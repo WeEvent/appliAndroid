@@ -37,4 +37,12 @@ public class Group {
     public void removeContact(String login){
         contactsList.remove(login);
     }
+
+    public void parseServer(){
+        // To be implemented
+    }
+
+    public void updateServer(){
+        // To be implemented
+    }
 }
