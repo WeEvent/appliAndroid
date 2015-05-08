@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Collection;
+
 /**
  * Created by CD on 08/05/2015.
  */
@@ -39,6 +41,18 @@ public class Category {
 
     public void removePollValue(String v) {
         poll.removePollValue(v);
+    }
+
+    public Collection<PollValue> getPollValues(){
+        return poll.getPollValues();
+    }
+
+    public PollValue getPollValue(String v){
+        return poll.getPollValue(v);
+    }
+
+    public Poll getPoll(){
+        return poll;
     }
 
     public void parseServer(){

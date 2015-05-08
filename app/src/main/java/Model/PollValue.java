@@ -25,6 +25,18 @@ public class PollValue {
         voters.remove(v);
     }
 
+    public String getValue(){
+        return value;
+    }
+
+    public int getVotersCount(){
+        return voters.size();
+    }
+
+    public boolean hasVoted(String log){
+        return voters.contains(log);
+    }
+
     public void parseServer(){
         // To be implemented
     }

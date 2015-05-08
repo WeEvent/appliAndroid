@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 /**
@@ -11,7 +12,7 @@ public class Poll {
 
     /// Constructor ///
     public Poll(){
-        values = new HashMap<String, PollValue>();
+        values  = new HashMap<String, PollValue>();
     }
 
     /// Public methods ///
@@ -31,6 +32,14 @@ public class Poll {
         values.get(v).removeVoter(voter);
     }
 
+    public Collection<PollValue> getPollValues(){
+        return values.values();
+    }
+
+    public PollValue getPollValue(String v) {
+        return values.get(v);
+    }
+
     public void parseServer(){
         // To be implemented
     }
@@ -38,4 +47,5 @@ public class Poll {
     public void updateServer(){
         // To be implemented
     }
+
 }

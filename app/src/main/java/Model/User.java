@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,11 +9,11 @@ import java.util.List;
  * Created by KM on 08/05/15.
  */
 public class User {
-    private String login = null;
-    private String cel = null;
-    private List<String> contactsList= null;
-    private HashMap<String,Group> listeGroup = null;
-    private HashMap<String,Event> listeEvent = null;
+    private String login                        = null;
+    private String cel                          = null;
+    private List<String> listContacts           = null;
+    private HashMap<String,Group> listGroups    = null;
+    private HashMap<String,Event> listEvents    = null;
 
     public User(String log,String cel){
         this.setLogin(log);
@@ -21,9 +22,9 @@ public class User {
     }
 
     private void init(){
-        listeGroup = new HashMap<String,Group>();;
-        contactsList = new ArrayList<String>();
-        listeEvent = new HashMap<String,Event>();
+        listGroups                              = new HashMap<String,Group>();;
+        listContacts                            = new ArrayList<String>();
+        listEvents                              = new HashMap<String,Event>();
     }
     ///
 
@@ -46,60 +47,60 @@ public class User {
     ///
 
     public List<String> getContactList(){
-        return contactsList;
+        return listContacts;
     }
     ///
 
-    public List<Event> getListeEvent(){
-        return (List<Event>)(listeEvent.values());
+    public Collection<Event> getListEvents(){
+        return listEvents.values();
     }
     ///
 
     public List<Group> getGroup(){
-        return (List<Group>)(listeGroup.values());
+        return (List<Group>)(listGroups.values());
     }
     ///
 
     public void addContact(String cont){
-        contactsList.add(cont);
+        listContacts.add(cont);
     }
     ///
 
     public void removeContact(String cont){
-        contactsList.remove(cont);
+        listContacts.remove(cont);
     }
     ///
 
     public void addEvent(String id,String nom, String desc){
         Event evt = new Event(id,nom,desc);
-        listeEvent.put(nom,evt);
+        listEvents.put(nom, evt);
     }
     ///
 
     public void removeEvent(String evt){
-        listeEvent.remove(evt);
+        listEvents.remove(evt);
     }
     ///
 
     public void addGroup(String nom){
         Group gr = new Group(nom);
-        listeGroup.put(nom,gr);
+        listGroups.put(nom, gr);
     }
     ///
 
     public void removeGroup(String gr){
-        listeGroup.remove(gr);
+        listGroups.remove(gr);
     }
     ///
 
 
     public Group getGroup(String gr){
-       return listeGroup.get(gr);
+       return listGroups.get(gr);
     }
     ///
 
     public Event getEvent(String evt){
-       return listeEvent.get(evt);
+       return listEvents.get(evt);
     }
     ///
 

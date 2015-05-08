@@ -1,6 +1,10 @@
 package Model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,13 +12,13 @@ import java.util.List;
  * Created by KM on 08/05/15.
  */
 public class Event {
-    private String id                   = null;
-    private String nom                  = null;
-    private String desc                 = null;
+    private String id                               = null;
+    private String nom                              = null;
+    private String desc                             = null;
 
-    private List<String> contactsList   = null;
-    private Chat chat                   = null;
-    private HashMap<String, Category> mapCategory = null;
+    private List<String> listContacts               = null;
+    private Chat chat                               = null;
+    private HashMap<String, Category> mapCategories = null;
 
 
     /// Public methods ///
@@ -28,8 +32,8 @@ public class Event {
 
     private void init(){
         chat                            = new Chat();
-        contactsList                    = new ArrayList<>();
-        mapCategory                     = new HashMap<String, Category>();
+        listContacts                    = new ArrayList<>();
+        mapCategories                   = new HashMap<String, Category>();
     }
     ///
 
@@ -69,41 +73,52 @@ public class Event {
     }
     ///
 
+    public Chat getChat(){
+        return chat;
+    }
+    ///
+
     public List<String> getContactList(){
-        return contactsList;
+        return listContacts;
     }
     ///
 
     public void addContact(String cont){
-        contactsList.add(cont);
+        listContacts.add(cont);
     }
     ///
 
     public void removeContact(String cont){
-        contactsList.remove(cont);
+        listContacts.remove(cont);
     }
     ///
 
-    public List<Category> getCategoryList(){
-        return (List<Category>)(mapCategory.values());
+    public Collection<Category> getCategoryList(){
+        return mapCategories.values();
+    }
+    ///
+
+    public Category getCategory(String cat){
+        return mapCategories.get(cat);
     }
     ///
 
     public void addCategory(String nom, String desc){
         Category cat = new Category(nom, desc);
-        mapCategory.put(nom,cat);
+        mapCategories.put(nom,cat);
 
     }
     ///
 
     public void removeCategory(String categ){
-        mapCategory.remove(categ);
+        mapCategories.remove(categ);
     }
     ///
 
-    public void addMessage(String txt){
-       // String login = self.getLogin();
-        chat.addMessage(new Message("", txt, "01/01/2015"));
+    public void addMessage(String txt,String login){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+        String date = dateFormat.format(Calendar.getInstance().getTime());
+        chat.addMessage(new Message(login, txt, date));
     }
 
     public void parseServer(){

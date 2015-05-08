@@ -8,10 +8,11 @@ public class Message {
     private String date             = null;
     private String texteMsg         = null;
 
-    public Message(String _login, String _dt, String _texte){
+    /// Public methods ///
+    public Message(String _login, String _text, String _dt){
         this.login                  = _login;
         this.date                   = _dt;
-        this .texteMsg              = _texte;
+        this .texteMsg              = _text;
     }
     ///
 
@@ -25,7 +26,7 @@ public class Message {
     }
     ///
 
-    public String getTexteMsg(){
+    public String getTextMsg(){
         return texteMsg;
     }
     ///

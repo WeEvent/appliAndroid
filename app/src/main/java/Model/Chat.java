@@ -7,18 +7,20 @@ import java.util.List;
  * Created by KM on 08/05/15.
  */
 public class Chat {
-    private List<Message> messageList   = null;
+    private List<Message> listMessages = null;
+
+    /// Public methods ///
     public Chat(){
-        messageList                     = new ArrayList<>();
+        listMessages = new ArrayList<>();
     }
 
     public List<Message> getMessages(){
-        return messageList;
+        return listMessages;
     }
     ///
 
     public void addMessage(Message m){
-        messageList.add(m);
+        listMessages.add(m);
     }
     ///
 
