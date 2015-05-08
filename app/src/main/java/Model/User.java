@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -10,15 +11,22 @@ public class User {
     private String login = null;
     private String cel = null;
     private List<String> contactsList= null;
-    private List<Group> listeGroup = null;
-    private List<Event> listeEvent = null;
+    private HashMap<String,Group> listeGroup = null;
+    private HashMap<String,Event> listeEvent = null;
 
     public User(String log,String cel){
         this.setLogin(log);
         this.setCel(cel);
-        contactsList = new ArrayList<String>();
-        listeEvent = new ArrayList<Event>();
+        init();
     }
+
+    private void init(){
+        listeGroup = new HashMap<String,Group>();;
+        contactsList = new ArrayList<String>();
+        listeEvent = new HashMap<String,Event>();
+    }
+    ///
+
 
     /// Public methods ///
     public void setLogin(String _login){
@@ -43,12 +51,12 @@ public class User {
     ///
 
     public List<Event> getListeEvent(){
-        return listeEvent;
+        return (List<Event>)(listeEvent.values());
     }
     ///
 
     public List<Group> getGroup(){
-        return listeGroup;
+        return (List<Group>)(listeGroup.values());
     }
     ///
 
@@ -62,43 +70,36 @@ public class User {
     }
     ///
 
-    public void addEvent(Event evt){
-        listeEvent.add(evt);
+    public void addEvent(String id,String nom, String desc){
+        Event evt = new Event(id,nom,desc);
+        listeEvent.put(nom,evt);
     }
     ///
 
-    public void removeEvent(Event evt){
+    public void removeEvent(String evt){
         listeEvent.remove(evt);
     }
     ///
 
-    public void addGroup(Group gr){
-        listeGroup.add(gr);
+    public void addGroup(String nom){
+        Group gr = new Group(nom);
+        listeGroup.put(nom,gr);
     }
     ///
 
-    public void removeGroup(Group gr){
+    public void removeGroup(String gr){
         listeGroup.remove(gr);
     }
     ///
 
 
     public Group getGroup(String gr){
-        int idx = listeGroup.indexOf(gr);
-        if(idx >=0){
-            return listeGroup.get(idx);
-        }
-
-        return null;
+       return listeGroup.get(gr);
     }
     ///
 
     public Event getEvent(String evt){
-        int idx = listeEvent.indexOf(evt);
-        if(idx >=0){
-            return listeEvent.get(idx);
-        }
-        return null;
+       return listeEvent.get(evt);
     }
     ///
 

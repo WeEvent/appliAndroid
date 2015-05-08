@@ -1,23 +1,24 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by KM on 08/05/15.
  */
 public class Event {
-    private int id                      = -1;
+    private String id                   = null;
     private String nom                  = null;
     private String desc                 = null;
 
     private List<String> contactsList   = null;
     private Chat chat                   = null;
-    private List<Category> categoryList = null;
+    private HashMap<String, Category> mapCategory = null;
 
 
     /// Public methods ///
-    public Event(int id, String nom, String desc){
+    public Event(String id, String nom, String desc){
         this.setID(id);
         this.setNom(nom);
         this.setDesc(desc);
@@ -25,10 +26,10 @@ public class Event {
     }
     ///
 
-    public void init(){
+    private void init(){
         chat                            = new Chat();
         contactsList                    = new ArrayList<>();
-        categoryList                    = new ArrayList<Category>();
+        mapCategory                     = new HashMap<String, Category>();
     }
     ///
 
@@ -52,12 +53,12 @@ public class Event {
     }
     ///
 
-    public void setID(int _id){
+    public void setID(String _id){
         this.id = _id;
     }
     ///
 
-    public int getID(){
+    public String getID(){
         return id;
     }
     ///
@@ -84,23 +85,25 @@ public class Event {
     ///
 
     public List<Category> getCategoryList(){
-        return categoryList;
+        return (List<Category>)(mapCategory.values());
     }
     ///
 
-    public void addCategory(Category categ){
-        categoryList.add(categ);
+    public void addCategory(String nom, String desc){
+        Category cat = new Category(nom, desc);
+        mapCategory.put(nom,cat);
+
     }
     ///
 
-    public void removeCategory(Category categ){
-        categoryList.remove(categ);
+    public void removeCategory(String categ){
+        mapCategory.remove(categ);
     }
     ///
 
     public void addMessage(String txt){
        // String login = self.getLogin();
-        chat.addMessage(new Message("",txt,"01/01/2015"));
+        chat.addMessage(new Message("", txt, "01/01/2015"));
     }
 
     public void parseServer(){
