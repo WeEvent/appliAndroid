@@ -9,14 +9,14 @@ import java.util.List;
 public class User {
     private String login = null;
     private String cel = null;
-    private List<String> listeContact= null;
+    private List<String> contactsList= null;
     private List<Group> listeGroup = null;
     private List<Event> listeEvent = null;
 
     public User(String log,String cel){
         this.setLogin(log);
         this.setCel(cel);
-        listeContact = new ArrayList<String>();
+        contactsList = new ArrayList<String>();
         listeEvent = new ArrayList<Event>();
     }
 
@@ -37,8 +37,8 @@ public class User {
     }
     ///
 
-    public List<String> getListeContact(){
-        return listeContact;
+    public List<String> getContactList(){
+        return contactsList;
     }
     ///
 
@@ -53,12 +53,12 @@ public class User {
     ///
 
     public void addContact(String cont){
-        listeContact.add(cont);
+        contactsList.add(cont);
     }
     ///
 
     public void removeContact(String cont){
-        listeContact.remove(cont);
+        contactsList.remove(cont);
     }
     ///
 
