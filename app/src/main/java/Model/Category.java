@@ -37,7 +37,7 @@ public class Category {
         poll.addPollValue(v);
     }
 
-    public void removePollValue(String v){
+    public void removePollValue(String v) {
         poll.removePollValue(v);
     }
 
