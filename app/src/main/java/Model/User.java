@@ -57,7 +57,7 @@ public class User {
     }
     ///
 
-    public void removeContact(Contact cont){
+    public void removeContact(String cont){
         listeContact.remove(cont);
     }
     ///
