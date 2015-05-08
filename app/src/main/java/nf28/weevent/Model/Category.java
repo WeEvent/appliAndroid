@@ -1,4 +1,4 @@
-package Model;
+package nf28.weevent.Model;
 
 import java.util.Collection;
 

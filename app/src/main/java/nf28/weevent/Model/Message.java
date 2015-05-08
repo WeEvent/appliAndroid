@@ -1,4 +1,4 @@
-package Model;
+package nf28.weevent.Model;
 
 /**
  * Created by KM on 08/05/15.
