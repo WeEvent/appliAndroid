@@ -28,7 +28,8 @@
         </activity>
         <activity
             android:name=".Controller.EventsActivity"
-            android:label="@string/item_events" >
+            android:label="@string/item_events"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".Controller.FriendsActivity"

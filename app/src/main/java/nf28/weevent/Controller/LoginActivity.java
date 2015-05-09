@@ -50,6 +50,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
     // UI references.
     private AutoCompleteTextView mEmailView;
+    private EditText mPhoneView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
@@ -62,6 +63,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
+
+        mPhoneView = (EditText) findViewById(R.id.phone);
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -82,6 +85,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 attemptLogin();
             }
         });
+
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
@@ -105,10 +109,12 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
+        mPhoneView.setError(null);
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        String phone = mPhoneView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -118,6 +124,13 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
+            cancel = true;
+        }
+
+        // Check for a valid phone number, if the user entered one.
+        if (!TextUtils.isEmpty(phone) && !isPhoneNumberValid(phone)) {
+            mPhoneView.setError(getString(R.string.error_incorrect_phone));
+            focusView = mPhoneView;
             cancel = true;
         }
 
@@ -131,6 +144,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             focusView = mEmailView;
             cancel = true;
         }
+
+
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -156,6 +171,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with our own logic for password
         return password.length() > 4;
+    }
+
+    private boolean isPhoneNumberValid(String phone) {
+        return phone.matches("[0-9]{10}");
     }
 
     /**
@@ -256,10 +275,12 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         private final String mEmail;
         private final String mPassword;
+        private final String mPhone;
 
-        UserLoginTask(String email, String password) {
+        UserLoginTask(String email, String password, String phone) {
             mEmail = email;
             mPassword = password;
+            mPhone = phone;
         }
 
         @Override

@@ -1,23 +1,76 @@
 package nf28.weevent.Controller;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import nf28.weevent.R;
 
-/**
- * Created by Nicolas on 07/05/2015.
- */
 
 public class EventsActivity extends MainActivity {
+
+    private ListView mainListView ;
+    private ArrayAdapter<String> listAdapter ;
+    // Search EditText
+    EditText inputSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.events);
 
+        initializeListEvents();
+
+        inputSearch = (EditText) findViewById(R.id.inputSearch);
+        inputSearch.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                // When user changed the Text
+                EventsActivity.this.listAdapter.getFilter().filter(cs);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                          int arg3) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+    }
+
+
+    public void initializeListEvents(){
+
+        mainListView = (ListView) findViewById( R.id.ListView );
+
+        String[] planets = new String[] { "RU", "Pizza Turtle Ninja", "NF28 Group appointment",
+                "Party all night long", "UTC Meeting", "Kebab Best", "Karting Compy",
+                "LOL lan", "Rugby", "Oulu Trip in Finland", "Pizza party at Mercier's house"};
+        ArrayList<String> planetList = new ArrayList<String>();
+        planetList.addAll( Arrays.asList(planets) );
+
+        // Create ArrayAdapter using the planet list.
+        listAdapter = new ArrayAdapter<String>(this, R.layout.simplerow, planetList);
+
+        // Set the ArrayAdapter as the ListView's adapter.
+        mainListView.setAdapter( listAdapter );
     }
 
     @Override
