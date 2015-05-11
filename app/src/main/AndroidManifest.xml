@@ -16,36 +16,53 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".Controller.MainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".Controller.LoginActivity"
+            android:screenOrientation="portrait"
+            android:label="Login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".Controller.LoginActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
             android:name=".Controller.EventsActivity"
             android:label="@string/item_events"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".Controller.FriendsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/item_friends" >
         </activity>
         <activity
             android:name=".Controller.HistoricalActivity"
+            android:screenOrientation="portrait"
             android:label="@string/item_historical" >
         </activity>
         <activity
             android:name=".Controller.ProfileActivity"
+            android:screenOrientation="portrait"
             android:label="@string/item_profile" >
         </activity>
         <activity
             android:name=".Controller.SettingsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/item_settings" >
+        </activity>
+        <activity
+            android:name=".Controller.SignUpActivity"
+            android:screenOrientation="portrait"
+            android:label="Signup" >
+        </activity>
+        <activity
+            android:name=".Controller.SignInActivity"
+            android:screenOrientation="portrait"
+            android:label="Signin">
         </activity>
     </application>
 

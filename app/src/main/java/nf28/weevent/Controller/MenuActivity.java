@@ -20,7 +20,7 @@ import nf28.weevent.Model.User;
 import nf28.weevent.R;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MenuActivity extends ActionBarActivity {
 
     protected ListView mDrawerList;
     protected DrawerLayout mDrawerLayout;
@@ -31,7 +31,6 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         mDrawerList = (ListView)findViewById(R.id.navList);
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
@@ -43,21 +42,6 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        Button btn_events = (Button) findViewById(R.id.btn_events);
-        btn_events.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, EventsActivity.class));
-            }
-        });
-
-        Button btn_friends = (Button) findViewById(R.id.btn_friends);
-        btn_friends.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FriendsActivity.class));
-            }
-        });
         //User u = test();
         //DataManager.getInstance().addUser(u);
     }
@@ -74,19 +58,19 @@ public class MainActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        startActivity(new Intent(MainActivity.this, EventsActivity.class));
+                        startActivity(new Intent(MenuActivity.this, EventsActivity.class));
                         break;
                     case 1:
-                        startActivity(new Intent(MainActivity.this,FriendsActivity.class));
+                        startActivity(new Intent(MenuActivity.this,FriendsActivity.class));
                         break;
                     case 2:
-                        startActivity(new Intent(MainActivity.this,HistoricalActivity.class));
+                        startActivity(new Intent(MenuActivity.this,HistoricalActivity.class));
                         break;
                     case 3:
-                        startActivity(new Intent(MainActivity.this,ProfileActivity.class));
+                        startActivity(new Intent(MenuActivity.this,ProfileActivity.class));
                         break;
                     case 4:
-                        startActivity(new Intent(MainActivity.this,SettingsActivity.class));
+                        startActivity(new Intent(MenuActivity.this,SettingsActivity.class));
                         break;
                     default:
                         break;
