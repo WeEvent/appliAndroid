@@ -23,6 +23,7 @@ import nf28.weevent.Model.Event;
 import nf28.weevent.Model.Message;
 import nf28.weevent.Model.PollValue;
 import nf28.weevent.Model.User;
+import nf28.weevent.Tools.DataManager;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -64,7 +65,8 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        //Test();
+        User u = test();
+        DataManager.getInstance().addUser(u);
     }
 
     private void addDrawerItems() {
@@ -168,7 +170,7 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void test(){
+    public User test(){
         User user = new User("Chloe","2345235423");
         user.addContact("Kostandin");
         user.addEvent("1","First Event","Something cool :)");
@@ -178,7 +180,7 @@ public class MainActivity extends ActionBarActivity {
         user.getEvent("First Event").getCategory("Film").addPollValue("Gladiator");
         user.getEvent("First Event").getCategory("Film").getPoll().addVoterToValue("Gladiator",user.getLogin());
 
-        for(String c : user.getContactList()){
+        /*for(String c : user.getContactList()){
             System.err.println("Contact : " + c);
         }
 
@@ -197,7 +199,9 @@ public class MainActivity extends ActionBarActivity {
         for(PollValue p : user.getEvent("First Event").getCategory("Film").getPollValues()){
             System.err.println("Pollvalue : " + p.getValue() + " - Nb votants :" + p.getVotersCount() + " :");
             System.err.println(".....Pollvalue : " + p.getValue() + " - Votre vote :" + p.hasVoted(user.getLogin()) + " :");
-        }
+        }*/
+
+        return user;
 
     }
 }

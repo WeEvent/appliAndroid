@@ -15,17 +15,18 @@ public class User {
     private HashMap<String,Group> listGroups    = null;
     private HashMap<String,Event> listEvents    = null;
 
-    public User(String log,String cel){
-        this.setLogin(log);
-        this.setCel(cel);
-        init();
-    }
-
-    private void init(){
+    public User(){
         listGroups                              = new HashMap<String,Group>();;
         listContacts                            = new ArrayList<String>();
         listEvents                              = new HashMap<String,Event>();
     }
+
+    public User(String log,String cel){
+        this();
+        this.setLogin(log);
+        this.setCel(cel);
+    }
+
     ///
 
 

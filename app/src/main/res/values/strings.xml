@@ -19,7 +19,7 @@
     <string name="action_search">Search</string>
     <string name="action_home">Home</string>
 
-    <string name="search_events">Search events ...</string>
+    <string name="search_events">Search events &#8230;</string>
 
     <string name="description">Never miss an event again !</string>
     <string name="btn_events_text">Events</string>
