@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class User {
     private String login                        = null;
-    private String cel                          = null;
+    private String mobile                       = null;
     private List<String> listContacts           = null;
     private HashMap<String,Group> listGroups    = null;
     private HashMap<String,Event> listEvents    = null;
@@ -21,10 +21,10 @@ public class User {
         listEvents                              = new HashMap<String,Event>();
     }
 
-    public User(String log,String cel){
+    public User(String log,String mobile){
         this();
         this.setLogin(log);
-        this.setCel(cel);
+        this.setMobile(mobile);
     }
 
     ///
@@ -39,11 +39,11 @@ public class User {
     }
     ///
 
-    public void setCel(String _cel){
-        cel = _cel;
+    public void setMobile(String _cel){
+        mobile = _cel;
     }
-    public String getCel(){
-        return cel;
+    public String getMobile(){
+        return mobile;
     }
     ///
 
