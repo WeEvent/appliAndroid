@@ -16,7 +16,7 @@ public class User {
     private HashMap<String,Event> listEvents    = null;
 
     public User(){
-        listGroups                              = new HashMap<String,Group>();;
+        listGroups                              = new HashMap<String,Group>();
         listContacts                            = new ArrayList<String>();
         listEvents                              = new HashMap<String,Event>();
     }

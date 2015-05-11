@@ -6,9 +6,12 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
@@ -17,11 +20,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class RestClient {
 
+    private String object;
     private ArrayList <NameValuePair> params;
     private ArrayList<NameValuePair> headers;
 
@@ -49,6 +55,11 @@ public class RestClient {
         this.url = url;
         params = new ArrayList<NameValuePair>();
         headers = new ArrayList<NameValuePair>();
+    }
+
+    public void setObject(String value)
+    {
+        object = value;
     }
 
     public void AddParam(String name, String value)
@@ -105,8 +116,38 @@ public class RestClient {
                     request.addHeader(h.getName(), h.getValue());
                 }
 
+                if (object != null && !object.equals(""))
+                    request.setEntity(new ByteArrayEntity(object.getBytes("UTF8")));
+
+                executeRequest(request, url);
+                break;
+            }
+            case DELETE:
+            {
+                //add parameters
+                String combinedParams = "";
                 if(!params.isEmpty()){
-                    request.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+                    combinedParams += "?";
+                    for(NameValuePair p : params)
+                    {
+                        String paramString = p.getName() + "=" + URLEncoder.encode(p.getValue(),"UTF-8");
+                        if(combinedParams.length() > 1)
+                        {
+                            combinedParams  +=  "&" + paramString;
+                        }
+                        else
+                        {
+                            combinedParams += paramString;
+                        }
+                    }
+                }
+
+                HttpDelete request = new HttpDelete(url + combinedParams);
+
+                //add headers
+                for(NameValuePair h : headers)
+                {
+                    request.addHeader(h.getName(), h.getValue());
                 }
 
                 executeRequest(request, url);

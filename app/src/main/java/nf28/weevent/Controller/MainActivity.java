@@ -65,8 +65,9 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        User u = test();
-        DataManager.getInstance().addUser(u);
+        //User u = test();
+        //DataManager.getInstance().addUser(u);
+        //User t = DataManager.getInstance().getUser("Chloe");
     }
 
     private void addDrawerItems() {

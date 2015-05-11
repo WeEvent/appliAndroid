@@ -1,19 +1,14 @@
 package nf28.weevent.Tools;
 
-import android.util.Log;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.StrictMode;
 
 import com.google.gson.Gson;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 
 import nf28.weevent.Model.Event;
@@ -31,45 +26,37 @@ public class DataManager {
         return ourInstance;
     }
 
-    public User getUser() {
-        if (user == null)
-            loadData();
+    public User getUser(String login) {
+        //if (user == null)
+        RestClient client = new RestClient("http://clement-mercier.fr/server/users");
+        client.AddParam("login", login);
+
+        try {
+            client.Execute(RequestMethod.GET);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        JSONObject json = null;
+        try{
+            json = new JSONObject(client.getResponse());
+            JSONArray res = json.getJSONArray("result");
+            user = new Gson().fromJson(res.get(0).toString(), User.class);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
         return user;
     }
 
-    private void loadData() {
-        HttpClient httpclient= new DefaultHttpClient();
-        try {
-            HttpGet httpGet=
-                    new HttpGet("http://clement-mercier.fr/server/users?name=");
-            HttpResponse httpresponse=httpclient.execute(httpGet);
-            HttpEntity httpentity=httpresponse.getEntity();
 
-            if (httpentity!=null){
-                InputStream inputstream=httpentity.getContent();
-                BufferedReader bufferedreader=new BufferedReader(
-                        new InputStreamReader(inputstream));
-                StringBuilder strinbulder=new StringBuilder();
-                String ligne=bufferedreader.readLine();
-                while (ligne!=null){
-                    strinbulder.append(ligne+"n");
-                    ligne=bufferedreader.readLine();
-                }
-                bufferedreader.close();
-
-                JSONObject jso=new JSONObject(strinbulder.toString());
-                JSONObject jsomain=jso.getJSONObject("pht");
-            }
-        } catch (Exception e) {
-            Log.e("tag", e.getMessage());
-        }
-    }
 
     public void addUser(User newUser) {
         String userJson = new Gson().toJson(newUser);
 
         RestClient client = new RestClient("http://clement-mercier.fr/server/users");
-        client.AddParam("", userJson);
+        client.setObject(userJson);
 
         try {
             client.Execute(RequestMethod.POST);
@@ -77,12 +64,23 @@ public class DataManager {
             e.printStackTrace();
         }
 
-        String response = client.getResponse();
-        if (response != null)
-            Log.i("reponse", response);
+        //String response = client.getResponse();
+    }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager cm = null;//(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        // if no network is available networkInfo will be null
+        // otherwise check if we are connected
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        }
+        return false;
     }
 
 
     private DataManager() {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 }
