@@ -24,8 +24,8 @@
     <string name="description">Never miss an event again !</string>
     <string name="btn_events_text">Events</string>
     <string name="btn_friends_text">Friends</string>
-    <string name="btn_friends_add">Add</string>
-    <string name="btn_events_add">Add</string>
+    <string name="btn_friends_add">+</string>
+    <string name="btn_events_add">+</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
