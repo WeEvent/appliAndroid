@@ -45,6 +45,7 @@ public class DataManager {
         }
         catch (Exception e){
             e.printStackTrace();
+            user=null;
         }
 
         return user;
@@ -52,7 +53,7 @@ public class DataManager {
 
 
 
-    public void addUser(User newUser) {
+    public static void addUser(User newUser) {
         String userJson = new Gson().toJson(newUser);
 
         RestClient client = new RestClient("http://clement-mercier.fr/server/users");

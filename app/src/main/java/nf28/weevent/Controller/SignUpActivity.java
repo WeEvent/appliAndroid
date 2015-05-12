@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,7 +28,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import nf28.weevent.Model.User;
 import nf28.weevent.R;
+import nf28.weevent.Tools.DataManager;
 
 /**
  * A login screen that offers login via email/password.
@@ -47,7 +50,7 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private EditText mEmailView;
+    private EditText mLoginView;
     private EditText mPhoneView;
     private EditText mPasswordView;
     private View mProgressView;
@@ -59,8 +62,8 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
         setContentView(R.layout.activity_sign_up_screen);
 
         // Set up the login form.
-        mEmailView = (EditText) findViewById(R.id.etUserName);
-        populateAutoComplete();
+        mLoginView = (EditText) findViewById(R.id.etUserName);
+        //populateAutoComplete();
 
         mPhoneView = (EditText) findViewById(R.id.phone);
 
@@ -105,18 +108,28 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
         }
 
         // Reset errors.
-        mEmailView.setError(null);
+        mLoginView.setError(null);
         mPasswordView.setError(null);
         mPhoneView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        String login = mLoginView.getText().toString();
         String password = mPasswordView.getText().toString();
         String phone = mPhoneView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(login)) {
+            mLoginView.setError(getString(R.string.error_field_required));
+            focusView = mLoginView;
+            cancel = true;
+        } else if (isLoginValid(login)==false) {
+            mLoginView.setError(getString(R.string.error_invalid_login));
+            focusView = mLoginView;
+            cancel = true;
+        }
 
         // Check for a valid phone number, if the user entered one.
         if (!TextUtils.isEmpty(phone) && !isPhoneNumberValid(phone)) {
@@ -136,26 +149,24 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
             cancel = true;
         }
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
-        }
-
-
-
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
         } else {
+            User user = new User();
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
+            if (!TextUtils.isEmpty(phone)){
+                user.setPassword(password);
+                user.setLogin(login);
+                user.setMobile(phone);
+            }
+            else {
+                user.setPassword(password);
+                user.setLogin(login);
+            }
+            DataManager.addUser(user);
             Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
             startActivity(intent);
             //showProgress(true);
@@ -164,10 +175,8 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
         }
     }
 
-    private boolean isEmailValid(String email) {
-        return email.matches("[\\w]+?[@][\\w]+?[.][aA-zZ]+?([.][aA-zZ])*");
-        //TODO: Replace this with our own logic = interrogation of mango db user
-        //return email.contains("@");
+    private boolean isLoginValid(String login) {
+        return DataManager.getInstance().getUser(login) ==null;
     }
 
     private boolean isPasswordValid(String password) {
@@ -327,4 +336,6 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
             showProgress(false);
         }
     }
+
+
 }
