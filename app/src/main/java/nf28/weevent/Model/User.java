@@ -71,7 +71,7 @@ public class User {
     }
     ///
 
-    public List<Group> getGroup(){
+    public List<Group> getGroups(){
         return (List<Group>)(listGroups.values());
     }
     ///
