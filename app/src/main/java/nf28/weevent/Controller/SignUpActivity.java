@@ -175,7 +175,7 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
                 Toast.makeText(SignUpActivity.this, getString(R.string.error_no_connection), Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (!DataManager.addUser(user)){
+            if (!DataManager.getInstance().addUser(user)){
                 Toast.makeText(SignUpActivity.this, getString(R.string.error_impossible_addUser), Toast.LENGTH_SHORT).show();
                 return;
             }
