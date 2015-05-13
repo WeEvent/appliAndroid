@@ -1,5 +1,7 @@
 package nf28.weevent.Tools;
 
+import android.app.Activity;
+import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.StrictMode;
@@ -10,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import nf28.weevent.Model.Event;
 import nf28.weevent.Model.User;
@@ -17,7 +20,7 @@ import nf28.weevent.Model.User;
 /**
  * Created by clement on 10/05/2015.
  */
-public class DataManager {
+public class DataManager extends Activity {
     private static DataManager ourInstance = new DataManager();
     private User user = null;
     private HashMap<String,Event> events = null;
@@ -53,7 +56,7 @@ public class DataManager {
 
 
 
-    public static void addUser(User newUser) {
+    public static boolean addUser(User newUser) {
         String userJson = new Gson().toJson(newUser);
 
         RestClient client = new RestClient("http://clement-mercier.fr/server/users");
@@ -61,24 +64,16 @@ public class DataManager {
 
         try {
             client.Execute(RequestMethod.POST);
+            if (client.getResponseCode() != 200)
+                return false;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
 
+        return true;
         //String response = client.getResponse();
     }
-
-    public boolean isNetworkAvailable() {
-        ConnectivityManager cm = null;//(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        // if no network is available networkInfo will be null
-        // otherwise check if we are connected
-        if (networkInfo != null && networkInfo.isConnected()) {
-            return true;
-        }
-        return false;
-    }
-
 
     private DataManager() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

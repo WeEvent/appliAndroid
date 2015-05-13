@@ -5,10 +5,13 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -24,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -166,7 +170,15 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
                 user.setPassword(password);
                 user.setLogin(login);
             }
-            DataManager.addUser(user);
+
+            if (!isNetworkAvailable()){
+                Toast.makeText(SignUpActivity.this, getString(R.string.error_no_connection), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!DataManager.addUser(user)){
+                Toast.makeText(SignUpActivity.this, getString(R.string.error_impossible_addUser), Toast.LENGTH_SHORT).show();
+                return;
+            }
             Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
             startActivity(intent);
             //showProgress(true);
@@ -186,6 +198,17 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
 
     private boolean isPhoneNumberValid(String phone) {
         return phone.matches("[0-9]{10}");
+    }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        // if no network is available networkInfo will be null
+        // otherwise check if we are connected
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        }
+        return false;
     }
 
     /**

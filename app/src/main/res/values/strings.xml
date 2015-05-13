@@ -34,6 +34,8 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_login">This login already exists</string>
     <string name="error_invalid_combination">Invalid combination of login/password</string>
+    <string name="error_no_connection">Your internet connection is not activated</string>
+    <string name="error_impossible_addUser">Impossible to create the account</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>

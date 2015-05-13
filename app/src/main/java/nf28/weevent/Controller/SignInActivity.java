@@ -6,10 +6,13 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -148,6 +151,12 @@ public class SignInActivity extends Activity implements LoaderCallbacks<Cursor> 
     }
 
     private boolean AreLoginAndPasswordValid(String login, String password) {
+
+        if (!isNetworkAvailable()){
+            Toast.makeText(SignInActivity.this, getString(R.string.error_no_connection), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         User tmp = DataManager.getInstance().getUser(login);
         if (tmp == null){
             return false;
@@ -155,9 +164,18 @@ public class SignInActivity extends Activity implements LoaderCallbacks<Cursor> 
         else if(tmp.getPassword().equals(password)) {
             return true;
         }
-        else {
-            return false;
+        return false;
+    }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        // if no network is available networkInfo will be null
+        // otherwise check if we are connected
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
         }
+        return false;
     }
 
     /**
