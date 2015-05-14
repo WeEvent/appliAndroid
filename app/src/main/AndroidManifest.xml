@@ -65,6 +65,11 @@
             android:screenOrientation="portrait"
             android:label="Signin">
         </activity>
+        <activity
+            android:name=".Controller.GroupActivity"
+            android:screenOrientation="portrait"
+            android:label="Group">
+        </activity>
     </application>
 
 </manifest>
