@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 import nf28.weevent.Model.User;
@@ -61,7 +60,7 @@ public class MenuActivity extends ActionBarActivity {
                         startActivity(new Intent(MenuActivity.this, EventsActivity.class));
                         break;
                     case 1:
-                        startActivity(new Intent(MenuActivity.this,FriendsActivity.class));
+                        startActivity(new Intent(MenuActivity.this,ContactsActivity.class));
                         break;
                     case 2:
                         startActivity(new Intent(MenuActivity.this,HistoricalActivity.class));

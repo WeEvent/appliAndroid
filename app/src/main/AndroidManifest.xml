@@ -70,7 +70,11 @@
             android:screenOrientation="portrait"
             android:label="@string/category_description">
         </activity>
-
+        <activity
+            android:name=".Controller.GroupActivity"
+            android:screenOrientation="portrait"
+            android:label="Group">
+        </activity>
     </application>
 
 </manifest>
