@@ -1,15 +1,12 @@
 package nf28.weevent.Controller;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.view.Menu;
+import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import nf28.weevent.Controller.SignInActivity;
-import nf28.weevent.Controller.SignUpActivity;
 import nf28.weevent.R;
 
 public class LoginActivity extends Activity implements OnClickListener {
@@ -35,7 +32,8 @@ public class LoginActivity extends Activity implements OnClickListener {
                 i = new Intent(this,SignInActivity.class);
                 break;
             case R.id.btnSignUp:
-                i = new Intent(this,SignUpActivity.class);
+               //KM_test i = new Intent(this,SignUpActivity.class);
+                i = new Intent(this,CategoriesActivity.class);
                 break;
         }
         startActivity(i);
