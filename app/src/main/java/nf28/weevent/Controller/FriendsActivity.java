@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -44,8 +45,12 @@ public class FriendsActivity extends Activity{
 
             if(v == all){
                 newFragment = new ContactsActivity();
+                all.setBackgroundColor(0xFF08AE9E);     //green
+                groups.setBackgroundColor(0xFFB2B2B2);  //light gray
             }else{
                 newFragment = new GroupsActivity();
+                all.setBackgroundColor(0xFFB2B2B2);     //light gray
+                groups.setBackgroundColor(0xFF08AE9E);  //green
             }
 
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
