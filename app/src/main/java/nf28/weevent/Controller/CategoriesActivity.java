@@ -8,15 +8,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.HashMap;
+
+import nf28.weevent.Model.Event;
 import nf28.weevent.R;
+import nf28.weevent.Tools.DataManager;
+
 /**
  * Created by KM on 13/05/15.
  */
 
 public class CategoriesActivity extends MainActivity {
 
-    // Declaring Your View and Variables
 
+    // The selected Event
+    static public Event evt = null;
+
+
+    //
     Toolbar toolbar;
     ViewPager pager;
     ViewPagerAdapter adapter;
@@ -31,8 +40,8 @@ public class CategoriesActivity extends MainActivity {
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
 
-      //  toolbar = (Toolbar) findViewById(R.id.tool_bar);
-      //  setSupportActionBar(toolbar);
+
+        //
         init();
         System.err.println("Category");
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
@@ -60,9 +69,28 @@ public class CategoriesActivity extends MainActivity {
         tabs.setViewPager(pager);
 
 
+        // Get all the events and init the first one by default as current Event
+        HashMap<String,Event> evts = getEvents();
 
+        for(String s : evts.keySet()){
+            System.out.println("Events -- " +s);
+            evt = evts.get(s);
+        }
     }
 
+
+
+    private HashMap<String,Event> getEvents() {
+        return DataManager.getInstance().getEvents();
+    }
+
+    static public void setSelectedEvt(Event e){
+        evt = e;
+    }
+
+    static public Event getSelectedEvt(){
+        return evt;
+    }
     private void init(){
         System.out.println("Init");
         ViewPagerAdapter.addTab(0);
