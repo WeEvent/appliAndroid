@@ -5,79 +5,81 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<LinearLayout
+<RelativeLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:background="#FFFFFF">
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
         android:background="#FFFFFF">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="All"
-        android:id="@+id/btn_friends_all"
-        android:background="#ff08ae9e"
-        android:textColor="#FFFFFF"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="0dp"
-        android:layout_marginBottom="10dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="10dp"
+            android:background="#FFFFFF">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="Groups"
-        android:id="@+id/btn_friends_groups"
-        android:background="#ffb2b2b2"
-        android:textColor="#ffffffff"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="28dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="10dp" />
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="All"
+                android:id="@+id/btn_friends_all"
+                android:background="#ff08ae9e"
+                android:textColor="#FFFFFF"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginBottom="10dp" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Groups"
+                android:id="@+id/btn_friends_groups"
+                android:background="#ffb2b2b2"
+                android:textColor="#ffffffff"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="28dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="10dp" />
 
         </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/list"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/list"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="fill_parent"
+            android:layout_width="wrap_content" />
 
-    <RelativeLayout
-        android:orientation="vertical"
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent"
-        android:layout_weight="1">
+    </LinearLayout>
 
-        <Button
-            android:background="@drawable/btn_round_corner"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/btn_add"
-            android:text="@string/btn_friends_add"
-            android:textColor="#ffffffff"
-            android:textSize="25dp"
-            android:layout_gravity="bottom"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"/>
 
-    </RelativeLayout>
+    <Button
+        android:background="@drawable/btn_round_corner"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/btn_add"
+        android:text="@string/btn_friends_add"
+        android:textColor="#ffffffff"
+        android:textSize="25dp"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"/>
 
-</LinearLayout>
+</RelativeLayout>
+
 
 
 

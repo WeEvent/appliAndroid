@@ -7,8 +7,13 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.List;
+
 import nf28.weevent.Controller.List.ActionSlideExpandableListView;
+import nf28.weevent.Model.Group;
 import nf28.weevent.R;
+import nf28.weevent.Tools.DataManager;
 
 /**
  * Created by CD on 14/05/2015.
@@ -26,7 +31,7 @@ public class GroupActivity extends MainActivity{
 
         ActionSlideExpandableListView list = (ActionSlideExpandableListView)this.findViewById(R.id.groupList);
 
-        list.setAdapter(buildDummyData());
+        list.setAdapter(buildData(name));
         list.setItemActionListener(new ActionSlideExpandableListView.OnActionClickListener() {
             @Override
             public void onClick(View listView, View buttonView, int position) {
@@ -46,15 +51,13 @@ public class GroupActivity extends MainActivity{
         }, R.id.buttonA, R.id.buttonB);
     }
 
-    public ListAdapter buildDummyData() {
-        String[] values = {
-                "contact O",
-                "contact 1",
-                "contact 2",
-                "contact 3",
-                "contact 4",
-                "contact 5"
-        };
+    public ListAdapter buildData(String groupName) {
+
+        HashMap<String,Group> groups = DataManager.getInstance().getUser().getGroups();
+        Group group = groups.get(groupName);
+
+        List<String> values = group.getContactsList();
+
         return new ArrayAdapter<String>(
                 this,
                 R.layout.expandable_list_item,

@@ -11,7 +11,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import nf28.weevent.Model.Group;
 import nf28.weevent.R;
+import nf28.weevent.Tools.DataManager;
 
 /**
  * Created by CD on 13/05/2015.
@@ -24,7 +30,7 @@ public class GroupsActivity extends Fragment{
 
         ListView list = (ListView)inflater.inflate(R.layout.groups, container, false);
 
-        list.setAdapter(buildDummyData());
+        list.setAdapter(buildData());
 
         AdapterView.OnItemClickListener l = new AdapterView.OnItemClickListener() {
             @Override
@@ -40,19 +46,17 @@ public class GroupsActivity extends Fragment{
         return list;
     }
 
-    public ListAdapter buildDummyData() {
-        String [] options = {
-                "NF28",
-                "RU",
-                "UTC",
-                "Famille",
-                "Filles",
-                "Garçons",
-                "Autres"
-        };
+    public ListAdapter buildData() {
+
+        HashMap<String,Group> groups = DataManager.getInstance().getUser().getGroups();
+        List<String> values = new ArrayList<String>();
+
+        for (String key: groups.keySet()) {
+            values.add(key);
+        }
 
         return new ArrayAdapter<String>
-                (getActivity(), R.layout.groups_list_item, R.id.text, options);
+                (getActivity(), R.layout.groups_list_item, R.id.text, values);
 
     }
 }

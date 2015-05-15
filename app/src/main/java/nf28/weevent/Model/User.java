@@ -71,8 +71,8 @@ public class User {
     }
     ///
 
-    public List<Group> getGroups(){
-        return (List<Group>)(listGroups.values());
+    public HashMap<String,Group> getGroups(){
+        return listGroups;
     }
     ///
 

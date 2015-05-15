@@ -11,8 +11,11 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.List;
+
 import nf28.weevent.Controller.List.ActionSlideExpandableListView;
 import nf28.weevent.R;
+import nf28.weevent.Tools.DataManager;
 
 /**
  * Created by CD on 13/05/2015.
@@ -26,7 +29,7 @@ public class ContactsActivity extends Fragment {
         ActionSlideExpandableListView list =  (ActionSlideExpandableListView) inflater
                 .inflate(R.layout.contacts, container, false);
 
-        list.setAdapter(buildDummyData());
+        list.setAdapter(buildData());
 
         list.setItemActionListener(new ActionSlideExpandableListView.OnActionClickListener() {
 
@@ -55,13 +58,10 @@ public class ContactsActivity extends Fragment {
 
 
 
-    public ListAdapter buildDummyData() {
-        String[] values = {
-                "Clément Mercier",
-                "Nicolas Rouquette",
-                "Kostandin Misho",
-                "Chloé Dejon"
-        };
+    public ListAdapter buildData() {
+
+        List<String> values = DataManager.getInstance().getUser().getContactList();
+
         return new ArrayAdapter<String>(
                 getActivity(),
                 R.layout.expandable_list_item,

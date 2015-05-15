@@ -43,6 +43,10 @@ public class DataManager extends Activity {
         StrictMode.setThreadPolicy(policy);
     }
 
+    public User getUser(){
+        return user;
+    }
+
     public User getUser(String login) {
         //if (user == null)
         RestClient client = new RestClient(serverAddress + "users");
