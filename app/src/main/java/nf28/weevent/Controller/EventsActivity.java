@@ -1,7 +1,6 @@
 package nf28.weevent.Controller;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
@@ -13,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -50,6 +50,7 @@ public class EventsActivity extends MainActivity {
             @Override
             public void onClick(View v) {
                 //startActivity(new Intent(EventsActivity.this, .class));
+                startActivity(new Intent(EventsActivity.this,CategoriesActivity.class));
             }
         });
 
@@ -89,9 +90,23 @@ public class EventsActivity extends MainActivity {
 
         // Create ArrayAdapter using the planet list.
         listAdapter = new ArrayAdapter<String>(this, R.layout.simplerow, planetList);
-
         // Set the ArrayAdapter as the ListView's adapter.
         mainListView.setAdapter( listAdapter );
+
+        /*
+        // TODO
+        mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+                Toast.makeText(
+                        EventsActivity.this,
+                        "Clicked Action: " + id + " in list item " + position,
+                        Toast.LENGTH_SHORT
+                ).show();
+
+            }
+
+        });
+         */
     }
 
     @Override
