@@ -79,7 +79,7 @@ public class MainActivity extends ActionBarActivity {
                         startActivity(new Intent(MainActivity.this, EventsActivity.class));
                         break;
                     case 1:
-                        startActivity(new Intent(MainActivity.this,ContactsActivity.class));
+                        startActivity(new Intent(MainActivity.this,FriendsActivity.class));
                         break;
                     case 2:
                         startActivity(new Intent(MainActivity.this,HistoricalActivity.class));

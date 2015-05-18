@@ -2,6 +2,7 @@ package nf28.weevent.Controller;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -11,13 +12,15 @@ import nf28.weevent.R;
  * Created by Nicolas on 07/05/2015.
  */
 
-public class SettingsActivity extends MainActivity {
+public class SettingsActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.events);
+        setContentView(R.layout.settings);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     @Override

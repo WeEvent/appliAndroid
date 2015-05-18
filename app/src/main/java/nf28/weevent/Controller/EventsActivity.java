@@ -3,6 +3,7 @@ package nf28.weevent.Controller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -19,7 +20,7 @@ import java.util.Arrays;
 import nf28.weevent.R;
 
 
-public class EventsActivity extends MainActivity {
+public class EventsActivity extends ActionBarActivity {
 
     private ListView mainListView ;
     private ArrayAdapter<String> listAdapter ;
@@ -30,18 +31,10 @@ public class EventsActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mDrawerList = (ListView)findViewById(R.id.navList);
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        mActivityTitle = getTitle().toString();
-
-        addDrawerItems();
-        setupDrawer();
+        setContentView(R.layout.events);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        setContentView(R.layout.events);
 
         initializeListEvents();
 
@@ -108,6 +101,7 @@ public class EventsActivity extends MainActivity {
         });
          */
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
