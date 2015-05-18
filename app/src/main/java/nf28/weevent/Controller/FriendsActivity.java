@@ -21,6 +21,8 @@ import nf28.weevent.R;
 public class FriendsActivity extends ActionBarActivity {
 
     Button all, groups;
+    Button add;
+    String view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class FriendsActivity extends ActionBarActivity {
 
         all = (Button)findViewById(R.id.btn_friends_all);
         groups = (Button)findViewById(R.id.btn_friends_groups);
+        add = (Button) findViewById(R.id.btn_add);
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -39,9 +42,11 @@ public class FriendsActivity extends ActionBarActivity {
         ContactsActivity fragment = new ContactsActivity();
         fragmentTransaction.add(R.id.list, fragment);
         fragmentTransaction.commit();
+        view = "all";
 
         all.setOnClickListener(changeListOnClickListener);
         groups.setOnClickListener(changeListOnClickListener);
+        add.setOnClickListener(addListener);
     }
 
     Button.OnClickListener changeListOnClickListener
@@ -52,10 +57,12 @@ public class FriendsActivity extends ActionBarActivity {
             Fragment newFragment;
 
             if(v == all){
+                view = "all";
                 newFragment = new ContactsActivity();
                 all.setBackgroundColor(0xFF08AE9E);     //green
                 groups.setBackgroundColor(0xFFB2B2B2);  //light gray
             }else{
+                view = "groups";
                 newFragment = new GroupsActivity();
                 all.setBackgroundColor(0xFFB2B2B2);     //light gray
                 groups.setBackgroundColor(0xFF08AE9E);  //green
@@ -66,6 +73,19 @@ public class FriendsActivity extends ActionBarActivity {
             transaction.replace(R.id.list, newFragment);
             transaction.addToBackStack(null);
             transaction.commit();
+        }};
+
+    Button.OnClickListener addListener
+            = new Button.OnClickListener(){
+
+        @Override
+        public void onClick(View v) {
+
+            if(view == "all"){
+                startActivity(new Intent(FriendsActivity.this, AddContactActivity.class));
+            }else{
+                // add group
+            }
         }};
 
     @Override

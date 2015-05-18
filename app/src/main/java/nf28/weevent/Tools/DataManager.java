@@ -13,6 +13,7 @@ import com.google.gson.JsonElement;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -70,6 +71,36 @@ public class DataManager extends Activity {
         }
 
         return user;
+    }
+
+    public List<String> getAllLogins() {
+        //if (user == null)
+        RestClient client = new RestClient(serverAddress + "users");
+
+        List<String> logins = new ArrayList<>();
+
+        try {
+            client.Execute(RequestMethod.GET);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        JSONObject json = null;
+        try{
+            json = new JSONObject(client.getResponse());
+            JSONArray res = json.getJSONArray("result");
+            for (int i = 0; i < res.length(); i++) {
+                Log.i("user", res.getJSONObject(i).toString());
+                User u = new Gson().fromJson(res.getJSONObject(i).toString(), User.class);
+                logins.add(u.getLogin());
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            logins=null;
+        }
+
+        return logins;
     }
 
     public boolean addUser(User newUser) {
