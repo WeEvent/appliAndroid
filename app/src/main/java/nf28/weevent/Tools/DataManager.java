@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -84,14 +85,34 @@ public class DataManager extends Activity {
         }
 
         return true;
-        //String response = client.getResponse();
     }
 
     public boolean addContact(String login) {
-        user.addContact(login);
 
         //TODO : partie web, faire la notification en ligne de l'ajout, sauvegarde du user
+        RestClient client = new RestClient(serverAddress);
+        client.AddParam("login", user.getLogin());
+        JSONObject json = new JSONObject();
+        JSONObject newContact = new JSONObject();
 
+        try {
+            newContact.put("listContacts", login);
+            json.put("$addToSet", newContact.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        client.setObject(json.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        user.addContact(login);
         return true;
     }
 

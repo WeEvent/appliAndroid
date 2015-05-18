@@ -18,6 +18,7 @@ import android.widget.ListView;
 
 import nf28.weevent.Model.User;
 import nf28.weevent.R;
+import nf28.weevent.Tools.DataManager;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -61,7 +62,7 @@ public class MainActivity extends ActionBarActivity {
 
         //User u = test();
         //DataManager.getInstance().addUser(u);
-        //User t = DataManager.getInstance().getUser("Chloe");
+        DataManager.getInstance().addContact("kidi");
     }
 
     protected void addDrawerItems() {
