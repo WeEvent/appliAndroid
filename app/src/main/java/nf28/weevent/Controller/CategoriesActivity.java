@@ -31,8 +31,6 @@ public class CategoriesActivity extends ActionBarActivity {
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[]={"Desc","Who","When","Where","Sum"};
-    int Numboftabs =5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +43,10 @@ public class CategoriesActivity extends ActionBarActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
 
-        //
-        init();
+
         System.err.println("Category");
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Numboftabs);
+        adapter =  new ViewPagerAdapter(getSupportFragmentManager(),ViewPagerAdapter.getTiles(),ViewPagerAdapter.getSizeTab());
 
         // fill the adapter with the proper values of drawables
 
@@ -94,14 +91,6 @@ public class CategoriesActivity extends ActionBarActivity {
 
     static public Event getSelectedEvt(){
         return evt;
-    }
-    private void init(){
-        System.out.println("Init");
-        ViewPagerAdapter.addTab(0);
-        ViewPagerAdapter.addTab(1);
-        ViewPagerAdapter.addTab(2);
-        ViewPagerAdapter.addTab(3);
-        ViewPagerAdapter.addTab(4);
     }
 
 

@@ -11,10 +11,13 @@ import java.util.Vector;
  */
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
+    int Numboftabs =5;
+
     CharSequence Titles[]; // This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created
     int NumbOfTabs; // Store the number of tabs, this will also be passed when the ViewPagerAdapter is created
 
     static private Vector<Integer> tab_names = new Vector<Integer>();
+    private static CharSequence Tiles_all[]={"Description","Event","Date","Place","Transport","Overview"};
 
     // Build a Constructor and assign the passed Values to appropriate values in the class
     public ViewPagerAdapter(FragmentManager fm,CharSequence mTitles[], int mNumbOfTabsumb) {
@@ -25,14 +28,28 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     }
 
-    public static void resetTab(){
-        tab_names.clear();
-    }
-
     public static void addTab(int id){
         System.err.println("-"+id);
         tab_names.add(id);
     }
+
+    public static int getSizeTab(){
+        return tab_names.size();
+    }
+
+    public static CharSequence[] getTiles(){
+        CharSequence Titl[] = new CharSequence[tab_names.size()];
+        int i = 0;
+        for(Integer idx : tab_names){
+            Titl[i++] = Tiles_all[idx];
+        }
+        return Titl;
+    }
+
+    public static void resetTabs(){
+        tab_names.clear();
+    }
+
     public static int getTabName(int idx){
         if(idx >=0 && idx <tab_names.size())
             return tab_names.get(idx);
@@ -44,28 +61,32 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
         if(position == 0) // if the position is 0 we are returning the First tab
         {
-            Tab1 tab1 = new Tab1();
-            return tab1;
+            Description description = new Description();
+            return description;
         }
         else  if(position == 1)      // second tab corresponds to the second category and so on ...
         {
             Tab2 tab2 = new Tab2();
             return tab2;
-        }else  if(position == 2)      // 3 tab corresponds to the second category and so on ...
+        }else  if(position == 2)      // 3 tab corresponds to Date
         {
-            Tab3 tab3 = new Tab3();
-            return tab3;
-        } else  if(position == 3)      // 4 tab corresponds to the second category and so on ...
+            Date date = new Date();
+            return date;
+        } else  if(position == 3)      // 4 tab corresponds to Place
         {
-            Tab4 tab4 = new Tab4();
-            return tab4;
-        } else      // 5 tab corresponds to the second category and so on ...
+            Place place = new Place();
+            return place;
+        } else if(position == 4)      // 5 tab corresponds to Transport
         {
-            Tab5 tab5 = new Tab5();
-            return tab5;
+            Transport transport = new Transport();
+            return transport;
+        }else if(position == 5 )       //  6 overview
+        {
+            Overview overview = new Overview();
+            return overview;
+        }else{
+            return null;
         }
-
-
     }
 
     // This method return the titles for the Tabs in the Tab Strip

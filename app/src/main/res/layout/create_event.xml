@@ -4,61 +4,77 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <RadioButton
+    <CheckBox
         android:drawableRight="@drawable/ic_desc"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:checked="true"
-        android:text="Desc"
+        android:text="Description"
+        android:button="@drawable/check_box_selector"
         android:id="@+id/select_desc"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="25dp" />
-    <RadioButton
+        android:layout_marginTop="25dp"
+        android:clickable="true"
+        android:enabled="false" />
+    <CheckBox
         android:drawableRight="@drawable/ic_evt"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:checked="false"
         android:text="Event"
+        android:button="@drawable/check_box_selector"
         android:id="@+id/select_evt"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="25dp" />
-    <RadioButton
+        android:layout_marginTop="25dp"
+        android:clickable="true" />
+    <CheckBox
         android:drawableRight="@drawable/ic_date"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:checked="false"
         android:text="Date"
+        android:button="@drawable/check_box_selector"
         android:id="@+id/select_date"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="25dp" />
-    <RadioButton
+        android:layout_marginTop="25dp"
+        android:clickable="true" />
+    <CheckBox
         android:drawableRight="@drawable/ic_map"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:checked="false"
+        android:checked="true"
         android:text="Map"
+        android:button="@drawable/check_box_selector"
         android:id="@+id/select_map"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="25dp" />
-    <RadioButton
+        android:layout_marginTop="25dp"
+        />
+
+
+    <CheckBox
         android:drawableRight="@drawable/ic_transp"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:checked="false"
         android:text="Transport"
+        android:button="@drawable/check_box_selector"
         android:id="@+id/select_transp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="25dp" />
+        android:layout_marginTop="25dp"
+        />
 
-    <RadioButton
+    <CheckBox
         android:drawableRight="@drawable/ic_poll"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:checked="true"
         android:text="Overview"
+        android:button="@drawable/check_box_selector"
         android:id="@+id/select_poll"
         android:layout_marginTop="25dp"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:enabled="false"
+        />
 
     <Button
         android:background="@drawable/btn_round_corner"

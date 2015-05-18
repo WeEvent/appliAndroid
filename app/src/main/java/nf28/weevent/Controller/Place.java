@@ -13,11 +13,11 @@ import nf28.weevent.R;
 /**
  * Created by KM on 13/05/15.
  */
-public class Tab5 extends Fragment {
+public class Place extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v =inflater.inflate(R.layout.categ_5,container,false);
+        View v =inflater.inflate(R.layout.place,container,false);
         return v;
     }
 }

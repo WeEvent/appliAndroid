@@ -15,12 +15,12 @@ import nf28.weevent.R;
 /**
  * Created by KM on 13/05/15.
  */
-public class Tab1 extends Fragment {
+public class Description extends Fragment {
     private Button sendValid = null;
     private TextView eventDesc = null;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v =inflater.inflate(R.layout.categ_1,container,false);
+        View v =inflater.inflate(R.layout.description,container,false);
         // Assigning ViewPager View and setting the adapter
         sendValid = (Button)v.findViewById(R.id.btnSendInvitation);
 
