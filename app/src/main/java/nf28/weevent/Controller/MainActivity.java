@@ -8,13 +8,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import nf28.weevent.Model.User;
 import nf28.weevent.R;
@@ -62,14 +70,28 @@ public class MainActivity extends ActionBarActivity {
         //User u = test();
         //DataManager.getInstance().addUser(u);
         //User t = DataManager.getInstance().getUser("Chloe");
+
     }
 
     protected void addDrawerItems() {
 
+        String[] thumbnail = {String.valueOf(R.drawable.ic_event),String.valueOf(R.drawable.ic_friends) ,String.valueOf(R.drawable.ic_historical) ,String.valueOf(R.drawable.ic_profile) , String.valueOf(R.drawable.ic_settings) };
+        String[] text = { "Events", "Friends", "Historical", "Profile", "Settings" };
+
+        List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+        for (int i = 0; i < 5; i++) {
+            Map<String, Object> datum = new HashMap<String, Object>(2);
+            datum.put("thumbnail", thumbnail[i]);
+            datum.put("name", text[i]);
+            data.add(datum);
+        }
+        mDrawerList.setAdapter(new SimpleAdapter(this, data, R.layout.drawer_item, new String[] {"thumbnail","name"}, new int[] {R.id.imageView, R.id.titoloTv}));
+
+
         //TODO:replace by R.string.item_home, R.string.item_events... but there is a cast problem
         String[] osArray = { "Events", "Friends", "Historical", "Profile", "Settings" };
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
-        mDrawerList.setAdapter(mAdapter);
+        //mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        //mDrawerList.setAdapter(mAdapter);
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
