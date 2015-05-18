@@ -94,7 +94,7 @@ public class DataManager extends Activity {
     public boolean addContact(String login) {
 
         //TODO : partie web, faire la notification en ligne de l'ajout, sauvegarde du user
-        RestClient client = new RestClient(serverAddress);
+        RestClient client = new RestClient(serverAddress + "users");
         client.AddParam("login", user.getLogin());
         JSONObject json = new JSONObject();
         JSONObject newContact = new JSONObject();
