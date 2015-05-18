@@ -1,24 +1,22 @@
 package nf28.weevent.Tools;
 
 import android.app.Activity;
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.StrictMode;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import nf28.weevent.Model.Event;
+import nf28.weevent.Model.Group;
 import nf28.weevent.Model.User;
 
 /**
@@ -119,59 +117,196 @@ public class DataManager extends Activity {
         }
 
         return true;
-        //String response = client.getResponse();
     }
 
     public boolean addContact(String login) {
+        if (user.getContactList().contains(login))
+            return true;
+
+        RestClient client = new RestClient(serverAddress + "users");
+        client.AddParam("login", user.getLogin());
+        JSONObject action = new JSONObject();
+        JSONObject contact = new JSONObject();
+
+        try {
+            contact.put("listContacts", login);
+            action.put("$addToSet", contact);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
         user.addContact(login);
-
-        //TODO : partie web, faire la notification en ligne de l'ajout, sauvegarde du user
-
         return true;
     }
 
     public boolean removeContact(String login) {
-        User tmp = user;
+        if (!user.getContactList().contains(login))
+            return true;
+
+        RestClient client = new RestClient(serverAddress + "users");
+        client.AddParam("login", user.getLogin());
+        JSONObject action = new JSONObject();
+        JSONObject contact = new JSONObject();
+
+        try {
+            contact.put("listContacts", login);
+            action.put("$pull", contact);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
         user.removeContact(login);
-
-        //TODO : partie web, faire la notification en ligne de la suppression, sauvegarde du user
-        // si la requete plante, on annule l'édition ?
-
         return true;
     }
 
     public boolean addGroup(String name) {
+        if (user.getGroups().containsKey(name))
+            return true;
+
+        RestClient client = new RestClient(serverAddress + "users");
+        client.AddParam("login", user.getLogin());
+        String group = new Gson().toJson(new Group(name));
+        JSONObject action = new JSONObject();
+        try {
+            JSONObject groupObj = new JSONObject(group);
+            JSONObject hashMap = new JSONObject();
+            hashMap.put("listGroups." + name, groupObj);
+            action.put("$set", hashMap);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
         user.addGroup(name);
-
-        //TODO : partie web, faire la notification en ligne de l'ajout, sauvegarde du user
-
         return true;
     }
 
     public boolean removeGroup(String name) {
+        if (!user.getGroups().containsKey(name))
+            return true;
+
+        RestClient client = new RestClient(serverAddress + "users");
+        client.AddParam("login", user.getLogin());
+        JSONObject action = new JSONObject();
+        try {
+            JSONObject hashMap = new JSONObject();
+            hashMap.put("listGroups." + name, "");
+            action.put("$unset", hashMap);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
         user.removeGroup(name);
-
-        //TODO : partie web, faire la notification en ligne de la suppression, sauvegarde du user
-        // si la requete plante, on annule l'édition ?
-
         return true;
     }
 
     public boolean addGroupUser(String nameGroup, String loginUser) {
+        if (user.getGroup(nameGroup).getContactsList().contains(loginUser))
+            return true;
+
+        RestClient client = new RestClient(serverAddress + "users");
+        client.AddParam("login", user.getLogin());
+        JSONObject action = new JSONObject();
+        JSONObject contact = new JSONObject();
+
+        try {
+            contact.put("listGroups." + nameGroup + ".contactsList", loginUser);
+            action.put("$addToSet", contact);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
         user.getGroup(nameGroup).addContact(loginUser);
-
-        //TODO : partie web, faire la notification en ligne de la suppression, sauvegarde du user
-        // si la requete plante, on annule l'édition ?
-
         return true;
     }
 
     public boolean removeGroupUser(String nameGroup, String loginUser) {
+        if (!user.getGroup(nameGroup).getContactsList().contains(loginUser))
+        return true;
+
+        RestClient client = new RestClient(serverAddress + "users");
+        client.AddParam("login", user.getLogin());
+        JSONObject action = new JSONObject();
+        JSONObject contact = new JSONObject();
+
+        try {
+            contact.put("listGroups." + nameGroup + ".contactsList", loginUser);
+            action.put("$pull", contact);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
         user.getGroup(nameGroup).removeContact(loginUser);
-
-        //TODO : partie web, faire la notification en ligne de la suppression, sauvegarde du user
-        // si la requete plante, on annule l'édition ?
-
         return true;
     }
 

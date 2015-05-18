@@ -9,6 +9,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
@@ -109,6 +110,39 @@ public class RestClient {
             case POST:
             {
                 HttpPost request = new HttpPost(url);
+
+                //add headers
+                for(NameValuePair h : headers)
+                {
+                    request.addHeader(h.getName(), h.getValue());
+                }
+
+                if (object != null && !object.equals(""))
+                    request.setEntity(new ByteArrayEntity(object.getBytes("UTF8")));
+
+                executeRequest(request, url);
+                break;
+            }
+            case PUT:
+            {
+                String combinedParams = "";
+                if(!params.isEmpty()){
+                    combinedParams += "?";
+                    for(NameValuePair p : params)
+                    {
+                        String paramString = p.getName() + "=" + URLEncoder.encode(p.getValue(),"UTF-8");
+                        if(combinedParams.length() > 1)
+                        {
+                            combinedParams  +=  "&" + paramString;
+                        }
+                        else
+                        {
+                            combinedParams += paramString;
+                        }
+                    }
+                }
+
+                HttpPut request = new HttpPut(url + combinedParams);
 
                 //add headers
                 for(NameValuePair h : headers)
