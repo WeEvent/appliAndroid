@@ -2,7 +2,6 @@ package nf28.weevent.Controller;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -43,7 +42,7 @@ public class EventsActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 //startActivity(new Intent(EventsActivity.this, .class));
-                startActivity(new Intent(EventsActivity.this,CategoriesActivity.class));
+                startActivity(new Intent(EventsActivity.this,CreateEventActivity.class));
             }
         });
 

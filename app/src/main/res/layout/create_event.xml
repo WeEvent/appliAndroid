@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <RadioButton
+        android:drawableRight="@drawable/ic_desc"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Desc"
+        android:id="@+id/select_desc"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp" />
+    <RadioButton
+        android:drawableRight="@drawable/ic_evt"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:text="Event"
+        android:id="@+id/select_evt"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp" />
+    <RadioButton
+        android:drawableRight="@drawable/ic_date"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:text="Date"
+        android:id="@+id/select_date"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp" />
+    <RadioButton
+        android:drawableRight="@drawable/ic_map"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:text="Map"
+        android:id="@+id/select_map"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp" />
+    <RadioButton
+        android:drawableRight="@drawable/ic_transp"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:text="Transport"
+        android:id="@+id/select_transp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp" />
+
+    <RadioButton
+        android:drawableRight="@drawable/ic_poll"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Overview"
+        android:id="@+id/select_poll"
+        android:layout_marginTop="25dp"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:background="@drawable/btn_round_corner"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/btn_events_create"
+        android:text="@string/btn_events_add"
+        android:textColor="#ffffffff"
+        android:textSize="25dp"
+
+        android:layout_alignRight="@+id/ListView"
+
+        android:layout_marginTop="20dp"
+        android:layout_gravity="right" />
+
+
+</LinearLayout>

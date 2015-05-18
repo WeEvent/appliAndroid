@@ -75,6 +75,11 @@
             android:screenOrientation="portrait"
             android:label="Group">
         </activity>
+        <activity
+            android:name=".Controller.CreateEventActivity"
+            android:screenOrientation="portrait"
+            android:label="New">
+        </activity>
     </application>
 
 </manifest>
