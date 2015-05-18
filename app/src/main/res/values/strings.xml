@@ -42,4 +42,7 @@
     <string name="prompt_phone">Phone number</string>
     <string name="error_incorrect_phone">This phone number is incorrect</string>
 
+    <!-- String related to categories -->
+    <string name="category_description">Categories</string>
+
 </resources>
