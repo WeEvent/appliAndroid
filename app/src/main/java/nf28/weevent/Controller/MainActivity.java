@@ -26,6 +26,7 @@ import java.util.Map;
 
 import nf28.weevent.Model.User;
 import nf28.weevent.R;
+import nf28.weevent.Tools.DataManager;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -69,8 +70,15 @@ public class MainActivity extends ActionBarActivity {
 
         //User u = test();
         //DataManager.getInstance().addUser(u);
+        //DataManager.getInstance().addContact("chloe");
+        //DataManager.getInstance().removeContact("kidi");
+        //DataManager.getInstance().addGroup("Famille");
+        //DataManager.getInstance().addGroup("Amis");
+        //DataManager.getInstance().removeGroup("Amis");
+        //DataManager.getInstance().addGroupUser("Famille", "kidi");
+        //DataManager.getInstance().addGroupUser("Famille", "chloe");
+        //DataManager.getInstance().removeGroupUser("Famille", "kidi");
         //User t = DataManager.getInstance().getUser("Chloe");
-
     }
 
     protected void addDrawerItems() {

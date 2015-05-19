@@ -12,7 +12,7 @@ public class User {
     private String login                        = null;
     private String password                     =null;
     private String mobile                       = null;
-    private List<String> listContacts           = null;
+    private ArrayList<String> listContacts           = null;
     private HashMap<String,Group> listGroups    = null;
     private HashMap<String,Event> listEvents    = null;
 

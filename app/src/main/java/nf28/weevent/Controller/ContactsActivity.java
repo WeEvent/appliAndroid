@@ -1,6 +1,7 @@
 package nf28.weevent.Controller;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -22,32 +23,42 @@ import nf28.weevent.Tools.DataManager;
  */
 public class ContactsActivity extends Fragment {
 
+    private ActionSlideExpandableListView list;
+    private ArrayAdapter<String> adapter;
+
     @Override
     public ActionSlideExpandableListView onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ActionSlideExpandableListView list =  (ActionSlideExpandableListView) inflater
+        list =  (ActionSlideExpandableListView) inflater
                 .inflate(R.layout.contacts, container, false);
 
-        list.setAdapter(buildData());
+        adapter = buildData();
+        list.setAdapter(adapter);
 
         list.setItemActionListener(new ActionSlideExpandableListView.OnActionClickListener() {
 
             @Override
-            public void onClick(View listView, View buttonview, int position) {
+            public void onClick(View listView, View clickedView, int position) {
 
-                String actionName = "";
-                if(buttonview.getId()==R.id.buttonA) {
-                    actionName = "buttonA";
+                if(clickedView.getId()==R.id.buttonA) {
+                    CharSequence text = "Coming soon!";
+                    Toast toast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
+                    toast.show();
+
                 } else {
-                    actionName = "ButtonB";
+
+                    String loginToRemove = list.getItemAtPosition(position).toString();
+                    DataManager.getInstance().removeContact(loginToRemove);
+
+                    adapter.notifyDataSetChanged();
+
+                    CharSequence text = "Contact removed!";
+                    Toast toast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
+                    toast.show();
                 }
 
-                Toast.makeText(
-                        getActivity(),
-                        "Clicked Action: " + actionName + " in list item " + position,
-                        Toast.LENGTH_SHORT
-                ).show();
+
 
             }
 
@@ -58,7 +69,7 @@ public class ContactsActivity extends Fragment {
 
 
 
-    public ListAdapter buildData() {
+    public ArrayAdapter<String> buildData() {
 
         List<String> values = DataManager.getInstance().getUser().getContactList();
 

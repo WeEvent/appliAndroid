@@ -44,5 +44,7 @@
 
     <!-- String related to categories -->
     <string name="category_description">Categories</string>
+    <string name="search_contacts">Search Contacts</string>
+    <string name="enter_login">Enter contact login</string>
 
 </resources>

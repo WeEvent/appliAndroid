@@ -4,6 +4,7 @@ package nf28.weevent.Controller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +19,7 @@ import nf28.weevent.Tools.DataManager;
  * Created by KM on 13/05/15.
  */
 
-public class CategoriesActivity extends MainActivity {
+public class CategoriesActivity extends ActionBarActivity {
 
 
     // The selected Event
@@ -30,8 +31,6 @@ public class CategoriesActivity extends MainActivity {
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[]={"Desc","Who","When","Where","Sum"};
-    int Numboftabs =5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +39,14 @@ public class CategoriesActivity extends MainActivity {
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
-        //
-        init();
+
+
         System.err.println("Category");
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Numboftabs);
+        adapter =  new ViewPagerAdapter(getSupportFragmentManager(),ViewPagerAdapter.getTiles(),ViewPagerAdapter.getSizeTab());
 
         // fill the adapter with the proper values of drawables
 
@@ -90,14 +91,6 @@ public class CategoriesActivity extends MainActivity {
 
     static public Event getSelectedEvt(){
         return evt;
-    }
-    private void init(){
-        System.out.println("Init");
-        ViewPagerAdapter.addTab(0);
-        ViewPagerAdapter.addTab(1);
-        ViewPagerAdapter.addTab(2);
-        ViewPagerAdapter.addTab(3);
-        ViewPagerAdapter.addTab(4);
     }
 
 
