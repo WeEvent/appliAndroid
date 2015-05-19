@@ -45,12 +45,12 @@ public class EventsActivity extends ActionBarActivity {
 
         mainListView = (ListView) findViewById( R.id.ListView );
 
-        Collection<Event> events = DataManager.getInstance().getUser().getListEvents();
+        Collection<String> events = DataManager.getInstance().getEvents().keySet();
 
         List<String> list_events = new ArrayList<String>();
 
-        for (Event e : events) {
-            list_events.add(e.getNom());
+        for (String s : events) {
+            list_events.add(s);
         }
 
         listAdapter = new ArrayAdapter<>(this, R.layout.simplerow,list_events);
