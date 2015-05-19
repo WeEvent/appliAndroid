@@ -1,6 +1,8 @@
 package nf28.weevent.Controller;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -83,11 +85,11 @@ public class MainActivity extends ActionBarActivity {
 
     protected void addDrawerItems() {
 
-        String[] thumbnail = {String.valueOf(R.drawable.ic_event),String.valueOf(R.drawable.ic_friends) ,String.valueOf(R.drawable.ic_historical) ,String.valueOf(R.drawable.ic_profile) , String.valueOf(R.drawable.ic_settings) };
-        String[] text = { "Events", "Friends", "Historical", "Profile", "Settings" };
+        String[] thumbnail = {String.valueOf(R.drawable.ic_event),String.valueOf(R.drawable.ic_friends) ,String.valueOf(R.drawable.ic_historical) ,String.valueOf(R.drawable.ic_profile) , String.valueOf(R.drawable.ic_settings), String.valueOf(R.drawable.ic_settings) };
+        String[] text = { "Events", "Friends", "Historical", "Profile", "Settings", "Logout" };
 
         List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < text.length; i++) {
             Map<String, Object> datum = new HashMap<String, Object>(2);
             datum.put("thumbnail", thumbnail[i]);
             datum.put("name", text[i]);
@@ -119,6 +121,13 @@ public class MainActivity extends ActionBarActivity {
                         break;
                     case 4:
                         startActivity(new Intent(MainActivity.this,SettingsActivity.class));
+                        break;
+                    case 5:
+                        SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.remove("loginRegister");
+                        editor.commit();
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         break;
                     default:
                         break;
