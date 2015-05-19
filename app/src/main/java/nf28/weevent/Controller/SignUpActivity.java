@@ -179,11 +179,14 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
                 Toast.makeText(SignUpActivity.this, getString(R.string.error_impossible_addUser), Toast.LENGTH_SHORT).show();
                 return;
             }
-            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-            startActivity(intent);
-            //showProgress(true);
-            //mAuthTask = new UserLoginTask(email, password);
-            //mAuthTask.execute((Void) null);
+            User u = DataManager.getInstance().getUser(login); // sets the user in manager
+            if (u != null){
+                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                startActivity(intent);
+                //showProgress(true);
+                //mAuthTask = new UserLoginTask(email, password);
+                //mAuthTask.execute((Void) null);
+            }
         }
     }
 

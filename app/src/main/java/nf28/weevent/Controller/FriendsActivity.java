@@ -89,6 +89,23 @@ public class FriendsActivity extends ActionBarActivity {
         }};
 
     @Override
+    protected void onResume()
+    {
+        super.onResume();
+        Fragment newFragment;
+        view = "all";
+        newFragment = new ContactsActivity();
+        all.setBackgroundColor(0xFF08AE9E);     //green
+        groups.setBackgroundColor(0xFFB2B2B2);  //light gray
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.list, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
     {
         onBackPressed();

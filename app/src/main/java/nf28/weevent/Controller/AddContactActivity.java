@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -52,7 +54,7 @@ public class AddContactActivity extends ActionBarActivity {
             String l = String.valueOf(login.getText());
 
             if(logins.contains(l)){
-                // add contact
+                DataManager.getInstance().addContact(l);
 
                 login.setText(null);
                 InputMethodManager imm = (InputMethodManager)getSystemService(
@@ -76,4 +78,26 @@ public class AddContactActivity extends ActionBarActivity {
             }
 
         }};
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem)
+    {
+        onBackPressed();
+        switch (menuItem.getItemId()) {
+            case R.id.action_home:
+                // app icon in action bar clicked; go home
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(menuItem);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_activity, menu);
+        return true;
+    }
 }
