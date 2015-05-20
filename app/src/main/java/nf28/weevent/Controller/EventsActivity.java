@@ -8,15 +8,23 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
+import nf28.weevent.Controller.List.ActionSlideExpandableListView;
+import nf28.weevent.Model.Event;
 import nf28.weevent.R;
+import nf28.weevent.Tools.DataManager;
 
 
 public class EventsActivity extends ActionBarActivity {
@@ -35,7 +43,18 @@ public class EventsActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        initializeListEvents();
+        mainListView = (ListView) findViewById( R.id.ListView );
+
+        Collection<String> events = DataManager.getInstance().getEvents().keySet();
+
+        List<String> list_events = new ArrayList<String>();
+
+        for (String s : events) {
+            list_events.add(s);
+        }
+
+        listAdapter = new ArrayAdapter<>(this, R.layout.simplerow,list_events);
+        mainListView.setAdapter(listAdapter);
 
         Button btn_events = (Button) findViewById(R.id.btn_events_add);
         btn_events.setOnClickListener(new View.OnClickListener() {
@@ -67,38 +86,6 @@ public class EventsActivity extends ActionBarActivity {
                 // TODO Auto-generated method stub
             }
         });
-    }
-
-
-    public void initializeListEvents(){
-
-        mainListView = (ListView) findViewById( R.id.ListView );
-
-        String[] planets = new String[] { "RU", "Pizza Turtle Ninja", "NF28 Group appointment",
-                "Party all night long", "UTC Meeting", "Kebab Best", "Karting Compy",
-                "LOL lan", "Rugby", "Oulu Trip in Finland", "Pizza party at Mercier's house"};
-        ArrayList<String> planetList = new ArrayList<String>();
-        planetList.addAll( Arrays.asList(planets) );
-
-        // Create ArrayAdapter using the planet list.
-        listAdapter = new ArrayAdapter<String>(this, R.layout.simplerow, planetList);
-        // Set the ArrayAdapter as the ListView's adapter.
-        mainListView.setAdapter( listAdapter );
-
-        /*
-        // TODO
-        mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-                Toast.makeText(
-                        EventsActivity.this,
-                        "Clicked Action: " + id + " in list item " + position,
-                        Toast.LENGTH_SHORT
-                ).show();
-
-            }
-
-        });
-         */
     }
 
 
