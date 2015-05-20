@@ -8,11 +8,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,7 +24,6 @@ import java.util.Map;
 
 import nf28.weevent.Model.User;
 import nf28.weevent.R;
-import nf28.weevent.Tools.DataManager;
 
 
 public class MainActivity extends ActionBarActivity {

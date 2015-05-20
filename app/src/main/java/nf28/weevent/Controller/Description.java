@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import nf28.weevent.Model.Event;
 import nf28.weevent.R;
+import nf28.weevent.Tools.DataManager;
 
 /**
  * Created by KM on 13/05/15.
@@ -28,6 +30,18 @@ public class Description extends Fragment {
         eventDesc = (TextView)v.findViewById(R.id.eventDescription);
 
         eventDesc.setText(CategoriesActivity.getSelectedEvt().getDesc());
+
+
+        sendValid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Event ev = CategoriesActivity.getSelectedEvt();
+                if(DataManager.getInstance().getEvents().get(ev.getNom())==null) {
+                    DataManager.getInstance().addEvent(ev);
+                    System.err.println("Added");
+                }
+            }
+        });
 
         return v;
     }

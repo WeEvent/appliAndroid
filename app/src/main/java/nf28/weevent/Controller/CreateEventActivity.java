@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 
 import java.util.HashMap;
+import java.util.Vector;
 
 import nf28.weevent.Model.Event;
 import nf28.weevent.R;
@@ -65,22 +66,38 @@ public class CreateEventActivity extends ActionBarActivity {
     }
 
     private void init(){
-        System.out.println("Select");
+        Vector<Integer> tabs = new Vector<Integer>();
         //reset
         ViewPagerAdapter.resetTabs();
 
-        ViewPagerAdapter.addTab(0);
+        tabs.add(0);
+        CategoriesActivity.getSelectedEvt().addCategory("0","Categ_0");
+        if(radio_evt.isChecked()) {
+            tabs.add(1);
+            CategoriesActivity.getSelectedEvt().addCategory("1","Categ_1");
+        }
+        if(radio_date.isChecked()) {
+            tabs.add(2);
+            CategoriesActivity.getSelectedEvt().addCategory("2", "Categ_2");
+        }
+        if(radio_map.isChecked()) {
+            tabs.add(3);
+            CategoriesActivity.getSelectedEvt().addCategory("3","Categ_3");
+        }
+        if(radio_transp.isChecked()) {
+            tabs.add(4);
+            CategoriesActivity.getSelectedEvt().addCategory("4","Categ_4");
+        }
 
-        if(radio_evt.isChecked())
-            ViewPagerAdapter.addTab(1);
-        if(radio_date.isChecked())
-            ViewPagerAdapter.addTab(2);
-        if(radio_map.isChecked())
-            ViewPagerAdapter.addTab(3);
-        if(radio_transp.isChecked())
-            ViewPagerAdapter.addTab(4);
+        tabs.add(5);
+        CategoriesActivity.getSelectedEvt().addCategory("5","Categ_5");
+        updateEventCategories(tabs);
+    }
 
-        ViewPagerAdapter.addTab(5);
+    private void updateEventCategories(Vector<Integer> tabs){
+        for(Integer i : tabs){
+            ViewPagerAdapter.addTab(i);
+        }
     }
 
 

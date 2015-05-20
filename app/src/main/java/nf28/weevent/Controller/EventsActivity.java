@@ -13,15 +13,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
-import nf28.weevent.Controller.List.ActionSlideExpandableListView;
 import nf28.weevent.Model.Event;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
@@ -53,17 +51,27 @@ public class EventsActivity extends ActionBarActivity {
             list_events.add(s);
         }
 
-        listAdapter = new ArrayAdapter<>(this, R.layout.simplerow,list_events);
+        listAdapter = new ArrayAdapter(this, R.layout.simplerow,list_events);
         mainListView.setAdapter(listAdapter);
 
         Button btn_events = (Button) findViewById(R.id.btn_events_add);
         btn_events.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(EventsActivity.this, .class));
+                loadEvent("");
                 startActivity(new Intent(EventsActivity.this,CreateEventActivity.class));
             }
         });
+
+        mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView parent, View view, int position, long id) {
+                // When clicked, show a toast with the TextView text
+                Toast.makeText(getApplicationContext(),	((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+                loadEvent(((TextView) view).getText().toString());
+                startActivity(new Intent(EventsActivity.this,CategoriesActivity.class));
+            }
+        });
+
 
         inputSearch = (EditText) findViewById(R.id.inputSearch);
         inputSearch.addTextChangedListener(new TextWatcher() {
@@ -88,6 +96,26 @@ public class EventsActivity extends ActionBarActivity {
         });
     }
 
+    public void loadEvent(String evt){
+        Event event = DataManager.getInstance().getEvents().get(evt);
+        if(event != null){
+            CategoriesActivity.setSelectedEvt(event);
+            init(event);
+        }else{
+            event = new Event("2","New Event","New Event description");
+            CategoriesActivity.setSelectedEvt(event);
+        }
+    }
+    private void init(Event evt){
+
+        //reset
+        ViewPagerAdapter.resetTabs();
+        System.err.println("-------"+evt.getCategoryList().size());
+        for(String i : evt.getCategoryKeys()){
+            System.err.println("+++++++++"+i);
+            ViewPagerAdapter.addTab(Integer.parseInt(i));
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)

@@ -98,6 +98,11 @@ public class Event {
     }
     ///
 
+    public Collection<String> getCategoryKeys(){
+        return mapCategories.keySet();
+    }
+    ///
+
     public Category getCategory(String cat){
         return mapCategories.get(cat);
     }

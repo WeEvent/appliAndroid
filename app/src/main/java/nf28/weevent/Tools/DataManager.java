@@ -5,7 +5,6 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -331,7 +330,10 @@ public class DataManager extends Activity {
     public HashMap<String,Event> getEvents() {
 
         RestClient client = new RestClient(serverAddress + "events");
-        client.AddParam("listContacts", user.getLogin());
+        if(user!=null)
+         client.AddParam("listContacts", user.getLogin());
+        else
+            System.err.println("User null");
 
         try {
             client.Execute(RequestMethod.GET);

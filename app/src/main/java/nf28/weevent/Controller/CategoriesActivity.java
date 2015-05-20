@@ -43,8 +43,6 @@ public class CategoriesActivity extends ActionBarActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
 
-
-        System.err.println("Category");
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(),ViewPagerAdapter.getTiles(),ViewPagerAdapter.getSizeTab());
 
@@ -69,14 +67,6 @@ public class CategoriesActivity extends ActionBarActivity {
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
 
-
-        // Get all the events and init the first one by default as current Event
-        HashMap<String,Event> evts = getEvents();
-
-        for(String s : evts.keySet()){
-            System.out.println("Events -- " +s);
-            evt = evts.get(s);
-        }
     }
 
 
