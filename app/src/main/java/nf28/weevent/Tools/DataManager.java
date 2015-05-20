@@ -54,6 +54,7 @@ public class DataManager extends Activity {
             client.Execute(RequestMethod.GET);
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
 
         JSONObject json = null;
@@ -80,6 +81,7 @@ public class DataManager extends Activity {
             client.Execute(RequestMethod.GET);
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
 
         JSONObject json = null;
@@ -87,7 +89,6 @@ public class DataManager extends Activity {
             json = new JSONObject(client.getResponse());
             JSONArray res = json.getJSONArray("result");
             for (int i = 0; i < res.length(); i++) {
-                Log.i("user", res.getJSONObject(i).toString());
                 User u = new Gson().fromJson(res.getJSONObject(i).toString(), User.class);
                 logins.add(u.getLogin());
             }
@@ -338,6 +339,7 @@ public class DataManager extends Activity {
             client.Execute(RequestMethod.GET);
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
 
         JSONObject json = null;
@@ -345,14 +347,13 @@ public class DataManager extends Activity {
             json = new JSONObject(client.getResponse());
             JSONArray array = json.getJSONArray("result");
             for (int i = 0; i < array.length(); i++) {
-                Log.i("event", array.getJSONObject(i).toString());
                 Event e = new Gson().fromJson(array.getJSONObject(i).toString(), Event.class);
                 events.put(e.getNom(), e);
             }
         }
         catch (Exception e){
             e.printStackTrace();
-            user=null;
+            return null;
         }
 
         return events;
