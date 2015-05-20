@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -39,6 +40,8 @@ import java.util.List;
 import nf28.weevent.Model.User;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
+
+import static android.app.PendingIntent.getActivity;
 
 /**
  * A login screen that offers login via email/password.
@@ -148,9 +151,14 @@ public class SignInActivity extends Activity implements LoaderCallbacks<Cursor> 
             // form field with an error.
             focusView.requestFocus();
         } else {
-            //showProgress(true);
+            // enregistrement automatique de la personne connectee
+            SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("loginRegister", DataManager.getInstance().getUser().getLogin());
+            editor.commit();
             Intent intent = new Intent(SignInActivity.this, MainActivity.class);
             startActivity(intent);
+            //showProgress(true);
             //mAuthTask = new UserLoginTask(email, password);
             //mAuthTask.execute((Void) null);
         }

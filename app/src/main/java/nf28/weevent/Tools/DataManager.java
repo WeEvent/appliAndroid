@@ -328,7 +328,6 @@ public class DataManager extends Activity {
     }
 
     public HashMap<String,Event> getEvents() {
-
         RestClient client = new RestClient(serverAddress + "events");
         if(user!=null)
          client.AddParam("listContacts", user.getLogin());
