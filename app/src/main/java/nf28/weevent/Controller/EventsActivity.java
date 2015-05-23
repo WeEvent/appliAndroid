@@ -99,11 +99,11 @@ public class EventsActivity extends ActionBarActivity {
     public void loadEvent(String evt){
         Event event = DataManager.getInstance().getEvents().get(evt);
         if(event != null){
-            CategoriesActivity.setSelectedEvt(event);
+            DataManager.getInstance().setSelectedEvt(event);
             init(event);
-        }else{
-            event = new Event("2","New Event","New Event description");
-            CategoriesActivity.setSelectedEvt(event);
+        }else{ // TODO ca sert a quoi le else ?
+            event = new Event();
+            DataManager.getInstance().setSelectedEvt(event);
         }
     }
     private void init(Event evt){

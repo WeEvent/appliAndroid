@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by KM on 08/05/15.
@@ -22,18 +23,19 @@ public class Event {
 
 
     /// Public methods ///
-    public Event(String id, String nom, String desc){
-        this.setID(id);
-        this.setNom(nom);
-        this.setDesc(desc);
-        init();
-    }
-    ///
-
-    private void init(){
+    public Event(){
+        double rand = Math.random();
+        this.setID(Double.toString(rand));
         chat                            = new Chat();
         listContacts                    = new ArrayList<>();
         mapCategories                   = new HashMap<String, Category>();
+    }
+
+
+    public Event(String nom, String desc){
+        this();
+        this.setNom(nom);
+        this.setDesc(desc);
     }
     ///
 
@@ -93,6 +95,9 @@ public class Event {
     }
     ///
 
+    public HashMap<String, Category> getCategories(){
+        return mapCategories;
+    }
     public Collection<Category> getCategoryList(){
         return mapCategories.values();
     }

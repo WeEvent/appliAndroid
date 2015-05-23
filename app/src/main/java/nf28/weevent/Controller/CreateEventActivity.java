@@ -34,6 +34,7 @@ public class CreateEventActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_event);
 
+        DataManager.getInstance().setSelectedEvt(new Event());
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
 
@@ -71,26 +72,28 @@ public class CreateEventActivity extends ActionBarActivity {
         ViewPagerAdapter.resetTabs();
 
         tabs.add(0);
-        CategoriesActivity.getSelectedEvt().addCategory("0","Categ_0");
+        DataManager.getInstance().getSelectedEvt().addCategory("0", "Categ_0");
         if(radio_evt.isChecked()) {
             tabs.add(1);
-            CategoriesActivity.getSelectedEvt().addCategory("1","Categ_1");
+            DataManager.getInstance().getSelectedEvt().addCategory("1","Categ_1");
         }
         if(radio_date.isChecked()) {
             tabs.add(2);
-            CategoriesActivity.getSelectedEvt().addCategory("2", "Categ_2");
+            DataManager.getInstance().getSelectedEvt().addCategory("2", "Categ_2");
         }
         if(radio_map.isChecked()) {
             tabs.add(3);
-            CategoriesActivity.getSelectedEvt().addCategory("3","Categ_3");
+            DataManager.getInstance().getSelectedEvt().addCategory("3", "Categ_3");
         }
         if(radio_transp.isChecked()) {
             tabs.add(4);
-            CategoriesActivity.getSelectedEvt().addCategory("4","Categ_4");
+            DataManager.getInstance().getSelectedEvt().addCategory("4","Categ_4");
         }
 
+        DataManager.getInstance().getSelectedEvt().addContact(DataManager.getInstance().getUser().getLogin());
+
         tabs.add(5);
-        CategoriesActivity.getSelectedEvt().addCategory("5","Categ_5");
+        DataManager.getInstance().getSelectedEvt().addCategory("5","Categ_5");
         updateEventCategories(tabs);
     }
 

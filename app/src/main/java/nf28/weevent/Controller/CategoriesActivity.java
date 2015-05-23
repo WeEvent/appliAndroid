@@ -21,11 +21,6 @@ import nf28.weevent.Tools.DataManager;
 
 public class CategoriesActivity extends ActionBarActivity {
 
-
-    // The selected Event
-    static public Event evt = null;
-
-
     //
     Toolbar toolbar;
     ViewPager pager;
@@ -66,23 +61,11 @@ public class CategoriesActivity extends ActionBarActivity {
 
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
-
     }
-
-
 
     private HashMap<String,Event> getEvents() {
         return DataManager.getInstance().getEvents();
     }
-
-    static public void setSelectedEvt(Event e){
-        evt = e;
-    }
-
-    static public Event getSelectedEvt(){
-        return evt;
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
