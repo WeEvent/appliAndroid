@@ -90,6 +90,11 @@
             android:screenOrientation="portrait"
             android:label="New Contact">
         </activity>
+        <activity
+            android:name=".Controller.AddGroupActivity"
+            android:screenOrientation="portrait"
+            android:label="New Group">
+        </activity>
     </application>
 
 </manifest>
