@@ -47,4 +47,11 @@
     <string name="search_contacts">Search Contacts</string>
     <string name="enter_login">Enter contact login</string>
 
+
+    <!-- Dialog for the name of an event -->
+    <string name="app_name_dialgo">PromptDialogExample</string>
+    <string name="menu_settings">Settings</string>
+    <string name="tv_label">Type Your Message : </string>
+    <string name="button_label">Show Prompt Dialog</string>
+
 </resources>

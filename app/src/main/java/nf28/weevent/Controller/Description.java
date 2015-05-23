@@ -35,11 +35,7 @@ public class Description extends Fragment {
         sendValid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Event ev = CategoriesActivity.getSelectedEvt();
-                if(DataManager.getInstance().getEvents().get(ev.getNom())==null) {
-                    DataManager.getInstance().addEvent(ev);
-                    System.err.println("Added");
-                }
+
             }
         });
 

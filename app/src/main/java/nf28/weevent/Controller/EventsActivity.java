@@ -1,10 +1,14 @@
 package nf28.weevent.Controller;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +33,7 @@ public class EventsActivity extends ActionBarActivity {
 
     private ListView mainListView ;
     private ArrayAdapter<String> listAdapter ;
-
+    private final Context context = this;
     // Search EditText
     EditText inputSearch;
 
@@ -59,16 +63,61 @@ public class EventsActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 loadEvent("");
-                startActivity(new Intent(EventsActivity.this,CreateEventActivity.class));
+                //check user activation
+                // get prompts.xml view
+                LayoutInflater layoutInflater = LayoutInflater.from(context);
+
+                View promptView = layoutInflater.inflate(R.layout.dialog, null);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+                // set prompts.xml to be the layout file of the alertdialog builder
+                alertDialogBuilder.setView(promptView);
+
+                final EditText input = (EditText) promptView.findViewById(R.id.userInput);
+
+                // setup a dialog window
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // get user input and set it to result
+
+                                Event event = new Event("2",input.getText().toString(),input.getText().toString()+" description");
+                                event.addContact(DataManager.getInstance().getUser().getLogin());
+                                CategoriesActivity.setSelectedEvt(event);
+                                if(DataManager.getInstance().getEvents().get(event.getNom())==null) {
+                                    init(event);
+                                    startActivity(new Intent(EventsActivity.this,CreateEventActivity.class));
+                                }else{
+                                    Toast.makeText(getApplicationContext(),	"Event exists!", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                        })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,	int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                // create an alert dialog
+                AlertDialog alertD = alertDialogBuilder.create();
+
+                alertD.show();
+
             }
         });
+
+
 
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 // When clicked, show a toast with the TextView text
                 Toast.makeText(getApplicationContext(),	((TextView) view).getText(), Toast.LENGTH_SHORT).show();
                 loadEvent(((TextView) view).getText().toString());
-                startActivity(new Intent(EventsActivity.this,CategoriesActivity.class));
+
             }
         });
 
@@ -101,9 +150,9 @@ public class EventsActivity extends ActionBarActivity {
         if(event != null){
             CategoriesActivity.setSelectedEvt(event);
             init(event);
+            startActivity(new Intent(EventsActivity.this,CategoriesActivity.class));
         }else{
-            event = new Event("2","New Event","New Event description");
-            CategoriesActivity.setSelectedEvt(event);
+            Toast.makeText(getApplicationContext(),	"Event doesn't exist!", Toast.LENGTH_SHORT).show();
         }
     }
     private void init(Event evt){
@@ -113,7 +162,7 @@ public class EventsActivity extends ActionBarActivity {
         System.err.println("-------"+evt.getCategoryList().size());
         for(String i : evt.getCategoryKeys()){
             System.err.println("+++++++++"+i);
-            ViewPagerAdapter.addTab(Integer.parseInt(i));
+            ViewPagerAdapter.addTab(Integer.parseInt(i.substring(4)));
         }
     }
 
