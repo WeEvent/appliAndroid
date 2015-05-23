@@ -42,9 +42,13 @@ public class ContactsActivity extends Fragment {
             public void onClick(View listView, View clickedView, int position) {
 
                 if(clickedView.getId()==R.id.buttonA) {
-                    CharSequence text = "Coming soon!";
+                    Intent intent = new Intent(getActivity(), AddContactToGroupActivity.class);
+                    intent.putExtra("contactToAdd", list.getItemAtPosition(position).toString());
+                    startActivity(intent);
+
+                    /*CharSequence text = "Coming soon!";
                     Toast toast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
-                    toast.show();
+                    toast.show();*/
 
                 } else {
 
