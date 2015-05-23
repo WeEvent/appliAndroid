@@ -22,18 +22,30 @@ public class Event {
 
 
     /// Public methods ///
-    public Event(String id, String nom, String desc){
-        this.setID(id);
-        this.setNom(nom);
-        this.setDesc(desc);
-        init();
-    }
-    ///
-
-    private void init(){
+    public Event(){
         chat                            = new Chat();
         listContacts                    = new ArrayList<>();
         mapCategories                   = new HashMap<String, Category>();
+    }
+    public Event(String id, String nom, String desc){
+        this();
+        this.setID(id);
+        this.setNom(nom);
+        this.setDesc(desc);
+
+        double rand = Math.random();
+        this.setID(Double.toString(rand));
+        chat                            = new Chat();
+        listContacts                    = new ArrayList<>();
+        mapCategories                   = new HashMap<String, Category>();
+
+    }
+
+
+    public Event(String nom, String desc){
+        this();
+        this.setNom(nom);
+        this.setDesc(desc);
     }
     ///
 
@@ -93,8 +105,16 @@ public class Event {
     }
     ///
 
+    public HashMap<String, Category> getCategories(){
+        return mapCategories;
+    }
     public Collection<Category> getCategoryList(){
         return mapCategories.values();
+    }
+    ///
+
+    public Collection<String> getCategoryKeys(){
+        return mapCategories.keySet();
     }
     ///
 

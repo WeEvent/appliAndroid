@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 
 import java.util.HashMap;
+import java.util.Vector;
 
 import nf28.weevent.Model.Event;
 import nf28.weevent.R;
@@ -33,6 +34,7 @@ public class CreateEventActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_event);
 
+        DataManager.getInstance().setSelectedEvt(new Event());
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
 
@@ -54,6 +56,8 @@ public class CreateEventActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 init();
+                DataManager.getInstance().addEvent(DataManager.getInstance().getSelectedEvt());
+                System.err.println("Added");
                 startActivity(new Intent(CreateEventActivity.this,CategoriesActivity.class));
             }
         });
@@ -65,22 +69,60 @@ public class CreateEventActivity extends ActionBarActivity {
     }
 
     private void init(){
-        System.out.println("Select");
+        Vector<Integer> tabs = new Vector<Integer>();
         //reset
         ViewPagerAdapter.resetTabs();
 
-        ViewPagerAdapter.addTab(0);
+        tabs.add(0);
+        DataManager.getInstance().getSelectedEvt().addCategory("Cat_0","Categ_0");
+        if(radio_evt.isChecked()) {
+            tabs.add(1);
+            DataManager.getInstance().getSelectedEvt().addCategory("Cat_1","Categ_1");
+        }
+        if(radio_date.isChecked()) {
+            tabs.add(2);
+            DataManager.getInstance().getSelectedEvt().addCategory("Cat_2", "Categ_2");
+        }
+        if(radio_map.isChecked()) {
+            tabs.add(3);
+            DataManager.getInstance().getSelectedEvt().addCategory("Cat_3","Categ_3");
+        }
+        if(radio_transp.isChecked()) {
+            tabs.add(4);
+            DataManager.getInstance().getSelectedEvt().addCategory("Cat_4", "Categ_4");
+            DataManager.getInstance().getSelectedEvt().addCategory("0", "Categ_0");
+            if (radio_evt.isChecked()) {
+                tabs.add(1);
+                DataManager.getInstance().getSelectedEvt().addCategory("1", "Categ_1");
+            }
+            if (radio_date.isChecked()) {
+                tabs.add(2);
+                DataManager.getInstance().getSelectedEvt().addCategory("2", "Categ_2");
+            }
+            if (radio_map.isChecked()) {
+                tabs.add(3);
+                DataManager.getInstance().getSelectedEvt().addCategory("3", "Categ_3");
+            }
+            if (radio_transp.isChecked()) {
+                tabs.add(4);
+                DataManager.getInstance().getSelectedEvt().addCategory("4", "Categ_4");
+            }
 
-        if(radio_evt.isChecked())
-            ViewPagerAdapter.addTab(1);
-        if(radio_date.isChecked())
-            ViewPagerAdapter.addTab(2);
-        if(radio_map.isChecked())
-            ViewPagerAdapter.addTab(3);
-        if(radio_transp.isChecked())
-            ViewPagerAdapter.addTab(4);
+            DataManager.getInstance().getSelectedEvt().addContact(DataManager.getInstance().getUser().getLogin());
 
-        ViewPagerAdapter.addTab(5);
+            tabs.add(5);
+
+            DataManager.getInstance().getSelectedEvt().addCategory("Cat_5", "Categ_5");
+
+            DataManager.getInstance().getSelectedEvt().addCategory("5", "Categ_5");
+            updateEventCategories(tabs);
+        }
+    }
+
+    private void updateEventCategories(Vector<Integer> tabs){
+        for(Integer i : tabs){
+            ViewPagerAdapter.addTab(i);
+        }
     }
 
 

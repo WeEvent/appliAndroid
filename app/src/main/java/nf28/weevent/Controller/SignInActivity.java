@@ -1,4 +1,3 @@
-//Button btn_friends = (Button) findViewById(R.id.btnSingIn);
 package nf28.weevent.Controller;
 
 import android.animation.Animator;
@@ -6,10 +5,12 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -23,10 +24,13 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,11 +41,12 @@ import nf28.weevent.Model.User;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
 
+import static android.app.PendingIntent.getActivity;
+
 /**
  * A login screen that offers login via email/password.
  */
 public class SignInActivity extends Activity implements LoaderCallbacks<Cursor> {
-
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
@@ -75,11 +80,13 @@ public class SignInActivity extends Activity implements LoaderCallbacks<Cursor> 
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.etUserName || id == EditorInfo.IME_NULL) {
                     attemptLogin();
+
                     return true;
                 }
                 return false;
             }
         });
+
 
         Button mEmailSignInButton = (Button) findViewById(R.id.btnSingIn);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -92,7 +99,9 @@ public class SignInActivity extends Activity implements LoaderCallbacks<Cursor> 
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
     }
+
 
     private void populateAutoComplete() {
         getLoaderManager().initLoader(0, null, this);
@@ -142,6 +151,11 @@ public class SignInActivity extends Activity implements LoaderCallbacks<Cursor> 
             // form field with an error.
             focusView.requestFocus();
         } else {
+            // enregistrement automatique de la personne connectee
+            SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("loginRegister", DataManager.getInstance().getUser().getLogin());
+            editor.commit();
             Intent intent = new Intent(SignInActivity.this, MainActivity.class);
             startActivity(intent);
             //showProgress(true);

@@ -1,6 +1,8 @@
 package nf28.weevent.Controller;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -8,11 +10,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,7 +26,6 @@ import java.util.Map;
 
 import nf28.weevent.Model.User;
 import nf28.weevent.R;
-import nf28.weevent.Tools.DataManager;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -83,11 +82,11 @@ public class MainActivity extends ActionBarActivity {
 
     protected void addDrawerItems() {
 
-        String[] thumbnail = {String.valueOf(R.drawable.ic_event),String.valueOf(R.drawable.ic_friends) ,String.valueOf(R.drawable.ic_historical) ,String.valueOf(R.drawable.ic_profile) , String.valueOf(R.drawable.ic_settings) };
-        String[] text = { "Events", "Friends", "Historical", "Profile", "Settings" };
+        String[] thumbnail = {String.valueOf(R.drawable.ic_event),String.valueOf(R.drawable.ic_friends) ,String.valueOf(R.drawable.ic_historical) ,String.valueOf(R.drawable.ic_profile) , String.valueOf(R.drawable.ic_settings), String.valueOf(R.drawable.ic_settings) };
+        String[] text = { "Events", "Friends", "Historical", "Profile", "Settings", "Logout" };
 
         List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < text.length; i++) {
             Map<String, Object> datum = new HashMap<String, Object>(2);
             datum.put("thumbnail", thumbnail[i]);
             datum.put("name", text[i]);
@@ -119,6 +118,13 @@ public class MainActivity extends ActionBarActivity {
                         break;
                     case 4:
                         startActivity(new Intent(MainActivity.this,SettingsActivity.class));
+                        break;
+                    case 5:
+                        SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.remove("loginRegister");
+                        editor.commit();
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         break;
                     default:
                         break;
@@ -195,7 +201,7 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public User test(){
+    /*public User test(){
         User user = new User("Chloe","2345235423");
         user.addContact("Kostandin");
         user.addEvent("1","First Event","Something cool :)");
@@ -205,7 +211,7 @@ public class MainActivity extends ActionBarActivity {
         user.getEvent("First Event").getCategory("Film").addPollValue("Gladiator");
         user.getEvent("First Event").getCategory("Film").getPoll().addVoterToValue("Gladiator",user.getLogin());
 
-        /*for(String c : user.getContactList()){
+        for(String c : user.getContactList()){
             System.err.println("Contact : " + c);
         }
 
@@ -224,9 +230,9 @@ public class MainActivity extends ActionBarActivity {
         for(PollValue p : user.getEvent("First Event").getCategory("Film").getPollValues()){
             System.err.println("Pollvalue : " + p.getValue() + " - Nb votants :" + p.getVotersCount() + " :");
             System.err.println(".....Pollvalue : " + p.getValue() + " - Votre vote :" + p.hasVoted(user.getLogin()) + " :");
-        }*/
+        }
 
         return user;
 
-    }
+    }*/
 }

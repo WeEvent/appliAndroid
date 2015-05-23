@@ -5,7 +5,6 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,6 +25,7 @@ public class DataManager extends Activity {
     private static DataManager ourInstance = new DataManager();
     private User user = null;
     private HashMap<String,Event> events = null;
+    private Event event = null;
 
     private String serverAddress;
 
@@ -38,8 +38,17 @@ public class DataManager extends Activity {
 
         events = new HashMap<>();
         user = null;
+        event = null;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+    }
+
+    public void setSelectedEvt(Event e){
+        event = e;
+    }
+
+    public Event getSelectedEvt(){
+        return event;
     }
 
     public User getUser(){
@@ -55,6 +64,7 @@ public class DataManager extends Activity {
             client.Execute(RequestMethod.GET);
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
 
         JSONObject json = null;
@@ -81,6 +91,7 @@ public class DataManager extends Activity {
             client.Execute(RequestMethod.GET);
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
 
         JSONObject json = null;
@@ -88,7 +99,6 @@ public class DataManager extends Activity {
             json = new JSONObject(client.getResponse());
             JSONArray res = json.getJSONArray("result");
             for (int i = 0; i < res.length(); i++) {
-                Log.i("user", res.getJSONObject(i).toString());
                 User u = new Gson().fromJson(res.getJSONObject(i).toString(), User.class);
                 logins.add(u.getLogin());
             }
@@ -329,14 +339,17 @@ public class DataManager extends Activity {
     }
 
     public HashMap<String,Event> getEvents() {
-
         RestClient client = new RestClient(serverAddress + "events");
-        client.AddParam("listContacts", user.getLogin());
+        if(user!=null)
+         client.AddParam("listContacts", user.getLogin());
+        else
+            System.err.println("User null");
 
         try {
             client.Execute(RequestMethod.GET);
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
 
         JSONObject json = null;
@@ -344,14 +357,13 @@ public class DataManager extends Activity {
             json = new JSONObject(client.getResponse());
             JSONArray array = json.getJSONArray("result");
             for (int i = 0; i < array.length(); i++) {
-                Log.i("event", array.getJSONObject(i).toString());
                 Event e = new Gson().fromJson(array.getJSONObject(i).toString(), Event.class);
                 events.put(e.getNom(), e);
             }
         }
         catch (Exception e){
             e.printStackTrace();
-            user=null;
+            return null;
         }
 
         return events;

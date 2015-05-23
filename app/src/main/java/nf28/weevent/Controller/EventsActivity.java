@@ -1,29 +1,39 @@
 package nf28.weevent.Controller;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
+import nf28.weevent.Model.Event;
 import nf28.weevent.R;
+import nf28.weevent.Tools.DataManager;
 
 
 public class EventsActivity extends ActionBarActivity {
 
     private ListView mainListView ;
     private ArrayAdapter<String> listAdapter ;
-
+    private final Context context = this;
     // Search EditText
     EditText inputSearch;
 
@@ -35,16 +45,82 @@ public class EventsActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        initializeListEvents();
+        mainListView = (ListView) findViewById( R.id.ListView );
+
+        Collection<String> events = DataManager.getInstance().getEvents().keySet();
+
+        List<String> list_events = new ArrayList<String>();
+
+        for (String s : events) {
+            list_events.add(s);
+        }
+
+        listAdapter = new ArrayAdapter(this, R.layout.simplerow,list_events);
+        mainListView.setAdapter(listAdapter);
 
         Button btn_events = (Button) findViewById(R.id.btn_events_add);
         btn_events.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(EventsActivity.this, .class));
-                startActivity(new Intent(EventsActivity.this,CreateEventActivity.class));
+                loadEvent("");
+                //check user activation
+                // get prompts.xml view
+                LayoutInflater layoutInflater = LayoutInflater.from(context);
+
+                View promptView = layoutInflater.inflate(R.layout.dialog, null);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+                // set prompts.xml to be the layout file of the alertdialog builder
+                alertDialogBuilder.setView(promptView);
+
+                final EditText input = (EditText) promptView.findViewById(R.id.userInput);
+
+                // setup a dialog window
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // get user input and set it to result
+
+                                Event event = new Event("2",input.getText().toString(),input.getText().toString()+" description");
+                                event.addContact(DataManager.getInstance().getUser().getLogin());
+                                DataManager.getInstance().setSelectedEvt(event);
+                                if(DataManager.getInstance().getEvents().get(event.getNom())==null) {
+                                    init(event);
+                                    startActivity(new Intent(EventsActivity.this,CreateEventActivity.class));
+                                }else{
+                                    Toast.makeText(getApplicationContext(),	"Event exists!", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                        })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,	int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                // create an alert dialog
+                AlertDialog alertD = alertDialogBuilder.create();
+
+                alertD.show();
+
             }
         });
+
+
+
+        mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView parent, View view, int position, long id) {
+                // When clicked, show a toast with the TextView text
+                Toast.makeText(getApplicationContext(),	((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+                loadEvent(((TextView) view).getText().toString());
+
+            }
+        });
+
 
         inputSearch = (EditText) findViewById(R.id.inputSearch);
         inputSearch.addTextChangedListener(new TextWatcher() {
@@ -69,38 +145,27 @@ public class EventsActivity extends ActionBarActivity {
         });
     }
 
+    public void loadEvent(String evt){
+        Event event = DataManager.getInstance().getEvents().get(evt);
+        if(event != null){
+            DataManager.getInstance().setSelectedEvt(event);
+            init(event);
+            startActivity(new Intent(EventsActivity.this,CategoriesActivity.class));
+        }else{
+            Toast.makeText(getApplicationContext(),	"Event doesn't exist!", Toast.LENGTH_SHORT).show();
 
-    public void initializeListEvents(){
-
-        mainListView = (ListView) findViewById( R.id.ListView );
-
-        String[] planets = new String[] { "RU", "Pizza Turtle Ninja", "NF28 Group appointment",
-                "Party all night long", "UTC Meeting", "Kebab Best", "Karting Compy",
-                "LOL lan", "Rugby", "Oulu Trip in Finland", "Pizza party at Mercier's house"};
-        ArrayList<String> planetList = new ArrayList<String>();
-        planetList.addAll( Arrays.asList(planets) );
-
-        // Create ArrayAdapter using the planet list.
-        listAdapter = new ArrayAdapter<String>(this, R.layout.simplerow, planetList);
-        // Set the ArrayAdapter as the ListView's adapter.
-        mainListView.setAdapter( listAdapter );
-
-        /*
-        // TODO
-        mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-                Toast.makeText(
-                        EventsActivity.this,
-                        "Clicked Action: " + id + " in list item " + position,
-                        Toast.LENGTH_SHORT
-                ).show();
-
-            }
-
-        });
-         */
+        }
     }
+    private void init(Event evt){
 
+        //reset
+        ViewPagerAdapter.resetTabs();
+        System.err.println("-------"+evt.getCategoryList().size());
+        for(String i : evt.getCategoryKeys()){
+            System.err.println("+++++++++"+i);
+            ViewPagerAdapter.addTab(Integer.parseInt(i.substring(4)));
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)

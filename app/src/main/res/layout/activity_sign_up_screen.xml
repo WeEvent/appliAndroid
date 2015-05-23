@@ -38,7 +38,8 @@
 	        android:padding="10dp"
 	        android:hint="User Name"
 	        android:textColorHint="#bbbbbb"
-	        android:drawableLeft="@drawable/user"/>
+	        android:drawableLeft="@drawable/user"
+            android:singleLine="true"/>
     	<EditText 
     	    	android:id="@+id/etPass"
 	       	android:layout_width="match_parent"
@@ -49,7 +50,8 @@
 	        android:hint="Password"
 	        android:textColorHint="#bbbbbb"
 	        android:password="true"
-	        android:drawableLeft="@drawable/password"/>
+	        android:drawableLeft="@drawable/password"
+            android:singleLine="true"/>
 
 
         <EditText
@@ -61,7 +63,8 @@
             android:hint="Phone (optional)"
             android:textColorHint="#bbbbbb"
             android:imeOptions="actionUnspecified" android:inputType="phone"
-            android:drawableLeft="@drawable/phone"/>
+            android:drawableLeft="@drawable/phone"
+            android:singleLine="true"/>
         <Button 
 	       	android:id="@+id/btnSingIn"
 	       	android:layout_width="match_parent"
