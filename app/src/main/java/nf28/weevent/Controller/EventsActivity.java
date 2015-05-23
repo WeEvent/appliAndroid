@@ -85,7 +85,7 @@ public class EventsActivity extends ActionBarActivity {
 
                                 Event event = new Event("2",input.getText().toString(),input.getText().toString()+" description");
                                 event.addContact(DataManager.getInstance().getUser().getLogin());
-                                CategoriesActivity.setSelectedEvt(event);
+                                DataManager.getInstance().setSelectedEvt(event);
                                 if(DataManager.getInstance().getEvents().get(event.getNom())==null) {
                                     init(event);
                                     startActivity(new Intent(EventsActivity.this,CreateEventActivity.class));
@@ -148,11 +148,12 @@ public class EventsActivity extends ActionBarActivity {
     public void loadEvent(String evt){
         Event event = DataManager.getInstance().getEvents().get(evt);
         if(event != null){
-            CategoriesActivity.setSelectedEvt(event);
+            DataManager.getInstance().setSelectedEvt(event);
             init(event);
             startActivity(new Intent(EventsActivity.this,CategoriesActivity.class));
         }else{
             Toast.makeText(getApplicationContext(),	"Event doesn't exist!", Toast.LENGTH_SHORT).show();
+
         }
     }
     private void init(Event evt){

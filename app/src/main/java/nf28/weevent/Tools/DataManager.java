@@ -25,6 +25,7 @@ public class DataManager extends Activity {
     private static DataManager ourInstance = new DataManager();
     private User user = null;
     private HashMap<String,Event> events = null;
+    private Event event = null;
 
     private String serverAddress;
 
@@ -37,8 +38,17 @@ public class DataManager extends Activity {
 
         events = new HashMap<>();
         user = null;
+        event = null;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+    }
+
+    public void setSelectedEvt(Event e){
+        event = e;
+    }
+
+    public Event getSelectedEvt(){
+        return event;
     }
 
     public User getUser(){

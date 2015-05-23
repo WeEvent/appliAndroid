@@ -86,7 +86,7 @@ public class User {
     }
     ///
 
-    public void addEvent(String id,String nom, String desc){
+    /*public void addEvent(String id,String nom, String desc){
         Event evt = new Event(id,nom,desc);
         listEvents.put(nom, evt);
     }
@@ -94,7 +94,7 @@ public class User {
 
     public void removeEvent(String evt){
         listEvents.remove(evt);
-    }
+    }*/
     ///
 
     public void addGroup(String nom){

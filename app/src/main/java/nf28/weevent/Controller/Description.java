@@ -29,13 +29,18 @@ public class Description extends Fragment {
         // Assigning ViewPager View and setting the adapter
         eventDesc = (TextView)v.findViewById(R.id.eventDescription);
 
-        eventDesc.setText(CategoriesActivity.getSelectedEvt().getDesc());
+        eventDesc.setText(DataManager.getInstance().getSelectedEvt().getDesc());
 
 
         sendValid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                Event ev = DataManager.getInstance().getSelectedEvt();
+                if(DataManager.getInstance().getEvents().get(ev.getNom())==null) {
+                    DataManager.getInstance().addEvent(ev);
+                    System.err.println("Added");
+                }
             }
         });
 
