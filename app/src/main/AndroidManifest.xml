@@ -86,6 +86,13 @@
             android:label="New Contact">
         </activity>
 
+        <activity
+            android:name=".Controller.InviteFriendsActivity"
+            android:screenOrientation="portrait"
+            android:label="Invite">
+        </activity>
+
+
     </application>
 
 </manifest>

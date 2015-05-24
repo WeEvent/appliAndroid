@@ -35,10 +35,6 @@ public class Event {
 
         double rand = Math.random();
         this.setID(Double.toString(rand));
-        chat                            = new Chat();
-        listContacts                    = new ArrayList<>();
-        mapCategories                   = new HashMap<String, Category>();
-
     }
 
 

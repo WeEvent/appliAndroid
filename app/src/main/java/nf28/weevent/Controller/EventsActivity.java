@@ -22,7 +22,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Vector;
 
 import nf28.weevent.Model.Event;
 import nf28.weevent.R;
@@ -83,7 +85,7 @@ public class EventsActivity extends ActionBarActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 // get user input and set it to result
 
-                                Event event = new Event("2",input.getText().toString(),input.getText().toString()+" description");
+                                Event event = new Event("10",input.getText().toString(),input.getText().toString()+" description");
                                 event.addContact(DataManager.getInstance().getUser().getLogin());
                                 DataManager.getInstance().setSelectedEvt(event);
                                 if(DataManager.getInstance().getEvents().get(event.getNom())==null) {
@@ -160,11 +162,15 @@ public class EventsActivity extends ActionBarActivity {
 
         //reset
         ViewPagerAdapter.resetTabs();
+        Vector<Integer> order_tabs = new Vector<Integer>();
         System.err.println("-------"+evt.getCategoryList().size());
         for(String i : evt.getCategoryKeys()){
             System.err.println("+++++++++"+i);
-            ViewPagerAdapter.addTab(Integer.parseInt(i.substring(4)));
+            order_tabs.add(Integer.parseInt(i.substring(4)));
         }
+        Collections.sort(order_tabs);
+        for(int i : order_tabs)
+            ViewPagerAdapter.addTab(i);
     }
 
     @Override

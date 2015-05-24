@@ -59,28 +59,28 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        if(position == 0) // if the position is 0 we are returning the First tab
+        if(ViewPagerAdapter.getTabName(position) == 0) // if the position is 0 we are returning the First tab
         {
             Description description = new Description();
             return description;
         }
-        else  if(position == 1)      // second tab corresponds to the second category and so on ...
+        else  if(ViewPagerAdapter.getTabName(position) == 1)      // second tab corresponds to the second category and so on ...
         {
             Tab2 tab2 = new Tab2();
             return tab2;
-        }else  if(position == 2)      // 3 tab corresponds to Date
+        }else  if(ViewPagerAdapter.getTabName(position) == 2)      // 3 tab corresponds to Date
         {
             Date date = new Date();
             return date;
-        } else  if(position == 3)      // 4 tab corresponds to Place
+        } else  if(ViewPagerAdapter.getTabName(position) == 3)      // 4 tab corresponds to Place
         {
             Place place = new Place();
             return place;
-        } else if(position == 4)      // 5 tab corresponds to Transport
+        } else if(ViewPagerAdapter.getTabName(position) == 4)      // 5 tab corresponds to Transport
         {
             Transport transport = new Transport();
             return transport;
-        }else if(position == 5 )       //  6 overview
+        }else if(ViewPagerAdapter.getTabName(position) == 5 )       //  6 overview
         {
             Overview overview = new Overview();
             return overview;
