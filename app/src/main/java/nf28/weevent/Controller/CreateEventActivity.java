@@ -91,8 +91,7 @@ public class CreateEventActivity extends ActionBarActivity {
             DataManager.getInstance().getSelectedEvt().addCategory("Cat_4", "Categ_4");
         }
 
-        DataManager.getInstance().getSelectedEvt().addContact(DataManager.getInstance().getUser().getLogin());
-
+        
         tabs.add(5);
 
         DataManager.getInstance().getSelectedEvt().addCategory("Cat_5", "Categ_5");

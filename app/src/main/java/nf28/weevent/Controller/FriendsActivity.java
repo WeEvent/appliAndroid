@@ -84,7 +84,7 @@ public class FriendsActivity extends ActionBarActivity {
             if(view == "all"){
                 startActivity(new Intent(FriendsActivity.this, AddContactActivity.class));
             }else{
-                // add group
+                startActivity(new Intent(FriendsActivity.this, AddGroupActivity.class));
             }
         }};
 
@@ -93,10 +93,18 @@ public class FriendsActivity extends ActionBarActivity {
     {
         super.onResume();
         Fragment newFragment;
-        view = "all";
-        newFragment = new ContactsActivity();
-        all.setBackgroundColor(0xFF08AE9E);     //green
-        groups.setBackgroundColor(0xFFB2B2B2);  //light gray
+
+        if(view == "all") {
+            newFragment = new ContactsActivity();
+            all.setBackgroundColor(0xFF08AE9E);     //green
+            groups.setBackgroundColor(0xFFB2B2B2);  //light gray
+        }
+        else
+        {
+            newFragment = new GroupsActivity();
+            all.setBackgroundColor(0xFFB2B2B2);     //light gray
+            groups.setBackgroundColor(0xFF08AE9E);  //green
+        }
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 

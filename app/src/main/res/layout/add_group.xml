@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="New Group"
+        android:background="#ff08ae9e"
+        android:textColor="#FFFFFF"
+        android:gravity="center" />
+
+    <EditText android:id="@+id/newGroup"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_group"
+        android:inputType="textVisiblePassword"
+        android:layout_marginBottom="20dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:id="@+id/btn_add_group"
+        android:background="#ff08ae9e"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center_horizontal"/>
+
+
+</LinearLayout>
