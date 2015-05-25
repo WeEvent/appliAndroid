@@ -1,7 +1,6 @@
 package nf28.weevent.Controller;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +22,7 @@ import nf28.weevent.Tools.DataManager;
 /**
  * Created by CD on 19/05/2015.
  */
-public class AddContactToGroupFragment extends Fragment{
+public class AddContactToGroupSelectGroupFragment extends Fragment{
 
     @Override
     public ListView onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,7 +36,7 @@ public class AddContactToGroupFragment extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //retrieve the contact to add
-                AddContactToGroupActivity activity = (AddContactToGroupActivity) getActivity();
+                AddContactToGroupSelectGroupActivity activity = (AddContactToGroupSelectGroupActivity) getActivity();
                 String contactToAdd = activity.getContactToAdd();
 
                 // add contact to group
@@ -66,7 +65,7 @@ public class AddContactToGroupFragment extends Fragment{
         }
 
         return new ArrayAdapter<String>
-                (getActivity(), R.layout.groups_list_item, R.id.text, values);
+                (getActivity(), R.layout.simple_list_item, R.id.text, values);
 
     }
 }

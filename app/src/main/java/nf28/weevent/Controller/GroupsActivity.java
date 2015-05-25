@@ -56,7 +56,7 @@ public class GroupsActivity extends Fragment{
         }
 
         return new ArrayAdapter<String>
-                (getActivity(), R.layout.groups_list_item, R.id.text, values);
+                (getActivity(), R.layout.simple_list_item, R.id.text, values);
 
     }
 }

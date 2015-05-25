@@ -1,13 +1,11 @@
 package nf28.weevent.Controller;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -42,7 +40,7 @@ public class ContactsActivity extends Fragment {
             public void onClick(View listView, View clickedView, int position) {
 
                 if(clickedView.getId()==R.id.buttonA) {
-                    Intent intent = new Intent(getActivity(), AddContactToGroupActivity.class);
+                    Intent intent = new Intent(getActivity(), AddContactToGroupSelectGroupActivity.class);
                     intent.putExtra("contactToAdd", list.getItemAtPosition(position).toString());
                     startActivity(intent);
 

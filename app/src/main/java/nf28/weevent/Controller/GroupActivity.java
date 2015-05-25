@@ -30,6 +30,7 @@ public class GroupActivity extends ActionBarActivity{
     String group;
     ImageButton delete;
     Button add;
+    ActionSlideExpandableListView contactsList;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -49,10 +50,10 @@ public class GroupActivity extends ActionBarActivity{
         delete.setOnClickListener(deleteGroupListener);
         add.setOnClickListener(addContactToGroupListener);
 
-        ActionSlideExpandableListView list = (ActionSlideExpandableListView)this.findViewById(R.id.groupList);
+        contactsList = (ActionSlideExpandableListView)this.findViewById(R.id.groupList);
 
-        list.setAdapter(buildData(group));
-        list.setItemActionListener(new ActionSlideExpandableListView.OnActionClickListener() {
+        contactsList.setAdapter(buildData(group));
+        contactsList.setItemActionListener(new ActionSlideExpandableListView.OnActionClickListener() {
             @Override
             public void onClick(View listView, View buttonView, int position) {
                    String actionName = "";
@@ -91,6 +92,9 @@ public class GroupActivity extends ActionBarActivity{
         @Override
         public void onClick(View v) {
 
+            Intent intent = new Intent(GroupActivity.this, AddContactToGroupSelectContactActivity.class);
+            intent.putExtra("group", group);
+            startActivity(intent);
         }};
 
     Button.OnClickListener deleteGroupListener
@@ -102,6 +106,13 @@ public class GroupActivity extends ActionBarActivity{
             DataManager.getInstance().removeGroup(group);
             onBackPressed();
         }};
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        contactsList.setAdapter(buildData(group));
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
