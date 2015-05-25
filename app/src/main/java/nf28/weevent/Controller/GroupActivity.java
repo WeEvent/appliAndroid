@@ -8,13 +8,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,7 +33,7 @@ public class GroupActivity extends ActionBarActivity{
     String group;
     ImageButton delete;
     Button add;
-    ActionSlideExpandableListView contactsList;
+    ListView contactsList;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -50,26 +53,9 @@ public class GroupActivity extends ActionBarActivity{
         delete.setOnClickListener(deleteGroupListener);
         add.setOnClickListener(addContactToGroupListener);
 
-        contactsList = (ActionSlideExpandableListView)this.findViewById(R.id.groupList);
+        contactsList = (ListView)this.findViewById(R.id.contactsWithTrashList);
 
         contactsList.setAdapter(buildData(group));
-        contactsList.setItemActionListener(new ActionSlideExpandableListView.OnActionClickListener() {
-            @Override
-            public void onClick(View listView, View buttonView, int position) {
-                   String actionName = "";
-                   if(buttonView.getId()==R.id.buttonA) {
-                         actionName = "buttonA";
-                   } else {
-                         actionName = "ButtonB";
-                   }
-
-                   Toast.makeText(
-                           GroupActivity.this,
-                           "Clicked Action: " + actionName + " in list item " + position,
-                           Toast.LENGTH_SHORT
-                           ).show();
-            }
-        }, R.id.buttonA, R.id.buttonB);
     }
 
     public ListAdapter buildData(String groupName) {
@@ -79,11 +65,7 @@ public class GroupActivity extends ActionBarActivity{
 
         List<String> values = group.getContactsList();
 
-        return new ArrayAdapter<String>(
-                this,
-                R.layout.expandable_list_item,
-                R.id.text,
-                values);
+        return new ListWithDeleteOptionAdapter((ArrayList)values, GroupActivity.this, groupName);
     }
 
     Button.OnClickListener addContactToGroupListener

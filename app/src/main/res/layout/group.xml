@@ -25,14 +25,21 @@
         android:textColor="#FFFFFF"
         android:gravity="center" />
 
-    <nf28.weevent.Controller.List.ActionSlideExpandableListView
+    <!--<nf28.weevent.Controller.List.ActionSlideExpandableListView
         android:orientation="vertical"
         android:id="@+id/groupList"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:layout_height="fill_parent"
-        android:layout_width="wrap_content" />
+        android:layout_width="wrap_content" />-->
+
+            <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/contactsWithTrashList">
+
+            </ListView>
 
         </LinearLayout>
 
