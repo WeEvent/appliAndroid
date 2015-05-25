@@ -4,10 +4,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/text"
-            android:text="Hello World" android:textSize="30dp"/>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/text"
+        android:text="Hello World"
+        android:textSize="30dp"/>
 
 </LinearLayout>

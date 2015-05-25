@@ -23,6 +23,7 @@ public class AddContactToGroupSelectContactActivity extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_contact_to_group_select_contact);
+        setTitle("Add Contact to Group");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);

@@ -4,14 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -52,31 +50,39 @@ public class AddContactActivity extends ActionBarActivity {
         public void onClick(View v) {
 
             String l = String.valueOf(login.getText());
+            CharSequence text;
 
             if(logins.contains(l)){
-                DataManager.getInstance().addContact(l);
 
-                login.setText(null);
-                InputMethodManager imm = (InputMethodManager)getSystemService(
-                        Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(login.getWindowToken(), 0);
+                List<String> contacts = DataManager.getInstance().getUser().getContactList();
 
-                Context context = getApplicationContext();
-                CharSequence text = "Contact added!";
-                int duration = Toast.LENGTH_SHORT;
+                if(!contacts.contains(l)){
 
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                    if (!l.equals(DataManager.getInstance().getUser().getLogin())){
+                        DataManager.getInstance().addContact(l);
+
+                        login.setText(null);
+                        InputMethodManager imm = (InputMethodManager)getSystemService(
+                                Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(login.getWindowToken(), 0);
+
+                        text = "Contact added!";
+                    }
+                    else{
+                        text="You can't add your own login!";
+                    }
+
+                }
+                else{
+                    text = "Contact already exists!";
+                }
             }
             else{
-                Context context = getApplicationContext();
-                CharSequence text = " Login doesn't exist!";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                text = "Login doesn't exist!";
             }
 
+            Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+            toast.show();
         }};
 
     @Override

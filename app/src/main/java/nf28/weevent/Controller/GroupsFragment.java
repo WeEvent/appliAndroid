@@ -22,7 +22,7 @@ import nf28.weevent.Tools.DataManager;
 /**
  * Created by CD on 13/05/2015.
  */
-public class GroupsActivity extends Fragment{
+public class GroupsFragment extends Fragment{
 
     @Override
     public ListView onCreateView(LayoutInflater inflater, ViewGroup container,

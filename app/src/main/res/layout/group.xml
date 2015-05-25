@@ -15,24 +15,15 @@
             android:layout_width="match_parent"
             android:layout_height="fill_parent">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Group"
-        android:id="@+id/groupName"
-        android:background="#ff08ae9e"
-        android:textColor="#FFFFFF"
-        android:gravity="center" />
-
-    <!--<nf28.weevent.Controller.List.ActionSlideExpandableListView
-        android:orientation="vertical"
-        android:id="@+id/groupList"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_height="fill_parent"
-        android:layout_width="wrap_content" />-->
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Group"
+                android:id="@+id/groupName"
+                android:background="#ff08ae9e"
+                android:textColor="#FFFFFF"
+                android:gravity="center" />
 
             <ListView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
