@@ -6,15 +6,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import nf28.weevent.Controller.List.ActionSlideExpandableListView;
 import nf28.weevent.Model.Group;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
@@ -23,6 +24,10 @@ import nf28.weevent.Tools.DataManager;
  * Created by CD on 14/05/2015.
  */
 public class GroupActivity extends ActionBarActivity{
+    String group;
+    ImageButton delete;
+    Button add;
+    ListView contactsList;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -33,29 +38,18 @@ public class GroupActivity extends ActionBarActivity{
         getSupportActionBar().setHomeButtonEnabled(true);
 
         final TextView groupName = (TextView) this.findViewById(R.id.groupName);
-        String name = getIntent().getStringExtra("group");
-        groupName.setText(name);
+        group = getIntent().getStringExtra("group");
+        groupName.setText(group);
 
-        ActionSlideExpandableListView list = (ActionSlideExpandableListView)this.findViewById(R.id.groupList);
+        delete = (ImageButton) this.findViewById(R.id.btn_delete_group);
+        add = (Button) this.findViewById(R.id.btn_add_contact_to_group);
 
-        list.setAdapter(buildData(name));
-        list.setItemActionListener(new ActionSlideExpandableListView.OnActionClickListener() {
-            @Override
-            public void onClick(View listView, View buttonView, int position) {
-                   String actionName = "";
-                   if(buttonView.getId()==R.id.buttonA) {
-                         actionName = "buttonA";
-                   } else {
-                         actionName = "ButtonB";
-                   }
+        delete.setOnClickListener(deleteGroupListener);
+        add.setOnClickListener(addContactToGroupListener);
 
-                   Toast.makeText(
-                           GroupActivity.this,
-                           "Clicked Action: " + actionName + " in list item " + position,
-                           Toast.LENGTH_SHORT
-                           ).show();
-            }
-        }, R.id.buttonA, R.id.buttonB);
+        contactsList = (ListView)this.findViewById(R.id.contactsWithTrashList);
+
+        contactsList.setAdapter(buildData(group));
     }
 
     public ListAdapter buildData(String groupName) {
@@ -65,11 +59,35 @@ public class GroupActivity extends ActionBarActivity{
 
         List<String> values = group.getContactsList();
 
-        return new ArrayAdapter<String>(
-                this,
-                R.layout.expandable_list_item,
-                R.id.text,
-                values);
+        return new ListWithDeleteOptionAdapter((ArrayList)values, GroupActivity.this, groupName);
+    }
+
+    Button.OnClickListener addContactToGroupListener
+            = new Button.OnClickListener(){
+
+        @Override
+        public void onClick(View v) {
+
+            Intent intent = new Intent(GroupActivity.this, AddContactToGroupSelectContactActivity.class);
+            intent.putExtra("group", group);
+            startActivity(intent);
+        }};
+
+    Button.OnClickListener deleteGroupListener
+            = new Button.OnClickListener(){
+
+        @Override
+        public void onClick(View v) {
+
+            DataManager.getInstance().removeGroup(group);
+            onBackPressed();
+        }};
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        contactsList.setAdapter(buildData(group));
     }
 
     @Override

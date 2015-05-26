@@ -1,7 +1,6 @@
 package nf28.weevent.Controller;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,13 +20,13 @@ import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
 
 /**
- * Created by CD on 13/05/2015.
+ * Created by CD on 19/05/2015.
  */
-public class GroupsActivity extends Fragment{
+public class AddContactToGroupSelectGroupFragment extends Fragment{
 
     @Override
     public ListView onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
 
         ListView list = (ListView)inflater.inflate(R.layout.groups, container, false);
 
@@ -35,9 +35,18 @@ public class GroupsActivity extends Fragment{
         AdapterView.OnItemClickListener l = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), GroupActivity.class);
-                intent.putExtra("group", parent.getItemAtPosition(position).toString());
-                startActivity(intent);
+                //retrieve the contact to add
+                AddContactToGroupSelectGroupActivity activity = (AddContactToGroupSelectGroupActivity) getActivity();
+                String contactToAdd = activity.getContactToAdd();
+
+                // add contact to group
+                String group = parent.getItemAtPosition(position).toString();
+                DataManager.getInstance().addGroupUser(group, contactToAdd);
+
+                //display message
+                CharSequence text = "Contact added to group!";
+                Toast toast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
+                toast.show();
             }
         };
 
@@ -56,7 +65,7 @@ public class GroupsActivity extends Fragment{
         }
 
         return new ArrayAdapter<String>
-                (getActivity(), R.layout.groups_list_item, R.id.text, values);
+                (getActivity(), R.layout.simple_list_item, R.id.text, values);
 
     }
 }

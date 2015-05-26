@@ -7,38 +7,38 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import nf28.weevent.R;
 
 /**
- * Created by CD on 19/05/2015.
+ * Created by CD on 24/05/2015.
  */
-public class AddContactToGroupActivity extends ActionBarActivity {
+public class AddContactToGroupSelectContactActivity extends ActionBarActivity {
 
-    String contactToAdd;
+    String group;
 
-    public String getContactToAdd(){
-        return contactToAdd;
-    }
+    public String getGroup() { return group; }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_contact_to_group);
+        setContentView(R.layout.add_contact_to_group_select_contact);
+        setTitle("Add Contact to Group");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        contactToAdd = getIntent().getStringExtra("contactToAdd");
+        group = getIntent().getStringExtra("group");
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        AddContactToGroupFragment fragment = new AddContactToGroupFragment();
+        AddContactToGroupSelectContactFragment fragment = new AddContactToGroupSelectContactFragment();
 
-        fragmentTransaction.add(R.id.groups_list, fragment);
+        fragmentTransaction.add(R.id.contacts_list, fragment);
         fragmentTransaction.commit();
-    }
 
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
@@ -61,4 +61,5 @@ public class AddContactToGroupActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_activity, menu);
         return true;
     }
+
 }

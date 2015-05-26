@@ -8,10 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -50,6 +48,7 @@ public class AddGroupActivity extends ActionBarActivity {
         public void onClick(View v) {
 
             String l = String.valueOf(groupName.getText());
+            String text;
 
             if(!getGroups().contains(l)){
                 DataManager.getInstance().addGroup(l);
@@ -59,22 +58,14 @@ public class AddGroupActivity extends ActionBarActivity {
                         Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(groupName.getWindowToken(), 0);
 
-                Context context = getApplicationContext();
-                CharSequence text = "Group added!";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                text = "Group added!";
             }
             else{
-                Context context = getApplicationContext();
-                CharSequence text = "Group already exists!";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                text = "Group already exists!";
             }
 
+            Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+            toast.show();
         }};
 
     public List getGroups() {

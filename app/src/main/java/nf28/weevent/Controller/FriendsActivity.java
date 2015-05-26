@@ -1,11 +1,9 @@
 package nf28.weevent.Controller;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -39,7 +37,7 @@ public class FriendsActivity extends ActionBarActivity {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        ContactsActivity fragment = new ContactsActivity();
+        ContactsFragment fragment = new ContactsFragment();
         fragmentTransaction.add(R.id.list, fragment);
         fragmentTransaction.commit();
         view = "all";
@@ -58,12 +56,12 @@ public class FriendsActivity extends ActionBarActivity {
 
             if(v == all){
                 view = "all";
-                newFragment = new ContactsActivity();
+                newFragment = new ContactsFragment();
                 all.setBackgroundColor(0xFF08AE9E);     //green
                 groups.setBackgroundColor(0xFFB2B2B2);  //light gray
             }else{
                 view = "groups";
-                newFragment = new GroupsActivity();
+                newFragment = new GroupsFragment();
                 all.setBackgroundColor(0xFFB2B2B2);     //light gray
                 groups.setBackgroundColor(0xFF08AE9E);  //green
             }
@@ -95,13 +93,13 @@ public class FriendsActivity extends ActionBarActivity {
         Fragment newFragment;
 
         if(view == "all") {
-            newFragment = new ContactsActivity();
+            newFragment = new ContactsFragment();
             all.setBackgroundColor(0xFF08AE9E);     //green
             groups.setBackgroundColor(0xFFB2B2B2);  //light gray
         }
         else
         {
-            newFragment = new GroupsActivity();
+            newFragment = new GroupsFragment();
             all.setBackgroundColor(0xFFB2B2B2);     //light gray
             groups.setBackgroundColor(0xFF08AE9E);  //green
         }

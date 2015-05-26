@@ -91,12 +91,17 @@
             android:label="Invite">
         </activity>
         <activity
-            android:name=".Controller.AddContactToGroupActivity"
+            android:name=".Controller.AddContactToGroupSelectGroupActivity"
             android:screenOrientation="portrait"
             android:label="New Contact">
         </activity>
         <activity
             android:name=".Controller.AddGroupActivity"
+            android:screenOrientation="portrait"
+            android:label="New Group">
+        </activity>
+        <activity
+            android:name=".Controller.AddContactToGroupSelectContactActivity"
             android:screenOrientation="portrait"
             android:label="New Group">
         </activity>

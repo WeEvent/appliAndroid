@@ -1,13 +1,11 @@
 package nf28.weevent.Controller;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -21,7 +19,7 @@ import nf28.weevent.Tools.DataManager;
 /**
  * Created by CD on 13/05/2015.
  */
-public class ContactsActivity extends Fragment {
+public class ContactsFragment extends Fragment {
 
     private ActionSlideExpandableListView list;
     private ArrayAdapter<String> adapter;
@@ -41,18 +39,15 @@ public class ContactsActivity extends Fragment {
             @Override
             public void onClick(View listView, View clickedView, int position) {
 
-                if(clickedView.getId()==R.id.buttonA) {
-                    Intent intent = new Intent(getActivity(), AddContactToGroupActivity.class);
+                if(clickedView.getId()==R.id.btn_add_contact_to_group) {
+                    Intent intent = new Intent(getActivity(), AddContactToGroupSelectGroupActivity.class);
                     intent.putExtra("contactToAdd", list.getItemAtPosition(position).toString());
                     startActivity(intent);
-
-                    /*CharSequence text = "Coming soon!";
-                    Toast toast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
-                    toast.show();*/
 
                 } else {
 
                     String loginToRemove = list.getItemAtPosition(position).toString();
+                    list.collapse();
                     DataManager.getInstance().removeContact(loginToRemove);
 
                     adapter.notifyDataSetChanged();
@@ -66,7 +61,7 @@ public class ContactsActivity extends Fragment {
 
             }
 
-        }, R.id.buttonA, R.id.buttonB);
+        }, R.id.btn_add_contact_to_group, R.id.btn_delete_contact);
 
         return list;
     }

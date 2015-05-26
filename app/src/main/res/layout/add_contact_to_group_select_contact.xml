@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Select Contact"
+        android:background="#ff08ae9e"
+        android:textColor="#FFFFFF"
+        android:gravity="center" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/contacts_list"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="30dp"
+        android:layout_height="fill_parent"
+        android:layout_width="wrap_content" />
+
+</LinearLayout>
