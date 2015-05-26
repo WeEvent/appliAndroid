@@ -20,12 +20,14 @@
     <string name="action_home">Home</string>
 
     <string name="search_events">Search events &#8230;</string>
+    <string name="search_places">Search places &#8230;</string>
 
     <string name="description">Never miss an event again !</string>
     <string name="btn_events_text">Events</string>
     <string name="btn_friends_text">Friends</string>
     <string name="btn_friends_add">+</string>
     <string name="btn_events_add">+</string>
+    <string name="btn_place_add">+</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -54,5 +56,8 @@
     <string name="tv_label">Type Your Message : </string>
     <string name="button_label">Show Prompt Dialog</string>
     <string name="enter_group">Enter group name</string>
+    <string name="event_name">Event name</string>
+    <string name="place_name">Place name</string>
+    <string name="edit_description">New description</string>
 
 </resources>

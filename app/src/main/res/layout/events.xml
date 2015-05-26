@@ -24,7 +24,7 @@
             android:id="@+id/ListView"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/inputSearch"
-            android:nestedScrollingEnabled="false"
+            android:nestedScrollingEnabled="true"
             android:layout_above="@+id/btn_events_add" />
 
         <Button

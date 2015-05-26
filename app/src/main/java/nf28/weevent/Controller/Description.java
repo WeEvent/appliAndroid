@@ -49,7 +49,7 @@ public class Description extends Fragment {
             public void onClick(View v) {
                 LayoutInflater layoutInflater = LayoutInflater.from(context);
 
-                View promptView = layoutInflater.inflate(R.layout.dialog, null);
+                View promptView = layoutInflater.inflate(R.layout.dialog_description, null);
 
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 

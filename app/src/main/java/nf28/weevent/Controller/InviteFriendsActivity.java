@@ -44,7 +44,7 @@ public class InviteFriendsActivity extends ActionBarActivity {
 
         int idx = 0; /// index used to fill the container for friends
         for (String s : friends) {
-            modelItems[idx++] = new ModelAdapter(s,0);
+            modelItems[idx++] = new ModelAdapter(s,(DataManager.getInstance().getSelectedEvt().getContactList().contains(s))?1:0);
         }
 
         adapter = new CustomAdapter(this, modelItems);
@@ -60,6 +60,7 @@ public class InviteFriendsActivity extends ActionBarActivity {
                        DataManager.getInstance().getSelectedEvt().addContact(modelItems[i].getName());
                    }
                }
+                //TODO a friend can be inserted only once!!!!!!!
                 DataManager.getInstance().addEvent(DataManager.getInstance().getSelectedEvt());
                 Toast.makeText(context, "Invitation Sent!", Toast.LENGTH_SHORT).show();
             }

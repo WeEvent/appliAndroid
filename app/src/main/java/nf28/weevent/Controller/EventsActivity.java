@@ -69,7 +69,7 @@ public class EventsActivity extends ActionBarActivity {
                 // get prompts.xml view
                 LayoutInflater layoutInflater = LayoutInflater.from(context);
 
-                View promptView = layoutInflater.inflate(R.layout.dialog, null);
+                View promptView = layoutInflater.inflate(R.layout.dialog_event, null);
 
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
