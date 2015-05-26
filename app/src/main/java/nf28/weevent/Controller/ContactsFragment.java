@@ -13,6 +13,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import nf28.weevent.Controller.List.ActionSlideExpandableListView;
+import nf28.weevent.Model.Group;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
 
@@ -49,6 +50,11 @@ public class ContactsFragment extends Fragment {
                     String loginToRemove = list.getItemAtPosition(position).toString();
                     list.collapse();
                     DataManager.getInstance().removeContact(loginToRemove);
+                    for (Group group: DataManager.getInstance().getUser().getGroups().values()) {
+                        if(group.getContactsList().contains(loginToRemove)){
+                            DataManager.getInstance().removeGroupUser(group.getName(), loginToRemove);
+                        }
+                    }
 
                     adapter.notifyDataSetChanged();
 

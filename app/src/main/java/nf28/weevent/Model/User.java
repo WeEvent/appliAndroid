@@ -81,9 +81,7 @@ public class User {
     }
     ///
 
-    public void removeContact(String cont){
-        listContacts.remove(cont);
-    }
+    public void removeContact(String cont){ listContacts.remove(cont); }
     ///
 
     /*public void addEvent(String id,String nom, String desc){
