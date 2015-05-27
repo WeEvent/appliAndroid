@@ -8,10 +8,11 @@
         android:drawableRight="@drawable/user"
 
         android:id="@+id/invited_friend"
-        android:layout_width="220dp"
-        android:layout_height="75dp"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
         android:button="@drawable/check_box_selector"
         android:text=""
+        android:checked="false"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="25dp"/>
 

@@ -8,6 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Filter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import nf28.weevent.R;
 
@@ -16,18 +20,22 @@ import nf28.weevent.R;
  */
 
 public class CustomAdapter extends ArrayAdapter<ModelAdapter>{
+        ModelAdapter[] originalItems = null;
         ModelAdapter[] modelItems = null;
         Context context;
+        CustomFilter filter = null;
         int pos = 0;
 public CustomAdapter(Context context, ModelAdapter[] resource) {
         super(context, R.layout.check_friend,resource);
         // TODO Auto-generated constructor stub
         this.context = context;
         this.modelItems = resource;
+        this.originalItems = resource;
         }
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
                 // TODO Auto-generated method stub
+
                 LayoutInflater inflater = ((Activity)context).getLayoutInflater();
                 convertView = inflater.inflate(R.layout.check_friend, parent, false);
                 //TextView name = (TextView) convertView.findViewById(R.id.textView1);
@@ -45,13 +53,67 @@ public CustomAdapter(Context context, ModelAdapter[] resource) {
                              break;
                          }
                      }
-                }
-            } );
-                cb.setText(modelItems[position].getName());
-                if(modelItems[position].getValue() == 1)
-                cb.setChecked(true);
-                else
-                cb.setChecked(false);
+                     }
+                  } );
+                  if(position < modelItems.length) {
+                      cb.setText(modelItems[position].getName());
+                      if (modelItems[position].getValue() == 1)
+                          cb.setChecked(true);
+                      else
+                          cb.setChecked(false);
+                  }else
+                    cb.setVisibility(View.GONE);
+
                 return convertView;
         }
-  }
+    //TODO to be removed if there is a bug !!!!1
+    @Override
+    public Filter getFilter() {
+        if (filter == null)
+            filter = new CustomFilter();
+
+        return filter;
+    }
+
+    private class CustomFilter extends Filter {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults();
+            // We implement here the filter logic
+            if (constraint == null || constraint.length() == 0) {
+                // No filter implemented we return all the list
+                results.values = originalItems;
+                results.count = originalItems.length;
+            } else {
+                // We perform filtering operation
+                List<ModelAdapter> modelList = new ArrayList<ModelAdapter>();
+
+                for (ModelAdapter p : originalItems) {
+                    if (p.getName().toUpperCase().startsWith(constraint.toString().toUpperCase()))
+                        modelList.add(p);
+                }
+
+                ModelAdapter [] new_adapt = new ModelAdapter[modelList.size()];
+                for(int i=0;i<modelList.size();i++)
+                    new_adapt[i]= modelList.get(i);
+
+                results.values = new_adapt;
+                results.count = new_adapt.length;
+
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint,
+                                      FilterResults results) {
+
+            // Now we have to inform the adapter about the new list filtered
+
+            modelItems = (ModelAdapter[]) results.values;
+            notifyDataSetChanged();
+
+        }
+    }
+}

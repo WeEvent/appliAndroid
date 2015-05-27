@@ -81,7 +81,7 @@ public class Place extends Fragment {
                                 modelItems = new ModelAdapter[pollValues.size()];
                                 pollIndex = 0;
                                 for (PollValue p : pollValues) {
-                                    modelItems[pollIndex++] = new ModelAdapter(p.getValue(),0);
+                                    modelItems[pollIndex++] = new ModelAdapter(p.getValue(),(p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0);
                                 }
 
                                adapter = new PlaceAdapter(context, modelItems);

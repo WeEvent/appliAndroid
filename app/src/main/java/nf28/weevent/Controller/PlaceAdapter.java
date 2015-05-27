@@ -8,7 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Filter;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
@@ -19,6 +23,8 @@ import nf28.weevent.Tools.DataManager;
 
 public class PlaceAdapter extends ArrayAdapter<ModelAdapter>{
         ModelAdapter[] modelItems = null;
+        ModelAdapter[] originalItems = null;
+        CustomFilter filter = null;
         Context context;
         int pos = 0;
 public PlaceAdapter(Context context, ModelAdapter[] resource) {
@@ -26,6 +32,7 @@ public PlaceAdapter(Context context, ModelAdapter[] resource) {
         // TODO Auto-generated constructor stub
         this.context = context;
         this.modelItems = resource;
+        this.originalItems = resource;
         }
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
@@ -57,11 +64,65 @@ public PlaceAdapter(Context context, ModelAdapter[] resource) {
                      }
                 }
             } );
-                cb.setText(modelItems[position].getName());
-                if(modelItems[position].getValue() == 1)
-                cb.setChecked(true);
-                else
-                cb.setChecked(false);
+                if(position < modelItems.length) {
+                    cb.setText(modelItems[position].getName());
+                    if (modelItems[position].getValue() == 1)
+                        cb.setChecked(true);
+                    else
+                        cb.setChecked(false);
+                }else
+                    cb.setVisibility(View.GONE);
                 return convertView;
         }
+
+    //TODO to be removed if there is a bug !!!!1
+    @Override
+    public Filter getFilter() {
+        if (filter == null)
+            filter = new CustomFilter();
+
+        return filter;
+    }
+
+    private class CustomFilter extends Filter {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults();
+            // We implement here the filter logic
+            if (constraint == null || constraint.length() == 0) {
+                // No filter implemented we return all the list
+                results.values = originalItems;
+                results.count = originalItems.length;
+            } else {
+                // We perform filtering operation
+                List<ModelAdapter> modelList = new ArrayList<ModelAdapter>();
+
+                for (ModelAdapter p : originalItems) {
+                    if (p.getName().toUpperCase().startsWith(constraint.toString().toUpperCase()))
+                        modelList.add(p);
+                }
+
+                ModelAdapter[] new_adapt = new ModelAdapter[modelList.size()];
+                for (int i = 0; i < modelList.size(); i++)
+                    new_adapt[i] = modelList.get(i);
+
+                results.values = new_adapt;
+                results.count = new_adapt.length;
+
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint,
+                                      FilterResults results) {
+
+            // Now we have to inform the adapter about the new list filtered
+
+            modelItems = (ModelAdapter[]) results.values;
+            notifyDataSetChanged();
+
+        }
+    }
   }

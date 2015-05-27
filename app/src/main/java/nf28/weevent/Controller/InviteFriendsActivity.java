@@ -76,6 +76,7 @@ public class InviteFriendsActivity extends ActionBarActivity {
                 // When user changed the Text
                 //TODO filter not working properly
                 InviteFriendsActivity.this.adapter.getFilter().filter(cs);
+
             }
 
             @Override

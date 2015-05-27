@@ -22,4 +22,6 @@ public class ModelAdapter{
         this.value = val;
     }
 
+
+
 }
