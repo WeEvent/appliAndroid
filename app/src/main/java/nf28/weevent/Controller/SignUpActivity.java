@@ -170,6 +170,7 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
                 user.setPassword(password);
                 user.setLogin(login);
             }
+            user.addGroup("Favoris");
 
             if (!isNetworkAvailable()){
                 Toast.makeText(SignUpActivity.this, getString(R.string.error_no_connection), Toast.LENGTH_SHORT).show();
