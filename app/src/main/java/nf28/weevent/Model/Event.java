@@ -92,7 +92,7 @@ public class Event {
     ///
 
     public void addContact(String cont){
-        listContacts.add(cont);
+        if(!listContacts.contains(cont))listContacts.add(cont);
     }
     ///
 

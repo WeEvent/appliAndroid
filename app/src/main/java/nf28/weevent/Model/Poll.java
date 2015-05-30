@@ -17,7 +17,8 @@ public class Poll {
 
     /// Public methods ///
     public void addPollValue(String v){
-        values.put(v, new PollValue(v));
+        if(!values.containsKey(v))
+            values.put(v, new PollValue(v));
     }
 
     public void removePollValue(String v){

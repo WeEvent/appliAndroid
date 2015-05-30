@@ -64,7 +64,7 @@ public class EventsActivity extends ActionBarActivity {
         btn_events.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadEvent("");
+
                 //check user activation
                 // get prompts.xml view
                 LayoutInflater layoutInflater = LayoutInflater.from(context);

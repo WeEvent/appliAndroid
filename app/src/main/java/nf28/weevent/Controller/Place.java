@@ -85,9 +85,10 @@ public class Place extends Fragment {
                                 }
 
                                adapter = new PlaceAdapter(context, modelItems);
-                                mainListView.setAdapter(adapter);
+                               mainListView.setAdapter(adapter);
 
-                                adapter.notifyDataSetChanged();
+                               adapter.notifyDataSetChanged();
+                               Toast.makeText(context,"Place added", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .setNegativeButton("Cancel",

@@ -42,7 +42,7 @@
         android:drawableRight="@drawable/ic_map"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:checked="true"
+        android:checked="false"
         android:text="Map"
         android:button="@drawable/check_box_selector"
         android:id="@+id/select_map"

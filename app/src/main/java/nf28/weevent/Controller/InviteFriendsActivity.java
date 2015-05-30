@@ -63,6 +63,7 @@ public class InviteFriendsActivity extends ActionBarActivity {
                 //TODO a friend can be inserted only once!!!!!!!
                 DataManager.getInstance().addEvent(DataManager.getInstance().getSelectedEvt());
                 Toast.makeText(context, "Invitation Sent!", Toast.LENGTH_SHORT).show();
+                onBackPressed();
             }
 
         });

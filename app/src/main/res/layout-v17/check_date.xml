@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <CheckBox
+        android:drawableRight="@drawable/ic_time_grey"
+
+        android:id="@+id/new_date"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:button="@drawable/check_box_selector"
+        android:text=""
+        android:checked="false"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"/>
+
+</LinearLayout>

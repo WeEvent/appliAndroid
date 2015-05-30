@@ -18,7 +18,8 @@ public class PollValue {
 
     /// Public methods ///
     public void addVoter(String v){
-        voters.add(v);
+        if(!voters.contains(v))
+            voters.add(v);
     }
 
     public void removeVoter(String v){
