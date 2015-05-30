@@ -4,10 +4,13 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -45,6 +48,11 @@ public class FriendsActivity extends ActionBarActivity {
         all.setOnClickListener(changeListOnClickListener);
         groups.setOnClickListener(changeListOnClickListener);
         add.setOnClickListener(addListener);
+
+        all.setOnTouchListener(onTouchListener);
+        groups.setOnTouchListener(onTouchListener);
+        add.setOnTouchListener(onTouchListener);
+
     }
 
     Button.OnClickListener changeListOnClickListener
@@ -85,6 +93,26 @@ public class FriendsActivity extends ActionBarActivity {
                 startActivity(new Intent(FriendsActivity.this, AddGroupActivity.class));
             }
         }};
+
+    Button.OnTouchListener onTouchListener
+            = new View.OnTouchListener() {
+
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN: {
+                    v.getBackground().setColorFilter(Color.LTGRAY, PorterDuff.Mode.SRC_ATOP);
+                    v.invalidate();
+                    break;
+                }
+                case MotionEvent.ACTION_UP: {
+                    v.getBackground().clearColorFilter();
+                    v.invalidate();
+                    break;
+                }
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onResume()
