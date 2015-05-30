@@ -2,7 +2,6 @@ package nf28.weevent.Tools;
 
 import android.app.Activity;
 import android.os.StrictMode;
-import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -367,5 +366,63 @@ public class DataManager extends Activity {
         }
 
         return events;
+    }
+
+    public boolean removeContactFromEvent(String login) {
+        RestClient client = new RestClient(serverAddress + "events");
+        client.AddParam("id", event.getID());
+        JSONObject action = new JSONObject();
+        JSONObject contact = new JSONObject();
+
+        try {
+            contact.put("listContacts", login);
+            action.put("$pull", contact);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        event.removeContact(login);
+        return true;
+    }
+
+    public boolean addContactToEvent(String login) {
+        RestClient client = new RestClient(serverAddress + "events");
+        client.AddParam("id", event.getID());
+        JSONObject action = new JSONObject();
+        JSONObject contact = new JSONObject();
+
+        try {
+            contact.put("listContacts", login);
+            action.put("$addToSet", contact);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        event.addContact(login);
+        return true;
     }
 }
