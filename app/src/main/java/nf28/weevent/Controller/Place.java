@@ -77,6 +77,7 @@ public class Place extends Fragment {
                                 // get user input and set it to result
                                // DataManager.getInstance().getSelectedEvt().setDesc(input.getText().toString());
                                 DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").addPollValue(input.getText().toString());
+                                DataManager.getInstance().addLineToPoll("Cat_3",input.getText().toString());
                                 pollValues = DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getPollValues();
                                 modelItems = new ModelAdapter[pollValues.size()];
                                 pollIndex = 0;

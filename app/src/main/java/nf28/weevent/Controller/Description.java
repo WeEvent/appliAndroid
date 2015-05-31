@@ -66,6 +66,7 @@ public class Description extends Fragment {
                                 // get user input and set it to result
                                 DataManager.getInstance().getSelectedEvt().setDesc(input.getText().toString());
                                 eventDesc.setText(DataManager.getInstance().getSelectedEvt().getDesc());
+                                DataManager.getInstance().setDescEvent(input.getText().toString());
                             }
                         })
                         .setNegativeButton("Cancel",

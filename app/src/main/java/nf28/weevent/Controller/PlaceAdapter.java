@@ -55,8 +55,15 @@ public PlaceAdapter(Context context, ModelAdapter[] resource) {
                                  // When clicked, show a toast with the TextView text
                                  DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getPollValue(text
                                          .toString()).addVoter(DataManager.getInstance().getUser().getLogin());
-                             }
+                                 DataManager.getInstance().newVoteToPollValue("Cat_3",text
+                                         .toString(),DataManager.getInstance().getUser().getLogin());
+                             }else{
+                                 DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getPollValue(text
+                                         .toString()).removeVoter(DataManager.getInstance().getUser().getLogin());
+                                 DataManager.getInstance().removeVoteToPollValue("Cat_3",text
+                                         .toString(),DataManager.getInstance().getUser().getLogin());
 
+                             }
 
                              break;
                          }
