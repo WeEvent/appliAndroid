@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by KM on 08/05/15.
@@ -135,6 +136,16 @@ public class Event {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
         String date = dateFormat.format(Calendar.getInstance().getTime());
         chat.addMessage(new Message(login, txt, date));
+    }
+
+    public Vector<PollValue> getPreferedPolls(){
+        Vector <PollValue> preferedPolls = new Vector<PollValue>();
+        for(Category categorie : mapCategories.values()){
+            if(!categorie.getName().equalsIgnoreCase("Cat_0"))
+                if(!categorie.getName().equalsIgnoreCase("Cat_3"))
+                    preferedPolls.add(categorie.getPreferedPoll());
+        }
+        return preferedPolls;
     }
 
     public void parseServer(){

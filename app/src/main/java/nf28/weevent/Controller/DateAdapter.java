@@ -27,7 +27,7 @@ public class DateAdapter extends ArrayAdapter<ModelAdapter>{
         Context context;
         int pos = 0;
 public DateAdapter(Context context, ModelAdapter[] resource) {
-        super(context, R.layout.check_friend,resource);
+        super(context, R.layout.check_date,resource);
         // TODO Auto-generated constructor stub
         this.context = context;
         this.modelItems = resource;

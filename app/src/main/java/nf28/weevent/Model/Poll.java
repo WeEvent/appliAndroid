@@ -41,6 +41,16 @@ public class Poll {
         return values.get(v);
     }
 
+    public PollValue getPreferedPoll(){
+        PollValue _poll = null;
+        for(PollValue poll : getPollValues()){
+                if(_poll == null || _poll.getVotersCount() < poll.getVotersCount())
+                    _poll = poll;
+
+        }
+        return _poll;
+    }
+
     public void parseServer(){
         // To be implemented
     }
