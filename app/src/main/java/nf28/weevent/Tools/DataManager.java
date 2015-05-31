@@ -343,7 +343,7 @@ public class DataManager extends Activity {
         if(user!=null)
          client.AddParam("listContacts", user.getLogin());
         else
-            System.err.println("User null");
+            return null;//System.err.println("User null");
 
         try {
             client.Execute(RequestMethod.GET);

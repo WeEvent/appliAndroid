@@ -23,7 +23,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import nf28.weevent.Model.Event;
@@ -36,6 +38,7 @@ public class EventsActivity extends ActionBarActivity {
     private ListView mainListView ;
     private ArrayAdapter<String> listAdapter ;
     private final Context context = this;
+    private HashMap<String,Event> events;
     // Search EditText
     EditText inputSearch;
 
@@ -49,11 +52,11 @@ public class EventsActivity extends ActionBarActivity {
 
         mainListView = (ListView) findViewById( R.id.ListView );
 
-        Collection<String> events = DataManager.getInstance().getEvents().keySet();
+        events = DataManager.getInstance().getEvents();
 
         List<String> list_events = new ArrayList<String>();
 
-        for (String s : events) {
+        for (String s : events.keySet()) {
             list_events.add(s);
         }
 
@@ -149,7 +152,7 @@ public class EventsActivity extends ActionBarActivity {
     }
 
     public void loadEvent(String evt){
-        Event event = DataManager.getInstance().getEvents().get(evt);
+        Event event = events.get(evt);
         if(event != null){
             DataManager.getInstance().setSelectedEvt(event);
             init(event);
