@@ -165,6 +165,7 @@ public class Date extends Fragment {
     private void updateDisplay() {
         String mDateDisplay = ""+(mMonth + 1)+"-"+mDay+"-"+mYear+"       "+pad(mHour)+" : "+pad(mMinute);
         DataManager.getInstance().getSelectedEvt().getCategory("Cat_2").addPollValue(mDateDisplay);
+        DataManager.getInstance().addLineToPoll("Cat_2",mDateDisplay);
         pollValues = DataManager.getInstance().getSelectedEvt().getCategory("Cat_2").getPollValues();
         modelItems = new ModelAdapter[pollValues.size()];
         pollIndex = 0;

@@ -87,6 +87,7 @@ public class EventsActivity extends ActionBarActivity {
 
                                 Event event = new Event("10",input.getText().toString(),input.getText().toString()+" description");
                                 event.addContact(DataManager.getInstance().getUser().getLogin());
+
                                 DataManager.getInstance().setSelectedEvt(event);
                                 if(DataManager.getInstance().getEvents().get(event.getNom())==null) {
                                     init(event);

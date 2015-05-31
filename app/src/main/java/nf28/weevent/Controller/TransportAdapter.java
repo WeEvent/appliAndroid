@@ -20,13 +20,13 @@ import nf28.weevent.Tools.DataManager;
  * Created by KM on 23/05/15.
  */
 
-public class DateAdapter extends ArrayAdapter<ModelAdapter>{
+public class TransportAdapter extends ArrayAdapter<ModelAdapter>{
         ModelAdapter[] modelItems = null;
         ModelAdapter[] originalItems = null;
         CustomFilter filter = null;
         Context context;
         int pos = 0;
-public DateAdapter(Context context, ModelAdapter[] resource) {
+public TransportAdapter(Context context, ModelAdapter[] resource) {
         super(context, R.layout.check_friend,resource);
         // TODO Auto-generated constructor stub
         this.context = context;
@@ -37,9 +37,9 @@ public DateAdapter(Context context, ModelAdapter[] resource) {
         public View getView(int position, View convertView, ViewGroup parent) {
                 // TODO Auto-generated method stub
                 LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-                convertView = inflater.inflate(R.layout.check_date, parent, false);
+                convertView = inflater.inflate(R.layout.check_transport, parent, false);
                 //TextView name = (TextView) convertView.findViewById(R.id.textView1);
-                CheckBox cb = (CheckBox) convertView.findViewById(R.id.new_date);
+                CheckBox cb = (CheckBox) convertView.findViewById(R.id.new_transport);
                 pos = position;  // update the position
                 cb.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
 
@@ -50,23 +50,20 @@ public DateAdapter(Context context, ModelAdapter[] resource) {
                      for(ModelAdapter m : modelItems)
                      {
                          if(m.getName().equalsIgnoreCase(text)){
-                             //m.setValue((arg1==true)?1:0);
-                             if(arg1==true){
-                                 m.setValue(1);
-                                 System.out.println("Added date");
-                                 DataManager.getInstance().getSelectedEvt().getCategory("Cat_2").getPollValue(text
+                             m.setValue((arg1==true)?1:0);
+                             if(m.getValue()==1) {
+                                 // When clicked, show a toast with the TextView text
+                                 DataManager.getInstance().getSelectedEvt().getCategory("Cat_4").getPollValue(text
                                          .toString()).addVoter(DataManager.getInstance().getUser().getLogin());
-                                 DataManager.getInstance().newVoteToPollValue("Cat_2",text
+                                 DataManager.getInstance().newVoteToPollValue("Cat_4",text
                                          .toString(),DataManager.getInstance().getUser().getLogin());
                              }else{
-                                 m.setValue(0);
-                                 System.out.println("Removed date");
-                                 DataManager.getInstance().getSelectedEvt().getCategory("Cat_2").getPollValue(text
+                                 DataManager.getInstance().getSelectedEvt().getCategory("Cat_4").getPollValue(text
                                          .toString()).removeVoter(DataManager.getInstance().getUser().getLogin());
-                                 DataManager.getInstance().removeVoteToPollValue("Cat_2",text
+                                 DataManager.getInstance().removeVoteToPollValue("Cat_4",text
                                          .toString(),DataManager.getInstance().getUser().getLogin());
-                             }
 
+                             }
 
                              break;
                          }

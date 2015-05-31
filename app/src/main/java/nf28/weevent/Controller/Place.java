@@ -44,7 +44,7 @@ public class Place extends Fragment {
         View v =inflater.inflate(R.layout.place,container,false);
         context =  context = inflater.getContext();
         mainListView = (ListView) v.findViewById( R.id.PlaceView );
-        System.err.println( DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getName());
+        //System.err.println( DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getName());
         pollValues = DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getPollValues();
         modelItems = new ModelAdapter[pollValues.size()];
         for (PollValue p : pollValues) {

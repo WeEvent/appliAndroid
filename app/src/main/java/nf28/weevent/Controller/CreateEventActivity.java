@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import java.util.HashMap;
 import java.util.Vector;
 
+import nf28.weevent.Model.Category;
 import nf28.weevent.Model.Event;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
@@ -63,6 +64,12 @@ public class CreateEventActivity extends ActionBarActivity {
 
     }
 
+    public void init_categ_event(Event e){
+        for(Category c : e.getCategoryList())
+            c.addPollValue(" Default ");
+    }
+
+
     private HashMap<String,Event> getEvents() {
         return DataManager.getInstance().getEvents();
     }
@@ -71,31 +78,33 @@ public class CreateEventActivity extends ActionBarActivity {
         Vector<Integer> tabs = new Vector<Integer>();
         //reset
         ViewPagerAdapter.resetTabs();
+        Event event = DataManager.getInstance().getSelectedEvt();
 
         tabs.add(0);
-        DataManager.getInstance().getSelectedEvt().addCategory("Cat_0","Categ_0");
+        event.addCategory("Cat_0","Categ_0");
         if(radio_evt.isChecked()) {
             tabs.add(1);
-            DataManager.getInstance().getSelectedEvt().addCategory("Cat_1","Categ_1");
+            event.addCategory("Cat_1","Categ_1");
         }
         if(radio_date.isChecked()) {
             tabs.add(2);
-            DataManager.getInstance().getSelectedEvt().addCategory("Cat_2", "Categ_2");
+            event.addCategory("Cat_2", "Categ_2");
         }
         if(radio_map.isChecked()) {
             tabs.add(3);
-            DataManager.getInstance().getSelectedEvt().addCategory("Cat_3","Categ_3");
+            event.addCategory("Cat_3","Categ_3");
         }
         if(radio_transp.isChecked()) {
             tabs.add(4);
-            DataManager.getInstance().getSelectedEvt().addCategory("Cat_4", "Categ_4");
+            event.addCategory("Cat_4", "Categ_4");
         }
 
 
         tabs.add(5);
 
-        DataManager.getInstance().getSelectedEvt().addCategory("Cat_5", "Categ_5");
+        event.addCategory("Cat_5", "Categ_5");
         updateEventCategories(tabs);
+        init_categ_event(event);
 
     }
 
@@ -118,7 +127,7 @@ public class CreateEventActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        onBackPressed();
+        //onBackPressed();
         switch (menuItem.getItemId()) {
             case R.id.action_home:
                 // app icon in action bar clicked; go home
