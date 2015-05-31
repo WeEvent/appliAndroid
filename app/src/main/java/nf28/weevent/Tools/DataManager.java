@@ -464,9 +464,9 @@ public class DataManager extends Activity {
 
         try {
             JSONObject newLineObj = new JSONObject(pollValue);
-            JSONObject hashMap = new JSONObject();
-            hashMap.put(valueLine, newLineObj);
-            contact.put("mapCategories." + nameCategory + ".poll.values", hashMap);
+            //JSONObject hashMap = new JSONObject();
+            //hashMap.put(valueLine, newLineObj);
+            contact.put("mapCategories." + nameCategory + ".poll.values." + valueLine, newLineObj);
             action.put("$set", contact);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -522,7 +522,7 @@ public class DataManager extends Activity {
         JSONObject contact = new JSONObject();
 
         try {
-            contact.put("mapCategories." + nameCategory + ".poll.values." + valueLine, loginVoter);
+            contact.put("mapCategories." + nameCategory + ".poll.values." + valueLine + ".voters", loginVoter);
             action.put("$addToSet", contact);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -551,7 +551,7 @@ public class DataManager extends Activity {
         JSONObject contact = new JSONObject();
 
         try {
-            contact.put("mapCategories." + nameCategory + ".poll.values." + valueLine, loginVoter);
+            contact.put("mapCategories." + nameCategory + ".poll.values." + valueLine + ".voters", loginVoter);
             action.put("$pull", contact);
         } catch (JSONException e) {
             e.printStackTrace();
