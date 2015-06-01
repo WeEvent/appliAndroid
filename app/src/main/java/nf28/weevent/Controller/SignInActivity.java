@@ -158,6 +158,7 @@ public class SignInActivity extends Activity implements LoaderCallbacks<Cursor> 
             editor.commit();
             Intent intent = new Intent(SignInActivity.this, MainActivity.class);
             startActivity(intent);
+            finish();
             //showProgress(true);
             //mAuthTask = new UserLoginTask(email, password);
             //mAuthTask.execute((Void) null);

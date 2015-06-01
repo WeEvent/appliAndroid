@@ -35,7 +35,7 @@ public class MainActivity extends ActionBarActivity {
 
     protected ListView mDrawerList;
     protected DrawerLayout mDrawerLayout;
-    protected ArrayAdapter<String> mAdapter;
+    //protected ArrayAdapter<String> mAdapter;
     protected ActionBarDrawerToggle mDrawerToggle;
     protected String mActivityTitle;
 
@@ -73,18 +73,6 @@ public class MainActivity extends ActionBarActivity {
         });
 
         btn_friends.setOnTouchListener(onTouchListener);
-
-        //User u = test();
-        //DataManager.getInstance().addUser(u);
-        //DataManager.getInstance().addContact("chloe");
-        //DataManager.getInstance().removeContact("kidi");
-        //DataManager.getInstance().addGroup("Famille");
-        //DataManager.getInstance().addGroup("Amis");
-        //DataManager.getInstance().removeGroup("Amis");
-        //DataManager.getInstance().addGroupUser("Famille", "kidi");
-        //DataManager.getInstance().addGroupUser("Famille", "chloe");
-        //DataManager.getInstance().removeGroupUser("Famille", "kidi");
-        //User t = DataManager.getInstance().getUser("Chloe");
     }
 
     protected void addDrawerItems() {
@@ -228,38 +216,9 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*public User test(){
-        User user = new User("Chloe","2345235423");
-        user.addContact("Kostandin");
-        user.addEvent("1","First Event","Something cool :)");
-        user.getEvent("First Event").addMessage("Yabadabdoo", user.getLogin());
-
-        user.getEvent("First Event").addCategory("Film","Au cinema");
-        user.getEvent("First Event").getCategory("Film").addPollValue("Gladiator");
-        user.getEvent("First Event").getCategory("Film").getPoll().addVoterToValue("Gladiator",user.getLogin());
-
-        for(String c : user.getContactList()){
-            System.err.println("Contact : " + c);
-        }
-
-        for(Event e : user.getListEvents()){
-            System.err.println("Event : " + e.getNom());
-        }
-
-        for(Message m : user.getEvent("First Event").getChat().getMessages()){
-            System.err.println("Event : " + m.getLogin() + " - " + m.getTextMsg() + " - " + m.getDate());
-        }
-
-        for(Category c : user.getEvent("First Event").getCategoryList()){
-            System.err.println("Category : " + c.getName());
-        }
-
-        for(PollValue p : user.getEvent("First Event").getCategory("Film").getPollValues()){
-            System.err.println("Pollvalue : " + p.getValue() + " - Nb votants :" + p.getVotersCount() + " :");
-            System.err.println(".....Pollvalue : " + p.getValue() + " - Votre vote :" + p.hasVoted(user.getLogin()) + " :");
-        }
-
-        return user;
-
+    /*@Override
+    public void onBackPressed()
+    {
+        // desactivate the return button
     }*/
 }
