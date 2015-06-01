@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import nf28.weevent.Model.Category;
 import nf28.weevent.Model.Event;
 import nf28.weevent.Model.Group;
 import nf28.weevent.Model.PollValue;
@@ -223,6 +224,36 @@ public class DataManager extends Activity {
         }
 
         user.addGroup(name);
+        return true;
+    }
+
+    public boolean updateRegId(String id) {
+        if (user != null)
+            return false;
+
+        RestClient client = new RestClient(serverAddress + "users");
+        client.AddParam("login", user.getLogin());
+        JSONObject action = new JSONObject();
+        try {
+            JSONObject hashMap = new JSONObject();
+            hashMap.put("register_id", id);
+            action.put("$set", hashMap);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
         return true;
     }
 
@@ -570,6 +601,38 @@ public class DataManager extends Activity {
         }
 
         event.getCategory(nameCategory).getPollValue(valueLine).removeVoter(loginVoter);
+        return true;
+    }
+
+    public boolean addCategory(String nameCategory, Category cat) {
+        RestClient client = new RestClient(serverAddress + "events");
+        client.AddParam("id", event.getID());
+        String category = new Gson().toJson(cat);
+        JSONObject action = new JSONObject();
+        JSONObject contact = new JSONObject();
+
+        try {
+            JSONObject newLineObj = new JSONObject(category);
+            //JSONObject hashMap = new JSONObject();
+            //hashMap.put(cat.getName(), newLineObj);
+            contact.put("mapCategories." + cat.getName(), newLineObj);
+            action.put("$set", contact);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        event.addCategory(cat);
         return true;
     }
 }

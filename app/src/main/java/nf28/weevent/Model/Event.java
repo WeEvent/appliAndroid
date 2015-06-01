@@ -123,7 +123,10 @@ public class Event {
     public void addCategory(String nom, String desc){
         Category cat = new Category(nom, desc);
         mapCategories.put(nom,cat);
+    }
 
+    public void addCategory(Category cat){
+        mapCategories.put(cat.getName(),cat);
     }
     ///
 
