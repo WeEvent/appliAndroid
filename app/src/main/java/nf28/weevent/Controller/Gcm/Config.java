@@ -4,7 +4,7 @@ public interface Config {
 
 	// used to share GCM regId with application server - using php app server
 	//static final String APP_SERVER_URL = "http://nicolasrouquette.com/gcm_server.php/?push=1";
-    static final String APP_SERVER_URL = "http://nicolasrouquette.com/gcm_server.php?shareRegId=1";
+    //static final String APP_SERVER_URL = "http://nicolasrouquette.com/gcm_server.php?shareRegId=1";
     static final String APP_SERVER_URL_SEND_NOTIF = "http://nicolasrouquette.com/gcm_server.php/?push=1";
 
     // GCM server using java

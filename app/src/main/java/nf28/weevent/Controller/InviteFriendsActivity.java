@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -77,6 +78,8 @@ public class InviteFriendsActivity extends ActionBarActivity {
                 Toast.makeText(context, "Invitation Sent!", Toast.LENGTH_SHORT).show();
 
                 shareRegisterIdWithServer(list_contact);
+                sendSMS(list_contact);
+
             }
 
         });
@@ -150,5 +153,25 @@ public class InviteFriendsActivity extends ActionBarActivity {
         };
         shareRegidTask.execute(null, null, null);
         finish();
+    }
+
+    public void sendSMS(List<String> list_contact){
+        for (String contact : list_contact) {
+            String mobilePhone = DataManager.getInstance().getUser(contact).getMobile();
+            if (mobilePhone != null){
+                String sms = "Test";
+                try {
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage(mobilePhone, null, sms, null, null);
+                    Toast.makeText(getApplicationContext(), "SMS Sent!",
+                            Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(),
+                            "SMS faild, please try again later!",
+                            Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

@@ -368,4 +368,34 @@ public class DataManager extends Activity {
 
         return events;
     }
+
+    public boolean updateRegId(String id) {
+        if (user == null)
+            return false;
+
+        RestClient client = new RestClient(serverAddress + "users");
+        client.AddParam("login", user.getLogin());
+        JSONObject action = new JSONObject();
+        try {
+            JSONObject hashMap = new JSONObject();
+            hashMap.put("register_id", id);
+            action.put("$set", hashMap);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
 }

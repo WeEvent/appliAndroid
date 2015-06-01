@@ -195,18 +195,6 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
             }
             user.addGroup("Favoris");
 
-            //----------------GCM --------------
-            //Creation of a register_id
-            getRegisterIdFromGoogle();
-
-            //Share register_id with server
-            shareRegisterIdWithServer();
-
-            //Set register_id of the user
-            user.setRegister_id(regId);
-
-            //--------------END GCM--------------
-
 
             if (!isNetworkAvailable()){
                 Toast.makeText(SignUpActivity.this, getString(R.string.error_no_connection), Toast.LENGTH_SHORT).show();
@@ -214,10 +202,24 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
             }
             if (!DataManager.getInstance().addUser(user)){
                 Toast.makeText(SignUpActivity.this, getString(R.string.error_impossible_addUser), Toast.LENGTH_SHORT).show();
+                //--------------END GCM--------------
                 return;
             }
             User u = DataManager.getInstance().getUser(login); // sets the user in manager
             if (u != null){
+
+
+                //----------------GCM --------------
+                //Creation of a register_id
+                getRegisterIdFromGoogle();
+
+                //Share register_id with server
+                //shareRegisterIdWithServer();
+
+                //Set register_id of the user
+                DataManager.getInstance().updateRegId(regId);
+
+
                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                 startActivity(intent);
                 //showProgress(true);
@@ -408,6 +410,7 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
             Toast.makeText(getApplicationContext(),
                     "Already Registered with GCM Server!",
                     Toast.LENGTH_LONG).show();
+
         }
     }
 
@@ -417,7 +420,6 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
         regId = getRegistrationId(context);
 
         if (TextUtils.isEmpty(regId)) {
-
             registerInBackground();
 
             Log.d("RegisterActivity",
@@ -481,6 +483,7 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
                     Log.d("RegisterActivity", "Error: " + msg);
                 }
                 Log.d("RegisterActivity", "AsyncTask completed: " + msg);
+
                 return msg;
             }
 
@@ -489,6 +492,7 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
                 Toast.makeText(getApplicationContext(),
                         "Registered with GCM Server." + msg, Toast.LENGTH_LONG)
                         .show();
+
             }
         }.execute(null, null, null);
     }
@@ -502,34 +506,6 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
         editor.putString(REG_ID, regId);
         editor.putInt(APP_VERSION, appVersion);
         editor.commit();
-    }
-
-    private void shareRegisterIdWithServer(){
-        if (TextUtils.isEmpty(regId)) {
-            Toast.makeText(getApplicationContext(), "RegId is empty!",
-                    Toast.LENGTH_LONG).show();
-        } else {
-
-            appUtil = new ShareExternalServer();
-            final Context context2 = SignUpActivity.this;
-            shareRegidTask = new AsyncTask<Void, Void, String>() {
-                @Override
-                protected String doInBackground(Void... params) {
-                    String result = appUtil.shareRegIdWithAppServer(context2, regId);
-                    return result;
-                }
-
-                @Override
-                protected void onPostExecute(String result) {
-                    shareRegidTask = null;
-                    Toast.makeText(getApplicationContext(), result,
-                            Toast.LENGTH_LONG).show();
-                }
-
-            };
-            shareRegidTask.execute(null, null, null);
-            finish();
-        }
     }
 
 }
