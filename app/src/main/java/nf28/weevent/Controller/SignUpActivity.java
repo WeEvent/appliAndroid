@@ -184,6 +184,7 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
             if (u != null){
                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
                 //showProgress(true);
                 //mAuthTask = new UserLoginTask(email, password);
                 //mAuthTask.execute((Void) null);
