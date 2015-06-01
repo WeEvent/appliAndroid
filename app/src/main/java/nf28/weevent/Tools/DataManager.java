@@ -547,6 +547,8 @@ public class DataManager extends Activity {
     }
 
     public boolean newVoteToPollValue(String nameCategory, String valueLine, String loginVoter) {
+        eve
+
         RestClient client = new RestClient(serverAddress + "events");
         client.AddParam("id", event.getID());
         JSONObject action = new JSONObject();
