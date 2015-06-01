@@ -228,7 +228,7 @@ public class DataManager extends Activity {
     }
 
     public boolean updateRegId(String id) {
-        if (user != null)
+        if (user == null)
             return false;
 
         RestClient client = new RestClient(serverAddress + "users");

@@ -63,21 +63,23 @@ public class GCMNotificationIntentService extends IntentService {
 	}
 
 	private void sendNotification(String msg) {
-		Log.d(TAG, "Preparing to send notification...: " + msg);
-		mNotificationManager = (NotificationManager) this
-				.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (msg!=null){
+            Log.d(TAG, "Preparing to send notification...: " + msg);
+            mNotificationManager = (NotificationManager) this
+                    .getSystemService(Context.NOTIFICATION_SERVICE);
 
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-				new Intent(this, MainActivity.class), 0);
+            PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                    new Intent(this, MainActivity.class), 0);
 
-		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
-				this).setSmallIcon(R.drawable.gcm_cloud)
-				.setContentTitle("Invitation received from WeEvent")
-				.setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
-				.setContentText(msg);
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
+                    this).setSmallIcon(R.drawable.gcm_cloud)
+                    .setContentTitle("Invitation received from WeEvent")
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
+                    .setContentText(msg);
 
-		mBuilder.setContentIntent(contentIntent);
-		mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
-		Log.d(TAG, "Notification ok");
+            mBuilder.setContentIntent(contentIntent);
+            mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+            Log.d(TAG, "Notification ok");
+        }
 	}
 }
