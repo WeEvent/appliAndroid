@@ -547,7 +547,8 @@ public class DataManager extends Activity {
     }
 
     public boolean newVoteToPollValue(String nameCategory, String valueLine, String loginVoter) {
-        eve
+        if (event.getCategory(nameCategory).getPollValue(valueLine).getVoters().contains(loginVoter))
+            return true;
 
         RestClient client = new RestClient(serverAddress + "events");
         client.AddParam("id", event.getID());

@@ -55,12 +55,10 @@ public CustomAdapter(Context context, ModelAdapter[] resource) {
                              if(arg1==true){
                                  m.setValue(1);
                                  System.out.println("Added contact");
-                                 DataManager.getInstance().getSelectedEvt().addContact(arg0.getText().toString());
                                  DataManager.getInstance().addContactToEvent(arg0.getText().toString());
                              }else{
                                  m.setValue(0);
                                  System.out.println("Removed contact");
-                                 DataManager.getInstance().getSelectedEvt().removeContact(arg0.getText().toString());
                                  DataManager.getInstance().removeContactFromEvent(arg0.getText().toString());
                              }
 
