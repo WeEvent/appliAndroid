@@ -22,15 +22,4 @@ public class Chat {
     public void addMessage(Message m){
         listMessages.add(m);
     }
-    ///
-
-    public void parseServer(){
-        // To be implemented
-    }
-    ///
-
-    public void updateServer(){
-        // To be implemented
-    }
-    ///
 }

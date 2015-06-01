@@ -105,6 +105,11 @@
             android:screenOrientation="portrait"
             android:label="New Group">
         </activity>
+        <activity
+            android:name=".Controller.ChatActivity"
+            android:screenOrientation="portrait"
+            android:label="New Group">
+        </activity>
 
         <activity
             android:name=".Controller.DatePickerActivity"
