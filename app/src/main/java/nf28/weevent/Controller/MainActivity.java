@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -59,6 +62,8 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        btn_events.setOnTouchListener(onTouchListener);
+
         Button btn_friends = (Button) findViewById(R.id.btn_friends);
         btn_friends.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +71,8 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(new Intent(MainActivity.this, FriendsActivity.class));
             }
         });
+
+        btn_friends.setOnTouchListener(onTouchListener);
 
         //User u = test();
         //DataManager.getInstance().addUser(u);
@@ -134,6 +141,26 @@ public class MainActivity extends ActionBarActivity {
             }
         });
     }
+
+    Button.OnTouchListener onTouchListener
+            = new View.OnTouchListener() {
+
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN: {
+                    v.getBackground().setColorFilter(Color.LTGRAY, PorterDuff.Mode.SRC_ATOP);
+                    v.invalidate();
+                    break;
+                }
+                case MotionEvent.ACTION_UP: {
+                    v.getBackground().clearColorFilter();
+                    v.invalidate();
+                    break;
+                }
+            }
+            return false;
+        }
+    };
 
     protected void setupDrawer() {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
