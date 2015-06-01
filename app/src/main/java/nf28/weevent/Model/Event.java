@@ -135,11 +135,15 @@ public class Event {
     }
     ///
 
-    public void addMessage(String txt,String login){
+    /*public void addMessage(String txt,String login){
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
         String date = dateFormat.format(Calendar.getInstance().getTime());
-        //chat.addMessage(new Message(login, txt, date));
-    }
+        chat.addMessage(new Message(login, txt, date));
+    }*/
+
+    /*public void addMessage(Message msg){
+        chat.addMessage(msg);
+    }*/
 
     public Vector<PollValue> getPreferedPolls(){
         Vector <PollValue> preferedPolls = new Vector<PollValue>();

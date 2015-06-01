@@ -48,7 +48,8 @@ public class ChatActivity extends ActionBarActivity {
                                                     editText1.getText().toString());
 
                     adapter.add(newMessage);
-                    DataManager.getInstance().getSelectedEvt().getChat().addMessage(newMessage);
+                    DataManager.getInstance().addMessage(newMessage);
+                    //DataManager.getInstance().getSelectedEvt().getChat().addMessage(newMessage);
 
                     editText1.setText("");
 
@@ -62,10 +63,6 @@ public class ChatActivity extends ActionBarActivity {
     }
 
     private void addItems() {
-
-        // test
-        adapter.add(new Message("another login", "hello!"));
-        // end test
 
         List<Message> listMessages = DataManager.getInstance().getSelectedEvt().getChat().getMessages();
 
