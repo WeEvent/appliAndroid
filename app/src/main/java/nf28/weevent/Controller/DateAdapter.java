@@ -54,17 +54,13 @@ public DateAdapter(Context context, ModelAdapter[] resource) {
                              if(arg1==true){
                                  m.setValue(1);
                                  System.out.println("Added date");
-                                 DataManager.getInstance().getSelectedEvt().getCategory("Cat_2").getPollValue(text
-                                         .toString()).addVoter(DataManager.getInstance().getUser().getLogin());
                                  DataManager.getInstance().newVoteToPollValue("Cat_2",text
-                                         .toString(),DataManager.getInstance().getUser().getLogin());
+                                         ,DataManager.getInstance().getUser().getLogin());
                              }else{
                                  m.setValue(0);
                                  System.out.println("Removed date");
-                                 DataManager.getInstance().getSelectedEvt().getCategory("Cat_2").getPollValue(text
-                                         .toString()).removeVoter(DataManager.getInstance().getUser().getLogin());
                                  DataManager.getInstance().removeVoteToPollValue("Cat_2",text
-                                         .toString(),DataManager.getInstance().getUser().getLogin());
+                                         ,DataManager.getInstance().getUser().getLogin());
                              }
 
 
