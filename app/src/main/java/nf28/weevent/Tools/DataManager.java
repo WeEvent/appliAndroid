@@ -16,6 +16,7 @@ import java.util.List;
 import nf28.weevent.Model.Category;
 import nf28.weevent.Model.Event;
 import nf28.weevent.Model.Group;
+import nf28.weevent.Model.Message;
 import nf28.weevent.Model.PollValue;
 import nf28.weevent.Model.User;
 
@@ -636,6 +637,37 @@ public class DataManager extends Activity {
             return false;
         }
         event.addCategory(cat);
+        return true;
+    }
+
+    public boolean addMessage(Message message) {
+        RestClient client = new RestClient(serverAddress + "events");
+        client.AddParam("id", event.getID());
+        String msg = new Gson().toJson(message);
+        JSONObject action = new JSONObject();
+        JSONObject contact = new JSONObject();
+
+        try {
+            JSONObject newLineObj = new JSONObject(msg);
+            contact.put("chat.listMessages", newLineObj);
+            action.put("$addToSet", contact);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        event.getChat().addMessage(message);
         return true;
     }
 }
