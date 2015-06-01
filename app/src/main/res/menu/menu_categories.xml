@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
     <item android:id="@+id/action_chat"
         android:title="@string/action_chat"
-        android:icon="@drawable/ic_action_home"
+        android:icon="@drawable/ic_chat"
         app:showAsAction="ifRoom|collapseActionView"/>
     <item android:id="@+id/action_home"
         android:title="@string/action_home"
-        android:icon="@drawable/ic_action_home"
+        android:icon="@drawable/ic_home"
         app:showAsAction="ifRoom|collapseActionView"/>
 </menu>
