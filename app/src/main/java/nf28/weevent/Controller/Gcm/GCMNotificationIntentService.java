@@ -73,7 +73,7 @@ public class GCMNotificationIntentService extends IntentService {
 
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
                     this).setSmallIcon(R.drawable.gcm_cloud)
-                    .setContentTitle("Invitation received from WeEvent")
+                    .setContentTitle("WeEvent")
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
                     .setContentText(msg);
 

@@ -217,8 +217,6 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
                 //shareRegisterIdWithServer();
 
                 //Set register_id of the user
-                DataManager.getInstance().updateRegId(regId);
-
 
                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -430,6 +428,8 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
             Toast.makeText(getApplicationContext(),
                     "RegId already available. RegId: " + regId,
                     Toast.LENGTH_LONG).show();
+            DataManager.getInstance().updateRegId(regId);
+
         }
         return regId;
     }
@@ -493,6 +493,8 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
                 Toast.makeText(getApplicationContext(),
                         "Registered with GCM Server." + msg, Toast.LENGTH_LONG)
                         .show();
+                DataManager.getInstance().updateRegId(regId);
+
 
             }
         }.execute(null, null, null);
