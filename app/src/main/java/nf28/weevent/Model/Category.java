@@ -51,6 +51,8 @@ public class Category {
         return poll.getPollValue(v);
     }
 
+    public PollValue getPreferedPoll(){return poll.getPreferedPoll();}
+
     public Poll getPoll(){
         return poll;
     }

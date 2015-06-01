@@ -80,6 +80,7 @@ public class InviteFriendsActivity extends ActionBarActivity {
                 shareRegisterIdWithServer(list_contact);
                 sendSMS(list_contact);
 
+                onBackPressed();
             }
 
         });

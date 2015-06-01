@@ -246,8 +246,8 @@ public class SlidingTabLayout extends HorizontalScrollView {
                 default:
             }
             tabTitleView.setCompoundDrawablesWithIntrinsicBounds(
-                    img,// left
-                    null,//top
+                    null,// left
+                    img,//top
                     null,// right
                     null//bottom
             );

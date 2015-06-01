@@ -17,7 +17,8 @@ public class Poll {
 
     /// Public methods ///
     public void addPollValue(String v){
-        values.put(v, new PollValue(v));
+        if(!values.containsKey(v))
+            values.put(v, new PollValue(v));
     }
 
     public void removePollValue(String v){
@@ -38,6 +39,16 @@ public class Poll {
 
     public PollValue getPollValue(String v) {
         return values.get(v);
+    }
+
+    public PollValue getPreferedPoll(){
+        PollValue _poll = null;
+        for(PollValue poll : getPollValues()){
+                if(_poll == null || _poll.getVotersCount() < poll.getVotersCount())
+                    _poll = poll;
+
+        }
+        return _poll;
     }
 
     public void parseServer(){

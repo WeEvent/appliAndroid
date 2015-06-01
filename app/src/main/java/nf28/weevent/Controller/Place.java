@@ -44,7 +44,7 @@ public class Place extends Fragment {
         View v =inflater.inflate(R.layout.place,container,false);
         context =  context = inflater.getContext();
         mainListView = (ListView) v.findViewById( R.id.PlaceView );
-        System.err.println( DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getName());
+        //System.err.println( DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getName());
         pollValues = DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getPollValues();
         modelItems = new ModelAdapter[pollValues.size()];
         for (PollValue p : pollValues) {
@@ -77,6 +77,7 @@ public class Place extends Fragment {
                                 // get user input and set it to result
                                // DataManager.getInstance().getSelectedEvt().setDesc(input.getText().toString());
                                 DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").addPollValue(input.getText().toString());
+                                DataManager.getInstance().addLineToPoll("Cat_3",input.getText().toString());
                                 pollValues = DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getPollValues();
                                 modelItems = new ModelAdapter[pollValues.size()];
                                 pollIndex = 0;
@@ -85,9 +86,10 @@ public class Place extends Fragment {
                                 }
 
                                adapter = new PlaceAdapter(context, modelItems);
-                                mainListView.setAdapter(adapter);
+                               mainListView.setAdapter(adapter);
 
-                                adapter.notifyDataSetChanged();
+                               adapter.notifyDataSetChanged();
+                               Toast.makeText(context,"Place added", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .setNegativeButton("Cancel",

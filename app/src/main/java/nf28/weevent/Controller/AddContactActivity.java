@@ -2,10 +2,13 @@ package nf28.weevent.Controller;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -39,6 +42,7 @@ public class AddContactActivity extends ActionBarActivity {
 
         add = (Button)findViewById(R.id.btn_add_contact);
         add.setOnClickListener(addOnClickListener);
+        add.setOnTouchListener(onTouchListener);
 
         logins = DataManager.getInstance().getAllLogins();
     }
@@ -84,6 +88,26 @@ public class AddContactActivity extends ActionBarActivity {
             Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
             toast.show();
         }};
+
+    Button.OnTouchListener onTouchListener
+            = new View.OnTouchListener() {
+
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN: {
+                    v.getBackground().setColorFilter(Color.LTGRAY, PorterDuff.Mode.SRC_ATOP);
+                    v.invalidate();
+                    break;
+                }
+                case MotionEvent.ACTION_UP: {
+                    v.getBackground().clearColorFilter();
+                    v.invalidate();
+                    break;
+                }
+            }
+            return false;
+        }
+    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)

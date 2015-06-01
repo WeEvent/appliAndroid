@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nf28.weevent.R;
+import nf28.weevent.Tools.DataManager;
 
 /**
  * Created by KM on 23/05/15.
@@ -46,10 +47,23 @@ public CustomAdapter(Context context, ModelAdapter[] resource) {
                 @Override
                 public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
                     // TODO Auto-generated method stub
+                    System.out.println("Change contact");
                      for(ModelAdapter m : modelItems)
                      {
                          if(m.getName().equalsIgnoreCase(arg0.getText().toString())){
-                             m.setValue((arg1==true)?1:0);
+                             //m.setValue((arg1==true)?1:0);
+                             if(arg1==true){
+                                 m.setValue(1);
+                                 System.out.println("Added contact");
+                                 DataManager.getInstance().getSelectedEvt().addContact(arg0.getText().toString());
+                                 DataManager.getInstance().addContactToEvent(arg0.getText().toString());
+                             }else{
+                                 m.setValue(0);
+                                 System.out.println("Removed contact");
+                                 DataManager.getInstance().getSelectedEvt().removeContact(arg0.getText().toString());
+                                 DataManager.getInstance().removeContactFromEvent(arg0.getText().toString());
+                             }
+
                              break;
                          }
                      }

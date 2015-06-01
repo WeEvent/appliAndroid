@@ -2,7 +2,6 @@ package nf28.weevent.Tools;
 
 import android.app.Activity;
 import android.os.StrictMode;
-import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -14,8 +13,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import nf28.weevent.Model.Category;
 import nf28.weevent.Model.Event;
 import nf28.weevent.Model.Group;
+import nf28.weevent.Model.PollValue;
 import nf28.weevent.Model.User;
 
 /**
@@ -226,6 +227,36 @@ public class DataManager extends Activity {
         return true;
     }
 
+    public boolean updateRegId(String id) {
+        if (user != null)
+            return false;
+
+        RestClient client = new RestClient(serverAddress + "users");
+        client.AddParam("login", user.getLogin());
+        JSONObject action = new JSONObject();
+        try {
+            JSONObject hashMap = new JSONObject();
+            hashMap.put("register_id", id);
+            action.put("$set", hashMap);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
     public boolean removeGroup(String name) {
         if (!user.getGroups().containsKey(name))
             return true;
@@ -291,7 +322,7 @@ public class DataManager extends Activity {
 
     public boolean removeGroupUser(String nameGroup, String loginUser) {
         if (!user.getGroup(nameGroup).getContactsList().contains(loginUser))
-        return true;
+            return true;
 
         RestClient client = new RestClient(serverAddress + "users");
         client.AddParam("login", user.getLogin());
@@ -341,9 +372,9 @@ public class DataManager extends Activity {
     public HashMap<String,Event> getEvents() {
         RestClient client = new RestClient(serverAddress + "events");
         if(user!=null)
-         client.AddParam("listContacts", user.getLogin());
+            client.AddParam("listContacts", user.getLogin());
         else
-            System.err.println("User null");
+            return null;//System.err.println("User null");
 
         try {
             client.Execute(RequestMethod.GET);
@@ -369,16 +400,71 @@ public class DataManager extends Activity {
         return events;
     }
 
-    public boolean updateRegId(String id) {
-        if (user == null)
-            return false;
+    public boolean removeContactFromEvent(String login) {
+        RestClient client = new RestClient(serverAddress + "events");
+        client.AddParam("id", event.getID());
+        JSONObject action = new JSONObject();
+        JSONObject contact = new JSONObject();
 
-        RestClient client = new RestClient(serverAddress + "users");
-        client.AddParam("login", user.getLogin());
+        try {
+            contact.put("listContacts", login);
+            action.put("$pull", contact);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        event.removeContact(login);
+        return true;
+    }
+
+    public boolean addContactToEvent(String login) {
+        RestClient client = new RestClient(serverAddress + "events");
+        client.AddParam("id", event.getID());
+        JSONObject action = new JSONObject();
+        JSONObject contact = new JSONObject();
+
+        try {
+            contact.put("listContacts", login);
+            action.put("$addToSet", contact);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        event.addContact(login);
+        return true;
+    }
+
+    public boolean setDescEvent(String desc) {
+        RestClient client = new RestClient(serverAddress + "events");
+        client.AddParam("id", event.getID());
         JSONObject action = new JSONObject();
         try {
             JSONObject hashMap = new JSONObject();
-            hashMap.put("register_id", id);
+            hashMap.put("desc", desc);
             action.put("$set", hashMap);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -396,6 +482,160 @@ public class DataManager extends Activity {
             return false;
         }
 
+        event.setDesc(desc);
+        return true;
+    }
+
+    public boolean addLineToPoll(String nameCategory, String valueLine) {
+        RestClient client = new RestClient(serverAddress + "events");
+        client.AddParam("id", event.getID());
+        String pollValue = new Gson().toJson(new PollValue(valueLine));
+        JSONObject action = new JSONObject();
+        JSONObject contact = new JSONObject();
+
+        try {
+            JSONObject newLineObj = new JSONObject(pollValue);
+            //JSONObject hashMap = new JSONObject();
+            //hashMap.put(valueLine, newLineObj);
+            contact.put("mapCategories." + nameCategory + ".poll.values." + valueLine, newLineObj);
+            action.put("$set", contact);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        event.getCategory(nameCategory).addPollValue(valueLine);
+        return true;
+    }
+
+    public boolean removeLineToPoll(String nameCategory, String valueLine) {
+        RestClient client = new RestClient(serverAddress + "events");
+        client.AddParam("id", event.getID());
+        JSONObject action = new JSONObject();
+        JSONObject contact = new JSONObject();
+
+        try {
+            contact.put("mapCategories." + nameCategory + ".poll.values." + valueLine, "");
+            action.put("$unset", contact);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        event.getCategory(nameCategory).removePollValue(valueLine);
+        return true;
+    }
+
+    public boolean newVoteToPollValue(String nameCategory, String valueLine, String loginVoter) {
+        if (event.getCategory(nameCategory).getPollValue(valueLine).getVoters().contains(loginVoter))
+            return true;
+
+        RestClient client = new RestClient(serverAddress + "events");
+        client.AddParam("id", event.getID());
+        JSONObject action = new JSONObject();
+        JSONObject contact = new JSONObject();
+
+        try {
+            contact.put("mapCategories." + nameCategory + ".poll.values." + valueLine + ".voters", loginVoter);
+            action.put("$addToSet", contact);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        event.getCategory(nameCategory).getPollValue(valueLine).addVoter(loginVoter);
+        return true;
+    }
+
+    public boolean removeVoteToPollValue(String nameCategory, String valueLine, String loginVoter) {
+        RestClient client = new RestClient(serverAddress + "events");
+        client.AddParam("id", event.getID());
+        JSONObject action = new JSONObject();
+        JSONObject contact = new JSONObject();
+
+        try {
+            contact.put("mapCategories." + nameCategory + ".poll.values." + valueLine + ".voters", loginVoter);
+            action.put("$pull", contact);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        event.getCategory(nameCategory).getPollValue(valueLine).removeVoter(loginVoter);
+        return true;
+    }
+
+    public boolean addCategory(String nameCategory, Category cat) {
+        RestClient client = new RestClient(serverAddress + "events");
+        client.AddParam("id", event.getID());
+        String category = new Gson().toJson(cat);
+        JSONObject action = new JSONObject();
+        JSONObject contact = new JSONObject();
+
+        try {
+            JSONObject newLineObj = new JSONObject(category);
+            //JSONObject hashMap = new JSONObject();
+            //hashMap.put(cat.getName(), newLineObj);
+            contact.put("mapCategories." + cat.getName(), newLineObj);
+            action.put("$set", contact);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        event.addCategory(cat);
         return true;
     }
 }
