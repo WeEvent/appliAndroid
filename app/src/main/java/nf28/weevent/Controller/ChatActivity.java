@@ -1,6 +1,9 @@
 package nf28.weevent.Controller;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -10,10 +13,15 @@ import android.view.View;
 import android.view.View.OnKeyListener;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import nf28.weevent.Controller.Gcm.ShareExternalServer;
+import nf28.weevent.Model.Event;
 import nf28.weevent.Model.Message;
+import nf28.weevent.Model.User;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
 
@@ -24,11 +32,21 @@ public class ChatActivity extends ActionBarActivity {
     private ChatArrayAdapter adapter;
     private ListView lv;
     private EditText editText1;
+
+    //gcm
+    ShareExternalServer appUtil;
+    AsyncTask<Void, Void, String> shareRegidTask;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat);
         setTitle("Chat");
+
+        /*SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove(DataManager.getInstance().getSelectedEvt().getID());
+        editor.commit();*/
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -53,6 +71,9 @@ public class ChatActivity extends ActionBarActivity {
 
                     editText1.setText("");
 
+                    //send notification
+                    //shareChatMessagedWithServer();
+
                     return true;
                 }
                 return false;
@@ -65,6 +86,7 @@ public class ChatActivity extends ActionBarActivity {
     private void addItems() {
 
         List<Message> listMessages = DataManager.getInstance().getSelectedEvt().getChat().getMessages();
+        Event e = DataManager.getInstance().getSelectedEvt();
 
         for (int i = 0; i<listMessages.size(); i++){
             adapter.add(listMessages.get(i));
@@ -94,6 +116,27 @@ public class ChatActivity extends ActionBarActivity {
         return true;
     }
 
+    public void shareChatMessagedWithServer(){
 
+        appUtil = new ShareExternalServer();
+        shareRegidTask = new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                ArrayList<String> list_contact = (ArrayList<String>) DataManager.getInstance().getSelectedEvt().getContactList();
+                User connectedUser = DataManager.getInstance().getUser();
+                list_contact.remove(connectedUser.getLogin());
+                String result = appUtil.SendNotificationForChat(list_contact,DataManager.getInstance().getSelectedEvt().getID(), connectedUser.getLogin());
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                shareRegidTask = null;
+                Toast.makeText(getApplicationContext(), result,
+                        Toast.LENGTH_LONG).show();
+            }
+        };
+        shareRegidTask.execute(null, null, null);
+    }
 
 }

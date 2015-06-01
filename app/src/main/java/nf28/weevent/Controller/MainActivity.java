@@ -120,6 +120,7 @@ public class MainActivity extends ActionBarActivity {
                         editor.remove("loginRegister");
                         editor.commit();
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        finish();
                         break;
                     default:
                         break;
