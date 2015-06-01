@@ -70,7 +70,7 @@ public class CategoriesActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_activity, menu);
+        getMenuInflater().inflate(R.menu.menu_categories, menu);
         return true;
     }
 
@@ -85,6 +85,11 @@ public class CategoriesActivity extends ActionBarActivity {
                 // app icon in action bar clicked; go home
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                return true;
+            case R.id.action_chat:
+                // app icon in action bar clicked; go home
+                Intent chat = new Intent(this, ChatActivity.class);
+                startActivity(chat);
                 return true;
             default:
                 return super.onOptionsItemSelected(menuItem);

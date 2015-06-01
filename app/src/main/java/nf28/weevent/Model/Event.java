@@ -138,7 +138,7 @@ public class Event {
     public void addMessage(String txt,String login){
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
         String date = dateFormat.format(Calendar.getInstance().getTime());
-        chat.addMessage(new Message(login, txt, date));
+        //chat.addMessage(new Message(login, txt, date));
     }
 
     public Vector<PollValue> getPreferedPolls(){
