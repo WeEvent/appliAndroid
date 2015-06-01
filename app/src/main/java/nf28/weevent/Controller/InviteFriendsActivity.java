@@ -69,12 +69,12 @@ public class InviteFriendsActivity extends ActionBarActivity {
                for(int i=0;i<modelItems.length;i++){
                    System.err.println("------ |  "+modelItems[i].getValue()+" | --------");
                    if(modelItems[i].getValue()==1){
-                       DataManager.getInstance().getSelectedEvt().addContact(modelItems[i].getName());
+                       DataManager.getInstance().addContact(modelItems[i].getName());
                        list_contact.add(modelItems[i].getName());
                    }
                }
                 //TODO a friend can be inserted only once!!!!!!!
-                DataManager.getInstance().addEvent(DataManager.getInstance().getSelectedEvt());
+                //DataManager.getInstance().addEvent(DataManager.getInstance().getSelectedEvt());
                 Toast.makeText(context, "Invitation Sent!", Toast.LENGTH_SHORT).show();
 
                 shareRegisterIdWithServer(list_contact);

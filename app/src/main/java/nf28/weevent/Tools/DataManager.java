@@ -388,6 +388,7 @@ public class DataManager extends Activity {
         try{
             json = new JSONObject(client.getResponse());
             JSONArray array = json.getJSONArray("result");
+            events = new HashMap<>();
             for (int i = 0; i < array.length(); i++) {
                 Event e = new Gson().fromJson(array.getJSONObject(i).toString(), Event.class);
                 events.put(e.getNom(), e);

@@ -52,15 +52,7 @@ public class EventsActivity extends ActionBarActivity {
 
         mainListView = (ListView) findViewById( R.id.ListView );
 
-        events = DataManager.getInstance().getEvents();
-
-        List<String> list_events = new ArrayList<String>();
-
-        for (String s : events.keySet()) {
-            list_events.add(s);
-        }
-
-        listAdapter = new ArrayAdapter(this, R.layout.simplerow,list_events);
+        listAdapter = new ArrayAdapter(this, R.layout.simplerow);
         mainListView.setAdapter(listAdapter);
 
         Button btn_events = (Button) findViewById(R.id.btn_events_add);
@@ -113,15 +105,16 @@ public class EventsActivity extends ActionBarActivity {
 
                 alertD.show();
 
+
+
             }
         });
-
 
 
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 // When clicked, show a toast with the TextView text
-                Toast.makeText(getApplicationContext(),	((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
                 loadEvent(((TextView) view).getText().toString());
 
             }
@@ -149,6 +142,15 @@ public class EventsActivity extends ActionBarActivity {
                 // TODO Auto-generated method stub
             }
         });
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        events = DataManager.getInstance().getEvents();
+        listAdapter.clear();
+        listAdapter.addAll(new ArrayList<String>(events.keySet()));
+        listAdapter.notifyDataSetChanged();
     }
 
     public void loadEvent(String evt){

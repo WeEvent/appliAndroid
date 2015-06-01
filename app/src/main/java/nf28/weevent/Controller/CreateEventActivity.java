@@ -59,6 +59,7 @@ public class CreateEventActivity extends ActionBarActivity {
                 DataManager.getInstance().addEvent(DataManager.getInstance().getSelectedEvt());
                 System.err.println("Added");
                 startActivity(new Intent(CreateEventActivity.this,CategoriesActivity.class));
+                finish();
             }
         });
 
