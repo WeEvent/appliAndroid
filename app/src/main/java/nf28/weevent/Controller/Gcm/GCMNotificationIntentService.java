@@ -83,6 +83,7 @@ public class GCMNotificationIntentService extends IntentService {
                         .setContentTitle("WeEvent")
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
                         .setDefaults(Notification.DEFAULT_SOUND)
+                        .setAutoCancel(true)
                         .setContentText(msg);
 
                 mBuilder.setContentIntent(contentIntent);
@@ -91,7 +92,7 @@ public class GCMNotificationIntentService extends IntentService {
             }
             else if (msg.contains("id=")) {
                 // enregistrement du nouveau etat chat
-                Pattern pattern = Pattern.compile("id=(.*?)");
+                Pattern pattern = Pattern.compile("id=(.*)");
                 Matcher matcher = pattern.matcher(msg);
                 if (matcher.find()) {
                     SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);

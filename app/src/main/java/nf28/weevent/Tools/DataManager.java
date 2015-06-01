@@ -58,6 +58,31 @@ public class DataManager extends Activity {
     }
 
     public User getUser(String login) {
+        RestClient client = new RestClient(serverAddress + "users");
+        client.AddParam("login", login);
+        User u = null;
+
+        try {
+            client.Execute(RequestMethod.GET);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        JSONObject json = null;
+        try{
+            json = new JSONObject(client.getResponse());
+            JSONArray res = json.getJSONArray("result");
+            u = new Gson().fromJson(res.get(0).toString(), User.class);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return u;
+    }
+
+    public User setUser(String login) {
         //if (user == null)
         RestClient client = new RestClient(serverAddress + "users");
         client.AddParam("login", login);

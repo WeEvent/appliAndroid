@@ -205,7 +205,7 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
                 //--------------END GCM--------------
                 return;
             }
-            User u = DataManager.getInstance().getUser(login); // sets the user in manager
+            User u = DataManager.getInstance().setUser(login); // sets the user in manager
             if (u != null){
 
 
@@ -229,7 +229,7 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
     }
 
     private boolean isLoginValid(String login) {
-        return DataManager.getInstance().getUser(login) ==null;
+        return DataManager.getInstance().getUser(login) == null;
     }
 
     private boolean isPasswordValid(String password) {

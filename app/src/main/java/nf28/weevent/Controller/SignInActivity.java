@@ -172,7 +172,7 @@ public class SignInActivity extends Activity implements LoaderCallbacks<Cursor> 
             return false;
         }
 
-        User tmp = DataManager.getInstance().getUser(login);
+        User tmp = DataManager.getInstance().setUser(login);
         if (tmp == null){
             return false;
         }

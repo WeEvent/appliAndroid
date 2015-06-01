@@ -43,10 +43,10 @@ public class ChatActivity extends ActionBarActivity {
         setContentView(R.layout.chat);
         setTitle("Chat");
 
-        /*SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.remove(DataManager.getInstance().getSelectedEvt().getID());
-        editor.commit();*/
+        editor.commit();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -67,12 +67,11 @@ public class ChatActivity extends ActionBarActivity {
 
                     adapter.add(newMessage);
                     DataManager.getInstance().addMessage(newMessage);
-                    //DataManager.getInstance().getSelectedEvt().getChat().addMessage(newMessage);
 
                     editText1.setText("");
 
                     //send notification
-                    //shareChatMessagedWithServer();
+                    shareChatMessagedWithServer();
 
                     return true;
                 }
