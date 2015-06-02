@@ -716,7 +716,7 @@ public class DataManager extends Activity {
         try{
             json = new JSONObject(client.getResponse());
             JSONArray res = json.getJSONArray("result");
-            chat = new Gson().fromJson(res.get(0).toString(), Chat.class);
+            chat = new Gson().fromJson(res.getJSONObject(0).get("chat").toString(), Chat.class);
         }
         catch (Exception e){
             e.printStackTrace();
