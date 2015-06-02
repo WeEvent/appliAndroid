@@ -35,7 +35,7 @@ public class Overview extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.overview,container,false);
-        context =  context = inflater.getContext();
+        context = inflater.getContext();
 
         mainListView = (ListView) v.findViewById( R.id.overviewView );
         //System.err.println( DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getName());

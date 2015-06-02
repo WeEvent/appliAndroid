@@ -65,10 +65,10 @@ public class CreateEventActivity extends ActionBarActivity {
 
     }
 
-    public void init_categ_event(Event e){
+    /*public void init_categ_event(Event e){
         for(Category c : e.getCategoryList())
             c.addPollValue(" Default ");
-    }
+    }*/
 
 
     private HashMap<String,Event> getEvents() {
@@ -105,7 +105,7 @@ public class CreateEventActivity extends ActionBarActivity {
 
         event.addCategory("Cat_5", "Categ_5");
         updateEventCategories(tabs);
-        init_categ_event(event);
+        //init_categ_event(event);
 
     }
 

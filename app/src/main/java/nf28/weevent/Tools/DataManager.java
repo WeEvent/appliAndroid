@@ -516,32 +516,68 @@ public class DataManager extends Activity {
     }
 
     public boolean addLineToPoll(String nameCategory, String valueLine) {
-        RestClient client = new RestClient(serverAddress + "events");
-        client.AddParam("id", event.getID());
-        String pollValue = new Gson().toJson(new PollValue(valueLine));
-        JSONObject action = new JSONObject();
-        JSONObject contact = new JSONObject();
+        //bug sur le hashMap vide dans MongoDB, il le considere comme un array, d'où les 2 cas
+        if (event.getCategory(nameCategory).getPoll().getPollValues().size() == 0)
+        {
+            RestClient client = new RestClient(serverAddress + "events");
+            client.AddParam("id", event.getID());
+            HashMap<String, PollValue> values = new HashMap<String, PollValue>();
+            values.put(valueLine, new PollValue(valueLine));
+            String valuesString = new Gson().toJson(values);
 
-        try {
-            JSONObject newLineObj = new JSONObject(pollValue);
-            //JSONObject hashMap = new JSONObject();
-            //hashMap.put(valueLine, newLineObj);
-            contact.put("mapCategories." + nameCategory + ".poll.values." + valueLine, newLineObj);
-            action.put("$set", contact);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return false;
-        }
+            JSONObject action = new JSONObject();
+            JSONObject contact = new JSONObject();
 
-        client.setObject(action.toString());
-
-        try {
-            client.Execute(RequestMethod.PUT);
-            if (client.getResponseCode() != 200)
+            try {
+                JSONObject valuesJson = new JSONObject(valuesString);
+                contact.put("mapCategories." + nameCategory + ".poll.values", valuesJson);
+                action.put("$set", contact);
+            } catch (JSONException e) {
+                e.printStackTrace();
                 return false;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            }
+
+            client.setObject(action.toString());
+
+            try {
+                client.Execute(RequestMethod.PUT);
+                if (client.getResponseCode() != 200)
+                    return false;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        else
+        {
+            RestClient client = new RestClient(serverAddress + "events");
+            client.AddParam("id", event.getID());
+            String pollValue = new Gson().toJson(new PollValue(valueLine));
+            JSONObject action = new JSONObject();
+            JSONObject contact = new JSONObject();
+
+            try {
+                JSONObject newLineObj = new JSONObject(pollValue);
+                //JSONObject hashMap = new JSONObject();
+                //hashMap.put(valueLine, newLineObj);
+                contact.put("mapCategories." + nameCategory + ".poll.values." + valueLine, newLineObj);
+                action.put("$set", contact);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+            client.setObject(action.toString());
+
+            try {
+                client.Execute(RequestMethod.PUT);
+                if (client.getResponseCode() != 200)
+                    return false;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+
         }
         event.getCategory(nameCategory).addPollValue(valueLine);
         return true;
