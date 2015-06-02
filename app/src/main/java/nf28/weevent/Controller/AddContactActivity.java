@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -11,6 +12,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,7 +28,7 @@ import nf28.weevent.Tools.DataManager;
  */
 public class AddContactActivity extends ActionBarActivity {
 
-    EditText login;
+    AutoCompleteTextView login;
     Button add;
 
     List<String> logins;
@@ -38,13 +41,17 @@ public class AddContactActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        login = (EditText)findViewById(R.id.loginSearch);
+        login = (AutoCompleteTextView)findViewById(R.id.loginSearch);
 
         add = (Button)findViewById(R.id.btn_add_contact);
         add.setOnClickListener(addOnClickListener);
         add.setOnTouchListener(onTouchListener);
 
         logins = DataManager.getInstance().getAllLogins();
+
+        ArrayAdapter adapterLogins = new ArrayAdapter(this, android.R.layout.simple_list_item_1, logins);
+        //login.setDropDownBackgroundDrawable(new ColorDrawable(gt ));
+        login.setAdapter(adapterLogins);
     }
 
     Button.OnClickListener addOnClickListener

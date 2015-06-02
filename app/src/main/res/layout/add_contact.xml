@@ -14,7 +14,7 @@
         android:textColor="#FFFFFF"
         android:gravity="center" />
 
-    <EditText android:id="@+id/loginSearch"
+    <AutoCompleteTextView android:id="@+id/loginSearch"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
