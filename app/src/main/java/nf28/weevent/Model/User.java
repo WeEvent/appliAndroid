@@ -15,12 +15,12 @@ public class User {
     private String register_id                        = null;
     private ArrayList<String> listContacts           = null;
     private HashMap<String,Group> listGroups    = null;
-    private HashMap<String,Event> listEvents    = null;
+    //private HashMap<String,Event> listEvents    = null;
 
     public User(){
         listGroups                              = new HashMap<String,Group>();
         listContacts                            = new ArrayList<String>();
-        listEvents                              = new HashMap<String,Event>();
+        //listEvents                              = new HashMap<String,Event>();
     }
 
     public User(String log,String password, String mobile){
@@ -74,9 +74,9 @@ public class User {
     }
     ///
 
-    public Collection<Event> getListEvents(){
+    /*public Collection<Event> getListEvents(){
         return listEvents.values();
-    }
+    }*/
     ///
 
     public HashMap<String,Group> getGroups(){
@@ -120,9 +120,9 @@ public class User {
     }
     ///
 
-    public Event getEvent(String evt){
+    /*public Event getEvent(String evt){
        return listEvents.get(evt);
-    }
+    }*/
     ///
 
     public void parseServer(){

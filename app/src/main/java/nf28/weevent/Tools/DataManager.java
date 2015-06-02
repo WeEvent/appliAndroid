@@ -226,29 +226,63 @@ public class DataManager extends Activity {
         if (user.getGroups().containsKey(name))
             return true;
 
-        RestClient client = new RestClient(serverAddress + "users");
-        client.AddParam("login", user.getLogin());
-        String group = new Gson().toJson(new Group(name));
-        JSONObject action = new JSONObject();
-        try {
-            JSONObject groupObj = new JSONObject(group);
-            JSONObject hashMap = new JSONObject();
-            hashMap.put("listGroups." + name, groupObj);
-            action.put("$set", hashMap);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return false;
-        }
+        if (user.getGroups().size() == 0)
+        {
+            RestClient client = new RestClient(serverAddress + "users");
+            client.AddParam("login", user.getLogin());
 
-        client.setObject(action.toString());
+            HashMap<String,Group> values = new HashMap<String,Group>();
+            values.put(name, new Group(name));
+            String valuesString = new Gson().toJson(values);
 
-        try {
-            client.Execute(RequestMethod.PUT);
-            if (client.getResponseCode() != 200)
+            JSONObject action = new JSONObject();
+            try {
+                JSONObject valuesJson = new JSONObject(valuesString);
+                JSONObject hashMap = new JSONObject();
+                hashMap.put("listGroups", valuesJson);
+                action.put("$set", hashMap);
+            } catch (JSONException e) {
+                e.printStackTrace();
                 return false;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            }
+
+            client.setObject(action.toString());
+
+            try {
+                client.Execute(RequestMethod.PUT);
+                if (client.getResponseCode() != 200)
+                    return false;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        else
+        {
+            RestClient client = new RestClient(serverAddress + "users");
+            client.AddParam("login", user.getLogin());
+            String group = new Gson().toJson(new Group(name));
+            JSONObject action = new JSONObject();
+            try {
+                JSONObject groupObj = new JSONObject(group);
+                JSONObject hashMap = new JSONObject();
+                hashMap.put("listGroups." + name, groupObj);
+                action.put("$set", hashMap);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+            client.setObject(action.toString());
+
+            try {
+                client.Execute(RequestMethod.PUT);
+                if (client.getResponseCode() != 200)
+                    return false;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
         }
 
         user.addGroup(name);
@@ -558,8 +592,6 @@ public class DataManager extends Activity {
 
             try {
                 JSONObject newLineObj = new JSONObject(pollValue);
-                //JSONObject hashMap = new JSONObject();
-                //hashMap.put(valueLine, newLineObj);
                 contact.put("mapCategories." + nameCategory + ".poll.values." + valueLine, newLineObj);
                 action.put("$set", contact);
             } catch (JSONException e) {

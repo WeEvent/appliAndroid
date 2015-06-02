@@ -193,7 +193,7 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
                 user.setPassword(password);
                 user.setLogin(login);
             }
-            user.addGroup("Favoris");
+            //user.addGroup("Favoris");
 
 
             if (!isNetworkAvailable()){
