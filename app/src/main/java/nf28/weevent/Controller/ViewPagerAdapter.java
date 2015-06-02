@@ -66,8 +66,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         }
         else  if(ViewPagerAdapter.getTabName(position) == 1)      // second tab corresponds to the second category and so on ...
         {
-            Tab2 tab2 = new Tab2();
-            return tab2;
+            EventActivity event = new EventActivity();
+            return event;
         }else  if(ViewPagerAdapter.getTabName(position) == 2)      // 3 tab corresponds to Date
         {
             Date date = new Date();

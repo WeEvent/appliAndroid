@@ -87,7 +87,9 @@ public class CategoriesActivity extends ActionBarActivity {
                 startActivity(intent);
                 return true;
             default:
-                return super.onOptionsItemSelected(menuItem);
+                Intent intent_ = new Intent(this, EventsActivity.class);
+                startActivity(intent_);
+                return true;
         }
 
        /* int id = item.getItemId();

@@ -125,6 +125,10 @@ public class Event {
         mapCategories.put(nom,cat);
 
     }
+
+    public void resetCategory(){
+        mapCategories.clear();
+    }
     ///
 
     public void removeCategory(String categ){
