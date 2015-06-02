@@ -35,7 +35,7 @@ public class EventActivity extends Fragment {
     private Button btn_events_create;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v =inflater.inflate(R.layout.update_event,container,false);
+        View v =inflater.inflate(R.layout.update_event, container, false);
         context = inflater.getContext();
 
 
@@ -85,15 +85,6 @@ public class EventActivity extends Fragment {
             Toast.makeText(context," Network error ", Toast.LENGTH_SHORT).show();
     }
 
-    public void init_categ_event(Event e){
-        for(Category c : e.getCategoryList()) {
-            if (c.getPollValues().size() == 0) {
-                c.addPollValue(" Default ");
-                System.err.println("Added new category");
-            }
-        }
-    }
-
 
     private HashMap<String,Event> getEvents() {
         return DataManager.getInstance().getEvents();
@@ -113,18 +104,25 @@ public class EventActivity extends Fragment {
 
         if(radio_date.isChecked()) {
             tabs.add(2);
-            if(radio_date.isEnabled())
-                event.addCategory("Cat_2","Categ_2");
+            if(radio_date.isEnabled()) {
+                event.addCategory("Cat_2", "Categ_2");
+                DataManager.getInstance().addCategory("Cat_2", new Category("Cat_2", "Categ_2"));
+            }
         }
         if(radio_map.isChecked()) {
             tabs.add(3);
-            if(radio_map.isEnabled())
-             event.addCategory("Cat_3","Categ_3");
+            if(radio_map.isEnabled()) {
+                event.addCategory("Cat_3", "Categ_3");
+                DataManager.getInstance().addCategory("Cat_3", new Category("Cat_3", "Categ_3"));
+            }
         }
         if(radio_transport.isChecked()) {
             tabs.add(4);
-            if(radio_transport.isEnabled())
-                event.addCategory("Cat_4","Categ_4");
+            if(radio_transport.isEnabled()){
+                event.addCategory("Cat_4","Categ_4") ;
+                DataManager.getInstance().addCategory("Cat_2", new Category("Cat_4", "Categ_4"));
+
+            }
         }
 
 
@@ -132,7 +130,6 @@ public class EventActivity extends Fragment {
 
         DataManager.getInstance().setSelectedEvt(event);
         updateEventCategories(tabs);
-        init_categ_event(event);
 
     }
 

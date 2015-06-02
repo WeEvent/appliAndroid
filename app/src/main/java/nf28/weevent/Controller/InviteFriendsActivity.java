@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.SmsManager;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,6 +49,7 @@ public class InviteFriendsActivity extends ActionBarActivity {
         mainListView = (ListView) findViewById( R.id.InviteView );
 
         Collection<String> friends = DataManager.getInstance().getUser().getContactList();
+        friends.add(DataManager.getInstance().getUser().getLogin());
         modelItems = new ModelAdapter[friends.size()];
 
         int idx = 0; /// index used to fill the container for friends
@@ -123,9 +122,7 @@ public class InviteFriendsActivity extends ActionBarActivity {
                 startActivity(intent);
                 return true;
             default:
-                Intent intent_ = new Intent(this, EventsActivity.class);
-                startActivity(intent_);
-                return true;
+                return super.onOptionsItemSelected(menuItem);
         }
     }
 

@@ -69,8 +69,11 @@ public CustomAdapter(Context context, ModelAdapter[] resource) {
                   } );
                   if(position < modelItems.length) {
                       cb.setText(modelItems[position].getName());
-                      if (modelItems[position].getValue() == 1)
+                      if (modelItems[position].getValue() == 1) {
                           cb.setChecked(true);
+                          if(!modelItems[position].getName().equalsIgnoreCase(DataManager.getInstance().getUser().getLogin()))
+                            cb.setEnabled(false);
+                      }
                       else
                           cb.setChecked(false);
                   }else

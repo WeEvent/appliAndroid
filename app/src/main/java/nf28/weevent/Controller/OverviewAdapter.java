@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.Filter;
 
 import java.util.ArrayList;
@@ -40,46 +39,17 @@ public class OverviewAdapter extends ArrayAdapter<ModelAdapter>{
         //TextView name = (TextView) convertView.findViewById(R.id.textView1);
         CheckBox cb = (CheckBox) convertView.findViewById(R.id.new_overview);
         pos = position;  // update the position
-        cb.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
 
-            @Override
-            public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
-                // TODO Auto-generated method stub
-                /* String text = arg0.getText().toString();
-                for(ModelAdapter m : modelItems)
-                {
 
-                    if(m.getName().equalsIgnoreCase(text)){
-                        m.setValue((arg1==true)?1:0);
-                        if(m.getValue()==1) {
-                            // When clicked, show a toast with the TextView text
-                            DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getPollValue(text
-                                    .toString()).addVoter(DataManager.getInstance().getUser().getLogin());
-                            DataManager.getInstance().newVoteToPollValue("Cat_3",text
-                                    .toString(),DataManager.getInstance().getUser().getLogin());
-                        }else{
-                            DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getPollValue(text
-                                    .toString()).removeVoter(DataManager.getInstance().getUser().getLogin());
-                            DataManager.getInstance().removeVoteToPollValue("Cat_3",text
-                                    .toString(),DataManager.getInstance().getUser().getLogin());
-
-                        }
-
-                        break;
-                    }
-
-                }
-                  */
-            }
-        } );
-        if(position < modelItems.length) {
+        if(modelItems !=null) {
             cb.setText(modelItems[position].getName());
             if (modelItems[position].getValue() == 1)
                 cb.setChecked(true);
             else
                 cb.setChecked(false);
-        }else
-            cb.setVisibility(View.GONE);
+        }
+
+  //          cb.setVisibility(View.GONE);
         return convertView;
     }
 

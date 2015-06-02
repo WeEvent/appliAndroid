@@ -1,9 +1,6 @@
 package nf28.weevent.Model;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -153,8 +150,12 @@ public class Event {
         Vector <PollValue> preferedPolls = new Vector<PollValue>();
         for(Category categorie : mapCategories.values()){
             if(!categorie.getName().equalsIgnoreCase("Cat_0"))
-                if(!categorie.getName().equalsIgnoreCase("Cat_3"))
-                    preferedPolls.add(categorie.getPreferedPoll());
+                if(!categorie.getName().equalsIgnoreCase("Cat_5"))
+                    if(!categorie.getName().equalsIgnoreCase("Cat_1")) {
+                        PollValue poll = categorie.getPreferedPoll();
+                        if(poll!=null)
+                            preferedPolls.add(poll);
+                    }
         }
         return preferedPolls;
     }
