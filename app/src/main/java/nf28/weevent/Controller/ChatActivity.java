@@ -1,11 +1,15 @@
 package nf28.weevent.Controller;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.KeyEvent;
@@ -19,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nf28.weevent.Controller.Gcm.ShareExternalServer;
+import nf28.weevent.Model.Chat;
 import nf28.weevent.Model.Event;
 import nf28.weevent.Model.Message;
 import nf28.weevent.Model.User;
@@ -33,6 +38,7 @@ public class ChatActivity extends ActionBarActivity {
     private ListView lv;
     private EditText editText1;
 
+
     //gcm
     ShareExternalServer appUtil;
     AsyncTask<Void, Void, String> shareRegidTask;
@@ -43,6 +49,10 @@ public class ChatActivity extends ActionBarActivity {
         setContentView(R.layout.chat);
         setTitle("Chat");
 
+        //Receiver for local broadcast to update chat after notif
+        registerReceiver(mMessageReceiver, new IntentFilter("update"));
+
+        //Check if there is a new message
         SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.remove(DataManager.getInstance().getSelectedEvt().getID());
@@ -138,4 +148,25 @@ public class ChatActivity extends ActionBarActivity {
         shareRegidTask.execute(null, null, null);
     }
 
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            //ex : int note = intent.getIntExtra("evaluation", 0);
+
+            //UPDATE VUE
+            Chat chat = DataManager.getInstance().getChat();
+            adapter.clear();
+            for (Message m : chat.getMessages())
+                adapter.add(m);
+            adapter.notifyDataSetChanged();
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        // Unregister since the activity is about to be closed.
+        unregisterReceiver(mMessageReceiver);
+        super.onDestroy();
+    }
 }

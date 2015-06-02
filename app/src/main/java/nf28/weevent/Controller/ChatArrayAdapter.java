@@ -31,6 +31,12 @@ public class ChatArrayAdapter extends ArrayAdapter<Message>{
         super.add(object);
     }
 
+    @Override
+    public void clear() {
+        messageList.clear();
+        super.clear();
+    }
+
     public ChatArrayAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
     }

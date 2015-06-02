@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import nf28.weevent.Model.Category;
+import nf28.weevent.Model.Chat;
 import nf28.weevent.Model.Event;
 import nf28.weevent.Model.Group;
 import nf28.weevent.Model.Message;
@@ -695,5 +696,30 @@ public class DataManager extends Activity {
 
         event.getChat().addMessage(message);
         return true;
+    }
+
+    public Chat getChat() {
+        RestClient client = new RestClient(serverAddress + "events");
+        client.AddParam("id", event.getID());
+        Event evt = null;
+
+        try {
+            client.Execute(RequestMethod.GET);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        JSONObject json = null;
+        try{
+            json = new JSONObject(client.getResponse());
+            JSONArray res = json.getJSONArray("result");
+            evt = new Gson().fromJson(res.get(0).toString(), Event.class);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return evt.getChat();
     }
 }

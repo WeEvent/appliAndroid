@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -99,8 +100,16 @@ public class GCMNotificationIntentService extends IntentService {
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putString(matcher.group(1), "newMessage");
                     editor.commit();
+                    sendMessage();
                 }
             }
         }
 	}
+
+    private void sendMessage()
+    {
+        Intent intent = new Intent("update");
+        //intent.putExtra("update",  "chat");
+        sendBroadcast(intent);
+    }
 }
