@@ -34,6 +34,11 @@ public class PollValue {
         return voters.size();
     }
 
+
+    public List<String> getVoters(){
+        return voters;
+    }
+
     public boolean hasVoted(String log){
         return voters.contains(log);
     }

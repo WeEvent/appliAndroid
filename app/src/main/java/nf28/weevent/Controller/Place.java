@@ -42,7 +42,7 @@ public class Place extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.place,container,false);
-        context =  context = inflater.getContext();
+        context = inflater.getContext();
         mainListView = (ListView) v.findViewById( R.id.PlaceView );
         //System.err.println( DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getName());
         pollValues = DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getPollValues();
@@ -75,8 +75,6 @@ public class Place extends Fragment {
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 // get user input and set it to result
-                               // DataManager.getInstance().getSelectedEvt().setDesc(input.getText().toString());
-                                DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").addPollValue(input.getText().toString());
                                 DataManager.getInstance().addLineToPoll("Cat_3",input.getText().toString());
                                 pollValues = DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getPollValues();
                                 modelItems = new ModelAdapter[pollValues.size()];

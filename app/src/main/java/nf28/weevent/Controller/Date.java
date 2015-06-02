@@ -58,7 +58,7 @@ public class Date extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.date,container,false);
-        context =  context = inflater.getContext();
+        context = inflater.getContext();
         mainListView = (ListView) v.findViewById( R.id.DateView );
         System.err.println( DataManager.getInstance().getSelectedEvt().getCategory("Cat_2").getName());
         pollValues = DataManager.getInstance().getSelectedEvt().getCategory("Cat_2").getPollValues();
@@ -164,7 +164,6 @@ public class Date extends Fragment {
     // updates the date we display in the TextView
     private void updateDisplay() {
         String mDateDisplay = ""+(mMonth + 1)+"-"+mDay+"-"+mYear+"       "+pad(mHour)+" : "+pad(mMinute);
-        DataManager.getInstance().getSelectedEvt().getCategory("Cat_2").addPollValue(mDateDisplay);
         DataManager.getInstance().addLineToPoll("Cat_2",mDateDisplay);
         pollValues = DataManager.getInstance().getSelectedEvt().getCategory("Cat_2").getPollValues();
         modelItems = new ModelAdapter[pollValues.size()];

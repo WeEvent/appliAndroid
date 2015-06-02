@@ -13,8 +13,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import nf28.weevent.Model.Category;
+import nf28.weevent.Model.Chat;
 import nf28.weevent.Model.Event;
 import nf28.weevent.Model.Group;
+import nf28.weevent.Model.Message;
 import nf28.weevent.Model.PollValue;
 import nf28.weevent.Model.User;
 
@@ -56,6 +59,31 @@ public class DataManager extends Activity {
     }
 
     public User getUser(String login) {
+        RestClient client = new RestClient(serverAddress + "users");
+        client.AddParam("login", login);
+        User u = null;
+
+        try {
+            client.Execute(RequestMethod.GET);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        JSONObject json = null;
+        try{
+            json = new JSONObject(client.getResponse());
+            JSONArray res = json.getJSONArray("result");
+            u = new Gson().fromJson(res.get(0).toString(), User.class);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return u;
+    }
+
+    public User setUser(String login) {
         //if (user == null)
         RestClient client = new RestClient(serverAddress + "users");
         client.AddParam("login", login);
@@ -84,6 +112,7 @@ public class DataManager extends Activity {
     public List<String> getAllLogins() {
         //if (user == null)
         RestClient client = new RestClient(serverAddress + "users");
+        client.AddParam("field", "login");
 
         List<String> logins = new ArrayList<>();
 
@@ -99,8 +128,8 @@ public class DataManager extends Activity {
             json = new JSONObject(client.getResponse());
             JSONArray res = json.getJSONArray("result");
             for (int i = 0; i < res.length(); i++) {
-                User u = new Gson().fromJson(res.getJSONObject(i).toString(), User.class);
-                logins.add(u.getLogin());
+                //User u = new Gson().fromJson(res.getJSONObject(i).toString(), User.class);
+                logins.add(res.getJSONObject(i).get("login").toString());
             }
         }
         catch (Exception e){
@@ -226,6 +255,36 @@ public class DataManager extends Activity {
         return true;
     }
 
+    public boolean updateRegId(String id) {
+        if (user == null)
+            return false;
+
+        RestClient client = new RestClient(serverAddress + "users");
+        client.AddParam("login", user.getLogin());
+        JSONObject action = new JSONObject();
+        try {
+            JSONObject hashMap = new JSONObject();
+            hashMap.put("register_id", id);
+            action.put("$set", hashMap);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
     public boolean removeGroup(String name) {
         if (!user.getGroups().containsKey(name))
             return true;
@@ -291,7 +350,7 @@ public class DataManager extends Activity {
 
     public boolean removeGroupUser(String nameGroup, String loginUser) {
         if (!user.getGroup(nameGroup).getContactsList().contains(loginUser))
-        return true;
+            return true;
 
         RestClient client = new RestClient(serverAddress + "users");
         client.AddParam("login", user.getLogin());
@@ -341,9 +400,9 @@ public class DataManager extends Activity {
     public HashMap<String,Event> getEvents() {
         RestClient client = new RestClient(serverAddress + "events");
         if(user!=null)
-         client.AddParam("listContacts", user.getLogin());
+            client.AddParam("listContacts", user.getLogin());
         else
-            System.err.println("User null");
+            return null;//System.err.println("User null");
 
         try {
             client.Execute(RequestMethod.GET);
@@ -356,6 +415,7 @@ public class DataManager extends Activity {
         try{
             json = new JSONObject(client.getResponse());
             JSONArray array = json.getJSONArray("result");
+            events = new HashMap<>();
             for (int i = 0; i < array.length(); i++) {
                 Event e = new Gson().fromJson(array.getJSONObject(i).toString(), Event.class);
                 events.put(e.getNom(), e);
@@ -456,32 +516,68 @@ public class DataManager extends Activity {
     }
 
     public boolean addLineToPoll(String nameCategory, String valueLine) {
-        RestClient client = new RestClient(serverAddress + "events");
-        client.AddParam("id", event.getID());
-        String pollValue = new Gson().toJson(new PollValue(valueLine));
-        JSONObject action = new JSONObject();
-        JSONObject contact = new JSONObject();
+        //bug sur le hashMap vide dans MongoDB, il le considere comme un array, d'où les 2 cas
+        if (event.getCategory(nameCategory).getPoll().getPollValues().size() == 0)
+        {
+            RestClient client = new RestClient(serverAddress + "events");
+            client.AddParam("id", event.getID());
+            HashMap<String, PollValue> values = new HashMap<String, PollValue>();
+            values.put(valueLine, new PollValue(valueLine));
+            String valuesString = new Gson().toJson(values);
 
-        try {
-            JSONObject newLineObj = new JSONObject(pollValue);
-            //JSONObject hashMap = new JSONObject();
-            //hashMap.put(valueLine, newLineObj);
-            contact.put("mapCategories." + nameCategory + ".poll.values." + valueLine, newLineObj);
-            action.put("$set", contact);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return false;
-        }
+            JSONObject action = new JSONObject();
+            JSONObject contact = new JSONObject();
 
-        client.setObject(action.toString());
-
-        try {
-            client.Execute(RequestMethod.PUT);
-            if (client.getResponseCode() != 200)
+            try {
+                JSONObject valuesJson = new JSONObject(valuesString);
+                contact.put("mapCategories." + nameCategory + ".poll.values", valuesJson);
+                action.put("$set", contact);
+            } catch (JSONException e) {
+                e.printStackTrace();
                 return false;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            }
+
+            client.setObject(action.toString());
+
+            try {
+                client.Execute(RequestMethod.PUT);
+                if (client.getResponseCode() != 200)
+                    return false;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        else
+        {
+            RestClient client = new RestClient(serverAddress + "events");
+            client.AddParam("id", event.getID());
+            String pollValue = new Gson().toJson(new PollValue(valueLine));
+            JSONObject action = new JSONObject();
+            JSONObject contact = new JSONObject();
+
+            try {
+                JSONObject newLineObj = new JSONObject(pollValue);
+                //JSONObject hashMap = new JSONObject();
+                //hashMap.put(valueLine, newLineObj);
+                contact.put("mapCategories." + nameCategory + ".poll.values." + valueLine, newLineObj);
+                action.put("$set", contact);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+            client.setObject(action.toString());
+
+            try {
+                client.Execute(RequestMethod.PUT);
+                if (client.getResponseCode() != 200)
+                    return false;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+
         }
         event.getCategory(nameCategory).addPollValue(valueLine);
         return true;
@@ -516,6 +612,9 @@ public class DataManager extends Activity {
     }
 
     public boolean newVoteToPollValue(String nameCategory, String valueLine, String loginVoter) {
+        if (event.getCategory(nameCategory).getPollValue(valueLine).getVoters().contains(loginVoter))
+            return true;
+
         RestClient client = new RestClient(serverAddress + "events");
         client.AddParam("id", event.getID());
         JSONObject action = new JSONObject();
@@ -571,5 +670,94 @@ public class DataManager extends Activity {
 
         event.getCategory(nameCategory).getPollValue(valueLine).removeVoter(loginVoter);
         return true;
+    }
+
+    public boolean addCategory(String nameCategory, Category cat) {
+        RestClient client = new RestClient(serverAddress + "events");
+        client.AddParam("id", event.getID());
+        String category = new Gson().toJson(cat);
+        JSONObject action = new JSONObject();
+        JSONObject contact = new JSONObject();
+
+        try {
+            JSONObject newLineObj = new JSONObject(category);
+            //JSONObject hashMap = new JSONObject();
+            //hashMap.put(cat.getName(), newLineObj);
+            contact.put("mapCategories." + cat.getName(), newLineObj);
+            action.put("$set", contact);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        event.addCategory(cat);
+        return true;
+    }
+
+    public boolean addMessage(Message message) {
+        RestClient client = new RestClient(serverAddress + "events");
+        client.AddParam("id", event.getID());
+        String msg = new Gson().toJson(message);
+        JSONObject action = new JSONObject();
+        JSONObject contact = new JSONObject();
+
+        try {
+            JSONObject newLineObj = new JSONObject(msg);
+            contact.put("chat.listMessages", newLineObj);
+            action.put("$addToSet", contact);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        event.getChat().addMessage(message);
+        return true;
+    }
+
+    public Chat getChat() {
+        RestClient client = new RestClient(serverAddress + "events");
+        client.AddParam("id", event.getID());
+        client.AddParam("field", "chat");
+        Chat chat = null;
+
+        try {
+            client.Execute(RequestMethod.GET);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        JSONObject json = null;
+        try{
+            json = new JSONObject(client.getResponse());
+            JSONArray res = json.getJSONArray("result");
+            chat = new Gson().fromJson(res.getJSONObject(0).get("chat").toString(), Chat.class);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return chat;
     }
 }

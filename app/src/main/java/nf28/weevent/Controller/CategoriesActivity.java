@@ -1,7 +1,9 @@
 package nf28.weevent.Controller;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -70,7 +72,13 @@ public class CategoriesActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_activity, menu);
+        getMenuInflater().inflate(R.menu.menu_categories, menu);
+
+        SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);
+        String chatRegister = sharedPref.getString(DataManager.getInstance().getSelectedEvt().getID(), null);
+        if (chatRegister != null){
+            menu.findItem(R.id.action_chat).setIcon(R.drawable.ic_chat_newmessage);
+        }
         return true;
     }
 
@@ -85,6 +93,11 @@ public class CategoriesActivity extends ActionBarActivity {
                 // app icon in action bar clicked; go home
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                return true;
+            case R.id.action_chat:
+                // app icon in action bar clicked; go home
+                Intent chat = new Intent(this, ChatActivity.class);
+                startActivity(chat);
                 return true;
             default:
                 Intent intent_ = new Intent(this, EventsActivity.class);

@@ -64,7 +64,6 @@ public class Description extends Fragment {
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 // get user input and set it to result
-                                DataManager.getInstance().getSelectedEvt().setDesc(input.getText().toString());
                                 eventDesc.setText(DataManager.getInstance().getSelectedEvt().getDesc());
                                 DataManager.getInstance().setDescEvent(input.getText().toString());
                             }

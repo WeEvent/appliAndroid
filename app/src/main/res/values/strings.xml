@@ -66,5 +66,6 @@
 
     <!-- Change date -->
     <string name="date_picker">Set date </string>
+    <string name="action_chat">Chat</string>
 
 </resources>

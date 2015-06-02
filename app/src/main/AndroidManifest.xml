@@ -10,6 +10,22 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <permission
+        android:name="com.javapapers.android.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.javapapers.android.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -105,12 +121,30 @@
             android:screenOrientation="portrait"
             android:label="New Group">
         </activity>
-
+        <activity
+            android:name=".Controller.ChatActivity"
+            android:screenOrientation="portrait"
+            android:label="New Group">
+        </activity>
         <activity
             android:name=".Controller.DatePickerActivity"
             android:screenOrientation="portrait"
             android:label="Date picker">
         </activity>
+
+        <receiver
+            android:name=".Controller.Gcm.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.javapapers.android" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".Controller.Gcm.GCMNotificationIntentService" />
+
     </application>
 
 </manifest>

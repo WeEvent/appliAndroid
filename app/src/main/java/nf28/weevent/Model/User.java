@@ -12,6 +12,7 @@ public class User {
     private String login                        = null;
     private String password                     =null;
     private String mobile                       = null;
+    private String register_id                        = null;
     private ArrayList<String> listContacts           = null;
     private HashMap<String,Group> listGroups    = null;
     private HashMap<String,Event> listEvents    = null;
@@ -58,6 +59,13 @@ public class User {
     }
     public String getMobile(){
         return mobile;
+    }
+
+    public void setRegister_id(String _register_id){
+        register_id = _register_id;
+    }
+    public String getRegister_id(){
+        return register_id;
     }
     ///
 

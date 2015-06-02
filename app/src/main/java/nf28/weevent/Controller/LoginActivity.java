@@ -31,10 +31,11 @@ public class LoginActivity extends Activity implements OnClickListener {
         SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);
         String loginRegister = sharedPref.getString(("loginRegister"), null);
         if (loginRegister != null){
-            User tmp = DataManager.getInstance().getUser(loginRegister);
+            User tmp = DataManager.getInstance().setUser(loginRegister);
             if (tmp != null){
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         }
     }
@@ -51,8 +52,6 @@ public class LoginActivity extends Activity implements OnClickListener {
                 break;
         }
         startActivity(i);
+        finish();
     }
-
-
-
 }
