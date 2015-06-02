@@ -112,6 +112,7 @@ public class DataManager extends Activity {
     public List<String> getAllLogins() {
         //if (user == null)
         RestClient client = new RestClient(serverAddress + "users");
+        client.AddParam("field", "login");
 
         List<String> logins = new ArrayList<>();
 
@@ -127,8 +128,8 @@ public class DataManager extends Activity {
             json = new JSONObject(client.getResponse());
             JSONArray res = json.getJSONArray("result");
             for (int i = 0; i < res.length(); i++) {
-                User u = new Gson().fromJson(res.getJSONObject(i).toString(), User.class);
-                logins.add(u.getLogin());
+                //User u = new Gson().fromJson(res.getJSONObject(i).toString(), User.class);
+                logins.add(res.getJSONObject(i).get("login").toString());
             }
         }
         catch (Exception e){
@@ -701,7 +702,8 @@ public class DataManager extends Activity {
     public Chat getChat() {
         RestClient client = new RestClient(serverAddress + "events");
         client.AddParam("id", event.getID());
-        Event evt = null;
+        client.AddParam("field", "chat");
+        Chat chat = null;
 
         try {
             client.Execute(RequestMethod.GET);
@@ -714,12 +716,12 @@ public class DataManager extends Activity {
         try{
             json = new JSONObject(client.getResponse());
             JSONArray res = json.getJSONArray("result");
-            evt = new Gson().fromJson(res.get(0).toString(), Event.class);
+            chat = new Gson().fromJson(res.get(0).toString(), Chat.class);
         }
         catch (Exception e){
             e.printStackTrace();
         }
 
-        return evt.getChat();
+        return chat;
     }
 }
