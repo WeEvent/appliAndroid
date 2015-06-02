@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1">
 
+    <ImageView
+        android:src="@drawable/ic_place_grey"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/imageViewOverview"
+        android:layout_gravity="right"
+        android:layout_alignBottom="@+id/new_overview"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
     <CheckBox
-        android:drawableRight="@drawable/ic_place_grey"
 
         android:id="@+id/new_overview"
-        android:layout_width="match_parent"
+        android:layout_width="217dp"
         android:layout_height="55dp"
         android:button="@drawable/check_box_selector"
         android:text=""
         android:checked="false"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="25dp"/>
+        android:layout_marginTop="25dp"
+        android:layout_gravity="left"
+        android:layout_toLeftOf="@+id/imageViewOverview"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-</LinearLayout>
+</RelativeLayout>

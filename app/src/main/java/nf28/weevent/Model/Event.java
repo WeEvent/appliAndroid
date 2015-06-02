@@ -148,12 +148,26 @@ public class Event {
 
     public Vector<PollValue> getPreferedPolls(){
         Vector <PollValue> preferedPolls = new Vector<PollValue>();
-        for(Category categorie : mapCategories.values()){
+        Collection<Category> values = mapCategories.values();
+        Vector<Category> vect_categ = new Vector<Category>();
+
+        for(Category categorie : values) {
+            Category tmp = categorie;
+            for (int j = 0; j < vect_categ.size(); j++) {
+                if (vect_categ.get(j).getName().compareToIgnoreCase(categorie.getName()) >0){
+                    tmp = vect_categ.get(j);
+                    vect_categ.set(j,categorie);
+                    categorie = tmp;
+                }
+            }
+            vect_categ.add(categorie);
+        }
+
+        for(Category categorie : vect_categ){
             if(!categorie.getName().equalsIgnoreCase("Cat_0"))
                 if(!categorie.getName().equalsIgnoreCase("Cat_5"))
                     if(!categorie.getName().equalsIgnoreCase("Cat_1")) {
                         PollValue poll = categorie.getPreferedPoll();
-                        if(poll!=null)
                             preferedPolls.add(poll);
                     }
         }

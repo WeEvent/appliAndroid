@@ -41,8 +41,11 @@ public class Overview extends Fragment {
         //System.err.println( DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getName());
         pollValues = DataManager.getInstance().getSelectedEvt().getPreferedPolls();
         modelItems = new ModelAdapter[pollValues.size()];
+        int i=0;
         for (PollValue p : pollValues) {
-            if(p!= null)modelItems[pollIndex++] = new ModelAdapter(p.getValue(),(p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0);
+            if(p!= null)
+                modelItems[pollIndex++] = new ModelAdapter(p.getValue(),10*i+((p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0));
+            i++;
         }
         //TODO a user can be inserted only once!!!!!!!
         System.out.println("++ \n "+ pollValues+" \n++");

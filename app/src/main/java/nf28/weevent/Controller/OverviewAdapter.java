@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Filter;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,12 +39,26 @@ public class OverviewAdapter extends ArrayAdapter<ModelAdapter>{
         convertView = inflater.inflate(R.layout.check_overview, parent, false);
         //TextView name = (TextView) convertView.findViewById(R.id.textView1);
         CheckBox cb = (CheckBox) convertView.findViewById(R.id.new_overview);
+        ImageView img = (ImageView) convertView.findViewById(R.id.imageViewOverview);
         pos = position;  // update the position
 
 
         if(modelItems !=null) {
-            cb.setText(modelItems[position].getName());
-            if (modelItems[position].getValue() == 1)
+            int posit = position %10;
+            cb.setText(modelItems[posit].getName());
+            cb.setEnabled(false);
+            int idx = position /10;
+            switch(position) {
+                case 0:img.setImageResource(R.drawable.ic_time);
+                    break;
+                case 1:img.setImageResource(R.drawable.ic_place);
+                    break;
+                case 2:img.setImageResource(R.drawable.ic_transport);
+                    break;
+                default :
+                    img.setImageResource(R.drawable.ic_overview);
+            }
+            if (modelItems[posit].getValue() == 1)
                 cb.setChecked(true);
             else
                 cb.setChecked(false);
