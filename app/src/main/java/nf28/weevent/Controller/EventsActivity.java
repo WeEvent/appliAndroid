@@ -36,7 +36,7 @@ import nf28.weevent.Tools.DataManager;
 public class EventsActivity extends ActionBarActivity {
 
     private ListView mainListView ;
-    private ArrayAdapter<String> listAdapter ;
+    private ArrayAdapter<Event> listAdapter ;
     private final Context context = this;
     private HashMap<String,Event> events;
     // Search EditText
@@ -84,9 +84,9 @@ public class EventsActivity extends ActionBarActivity {
                                 event.addContact(DataManager.getInstance().getUser().getLogin());
 
                                 DataManager.getInstance().setSelectedEvt(event);
-                                if(DataManager.getInstance().getEvents().get(event.getNom())==null) {
+                                if(DataManager.getInstance().getEvents().get(event.getID())==null) {
                                     init(event);
-                                    startActivity(new Intent(EventsActivity.this,CreateEventActivity.class));
+                                    startActivity(new Intent(EventsActivity.this, CreateEventActivity.class));
                                 }else{
                                     Toast.makeText(getApplicationContext(),	"Event exists!", Toast.LENGTH_SHORT).show();
                                 }
@@ -110,12 +110,11 @@ public class EventsActivity extends ActionBarActivity {
             }
         });
 
-
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 // When clicked, show a toast with the TextView text
                 Toast.makeText(getApplicationContext(), ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
-                loadEvent(((TextView) view).getText().toString());
+                loadEvent(listAdapter.getItem(position));
 
             }
         });
@@ -149,16 +148,15 @@ public class EventsActivity extends ActionBarActivity {
         super.onResume();
         events = DataManager.getInstance().getEvents();
         listAdapter.clear();
-        listAdapter.addAll(new ArrayList<String>(events.keySet()));
+        listAdapter.addAll(events.values());
         listAdapter.notifyDataSetChanged();
     }
 
-    public void loadEvent(String evt){
-        Event event = events.get(evt);
+    public void loadEvent(Event event){
         if(event != null){
             DataManager.getInstance().setSelectedEvt(event);
             init(event);
-            startActivity(new Intent(EventsActivity.this,CategoriesActivity.class));
+            startActivity(new Intent(EventsActivity.this, CategoriesActivity.class));
         }else{
             Toast.makeText(getApplicationContext(),	"Event doesn't exist!", Toast.LENGTH_SHORT).show();
 

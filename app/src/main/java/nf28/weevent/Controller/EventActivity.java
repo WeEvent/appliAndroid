@@ -86,18 +86,12 @@ public class EventActivity extends Fragment {
     }
 
 
-    private HashMap<String,Event> getEvents() {
-        return DataManager.getInstance().getEvents();
-    }
-
     private void init(){
         Vector<Integer> tabs = new Vector<Integer>();
 
         Event event = DataManager.getInstance().getSelectedEvt();
-       // Event event_ = DataManager.getIn
 
         tabs.add(0);
-
 
         tabs.add(1);
 

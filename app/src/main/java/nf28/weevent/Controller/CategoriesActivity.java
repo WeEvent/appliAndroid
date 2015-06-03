@@ -65,10 +65,6 @@ public class CategoriesActivity extends ActionBarActivity {
         tabs.setViewPager(pager);
     }
 
-    private HashMap<String,Event> getEvents() {
-        return DataManager.getInstance().getEvents();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

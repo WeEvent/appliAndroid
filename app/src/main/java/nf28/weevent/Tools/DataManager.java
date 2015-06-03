@@ -452,7 +452,7 @@ public class DataManager extends Activity {
             events = new HashMap<>();
             for (int i = 0; i < array.length(); i++) {
                 Event e = new Gson().fromJson(array.getJSONObject(i).toString(), Event.class);
-                events.put(e.getNom(), e);
+                events.put(e.getID(), e);
             }
         }
         catch (Exception e){

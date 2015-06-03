@@ -183,4 +183,9 @@ public class Event {
         // To be implemented
     }
     ///
+
+    @Override
+    public String toString(){
+        return this.nom;
+    }
 }
