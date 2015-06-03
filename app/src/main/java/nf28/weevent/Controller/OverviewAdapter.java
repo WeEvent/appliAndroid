@@ -43,7 +43,7 @@ public class OverviewAdapter extends ArrayAdapter<ModelAdapter>{
         pos = position;  // update the position
 
 
-        if(modelItems !=null) {
+        if(modelItems[position] !=null && modelItems.length!=0) {
             int posit = position %10;
             cb.setText(modelItems[posit].getName());
             cb.setEnabled(false);

@@ -140,7 +140,8 @@ public class Date extends Fragment {
 
         ((TimePickerDialog)d).setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int buttonId) {
-                   updateDisplay();
+
+                updateDisplay();
                 System.out.println("\n\n\n\nUpdate launched\n\n\n");
             }
         });
@@ -163,7 +164,9 @@ public class Date extends Fragment {
     }
     // updates the date we display in the TextView
     private void updateDisplay() {
-        String mDateDisplay = ""+(mMonth + 1)+"-"+mDay+"-"+mYear+"       "+pad(mHour)+" : "+pad(mMinute);
+        new TimePickerDialog(context,
+                mTimeSetListener, mHour, mMinute, false);
+        String mDateDisplay = ""+(mMonth + 1)+"-"+mDay+"-"+mYear+"       "+mHour+" : "+(mMinute);
         DataManager.getInstance().addLineToPoll("Cat_2",mDateDisplay);
         pollValues = DataManager.getInstance().getSelectedEvt().getCategory("Cat_2").getPollValues();
         modelItems = new ModelAdapter[pollValues.size()];
@@ -176,7 +179,7 @@ public class Date extends Fragment {
         mainListView.setAdapter(adapter);
 
         adapter.notifyDataSetChanged();
-        Toast.makeText(context,"Date added", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,mDateDisplay, Toast.LENGTH_SHORT).show();
 
     }
 
