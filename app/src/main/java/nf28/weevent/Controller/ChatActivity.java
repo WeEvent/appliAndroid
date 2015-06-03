@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -13,8 +15,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -67,10 +71,15 @@ public class ChatActivity extends ActionBarActivity {
 
         lv.setAdapter(adapter);
 
+        lv.setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
+        lv.setStackFromBottom(true);
+
         editText1 = (EditText) findViewById(R.id.editText1);
+
         editText1.setOnKeyListener(new OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)
+                        && !editText1.getText().toString().equals("")) {
 
                     Message newMessage = new Message(DataManager.getInstance().getUser().getLogin(),
                                                     editText1.getText().toString());
