@@ -18,6 +18,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import nf28.weevent.Controller.LoginActivity;
 import nf28.weevent.Controller.MainActivity;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
@@ -77,7 +78,7 @@ public class GCMNotificationIntentService extends IntentService {
                         .getSystemService(Context.NOTIFICATION_SERVICE);
 
                 PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                        new Intent(this, MainActivity.class), 0);
+                        new Intent(this, LoginActivity.class), 0);
 
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
                         this).setSmallIcon(R.drawable.gcm_cloud)
