@@ -10,6 +10,7 @@
         android:background="#ffffffff"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+
         <!-- Editext for Search -->
         <EditText android:id="@+id/inputSearch"
             android:layout_width="fill_parent"
@@ -17,6 +18,39 @@
             android:hint="@string/search_events"
             android:inputType="textVisiblePassword"
             android:layout_marginBottom="20dp" />
+
+    <LinearLayout
+        android:padding="50dp"
+        android:id="@+id/progressbar_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <ProgressBar
+                style="@android:style/Widget.Holo.Light.ProgressBar.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:text="Loading data..." />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#C0C0C0" />
+    </LinearLayout>
 
         <ListView
             android:layout_width="wrap_content"
@@ -39,5 +73,7 @@
             android:layout_alignRight="@+id/ListView"
             android:layout_alignEnd="@+id/ListView"
             android:layout_marginTop="20dp" />
+
+
 
     </RelativeLayout>
