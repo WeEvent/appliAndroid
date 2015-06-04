@@ -55,25 +55,19 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        Button btn_events = (Button) findViewById(R.id.btn_events);
-        btn_events.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.event_cardview).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, EventsActivity.class));
             }
         });
 
-        btn_events.setOnTouchListener(onTouchListener);
-
-        Button btn_friends = (Button) findViewById(R.id.btn_friends);
-        btn_friends.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.friend_cardview).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, FriendsActivity.class));
             }
         });
-
-        btn_friends.setOnTouchListener(onTouchListener);
     }
 
     protected void addDrawerItems() {

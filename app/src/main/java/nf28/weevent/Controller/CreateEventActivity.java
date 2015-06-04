@@ -65,16 +65,6 @@ public class CreateEventActivity extends ActionBarActivity {
 
     }
 
-    /*public void init_categ_event(Event e){
-        for(Category c : e.getCategoryList())
-            c.addPollValue(" Default ");
-    }*/
-
-
-    private HashMap<String,Event> getEvents() {
-        return DataManager.getInstance().getEvents();
-    }
-
     private void init(){
         Vector<Integer> tabs = new Vector<Integer>();
         //reset

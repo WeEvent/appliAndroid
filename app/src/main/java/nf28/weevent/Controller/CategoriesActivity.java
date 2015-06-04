@@ -65,10 +65,6 @@ public class CategoriesActivity extends ActionBarActivity {
         tabs.setViewPager(pager);
     }
 
-    private HashMap<String,Event> getEvents() {
-        return DataManager.getInstance().getEvents();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -93,6 +89,7 @@ public class CategoriesActivity extends ActionBarActivity {
                 // app icon in action bar clicked; go home
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                finish();
                 return true;
             case R.id.action_chat:
                 // app icon in action bar clicked; go home
@@ -100,9 +97,10 @@ public class CategoriesActivity extends ActionBarActivity {
                 startActivity(chat);
                 return true;
             default:
-                Intent intent_ = new Intent(this, EventsActivity.class);
+                /*Intent intent_ = new Intent(this, EventsActivity.class);
                 startActivity(intent_);
-                return true;
+                return true;*/
+                return super.onOptionsItemSelected(menuItem);
         }
 
        /* int id = item.getItemId();

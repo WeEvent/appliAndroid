@@ -8,54 +8,120 @@
 
 
 <!-- The first child in the layout is for the main Activity UI-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        tools:context=".MainActivity"
-        android:background="#ffffffff">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="fill_parent"
+        android:layout_width="match_parent">
 
-        <Button
-            android:id="@+id/btn_events"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_events_text"
-            style="?android:attr/borderlessButtonStyle"
-            android:background="#ff08ae9e"
-            android:textColor="#FFFFFF"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignRight="@+id/imageView"
-            android:layout_alignEnd="@+id/imageView" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent">
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:src="@drawable/social_network"
-            android:layout_below="@+id/btn_friends"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="48dp" />
+                app:cardBackgroundColor="#08AE9E"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="2dp"
+                android:id="@+id/view">
 
-        <Button
-            android:id="@+id/btn_friends"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_friends_text"
-            style="?android:attr/borderlessButtonStyle"
-            android:background="#ff08ae9e"
-            android:textColor="#FFFFFF"
-            android:layout_below="@+id/btn_events"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="40dp"
-            android:layout_alignRight="@+id/btn_events"
-            android:layout_alignEnd="@+id/btn_events" />
+                <!-- Les CardView possèdent des attributs supplémentaires dont
+                     - cardBackgroundColor
+                     - cardElevation pour l'élévation (donc aussi l'ombre)
+                     - cardCornerRadius pour arrondir les angles
+                 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/event_cardview">
+
+                    <!-- Les CardView agissent comme des FrameLayout,
+                     pour avoir une organisation verticale nous devons
+                     donc rajouter un LinearLayout -->
+
+                    <ImageView
+                        android:id="@+id/image"
+                        android:layout_width="match_parent"
+                        android:layout_height="155dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/agenda_cardview"/>
+
+                    <TextView
+                        android:id="@+id/text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="30dp"
+                        android:background="?android:selectableItemBackground"
+                        android:text="Manage your events"
+                        android:textColor="#FFF"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent">
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+
+                app:cardBackgroundColor="#08AE9E"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="2dp"
+                android:id="@+id/view2"
+                android:layout_marginTop="0dp"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="50dp">
+
+                <!-- Les CardView possèdent des attributs supplémentaires dont
+                     - cardBackgroundColor
+                     - cardElevation pour l'élévation (donc aussi l'ombre)
+                     - cardCornerRadius pour arrondir les angles
+                 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/friend_cardview"
+                    android:weightSum="1">
+
+                    <!-- Les CardView agissent comme des FrameLayout,
+                     pour avoir une organisation verticale nous devons
+                     donc rajouter un LinearLayout -->
+
+                    <ImageView
+                        android:id="@+id/image2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="155dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/friend_cardview"
+                        android:layout_marginBottom="0dp" />
+
+                    <TextView
+                        android:id="@+id/text2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="30dp"
+                        android:background="?android:selectableItemBackground"
+                        android:text="Friends and Groups"
+                        android:textColor="#FFF"
+                        android:textSize="18sp"
+                        android:layout_weight="0.62"
+                        android:layout_marginBottom="0dp" />
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
     </RelativeLayout>
 
     <ListView
