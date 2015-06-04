@@ -21,18 +21,21 @@ import nf28.weevent.Tools.DataManager;
  */
 
 public class CustomAdapter extends ArrayAdapter<ModelAdapter>{
-        ModelAdapter[] originalItems = null;
-        ModelAdapter[] modelItems = null;
+
+        List<ModelAdapter> originalItems = null;
+        List<ModelAdapter> modelItems = null;
         Context context;
         CustomFilter filter = null;
         int pos = 0;
-public CustomAdapter(Context context, ModelAdapter[] resource) {
-        super(context, R.layout.check_friend,resource);
-        // TODO Auto-generated constructor stub
-        this.context = context;
-        this.modelItems = resource;
-        this.originalItems = resource;
+
+        public CustomAdapter(Context context, List<ModelAdapter> resource) {
+                super(context, R.layout.check_friend,resource);
+                // TODO Auto-generated constructor stub
+                this.context = context;
+                this.modelItems = resource;
+                this.originalItems = resource;
         }
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
                 // TODO Auto-generated method stub
@@ -67,11 +70,11 @@ public CustomAdapter(Context context, ModelAdapter[] resource) {
                      }
                      }
                   } );
-                  if(position < modelItems.length) {
-                      cb.setText(modelItems[position].getName());
-                      if (modelItems[position].getValue() == 1) {
+                  if(position < modelItems.size()) {
+                      cb.setText(modelItems.get(position).getName());
+                      if (modelItems.get(position).getValue() == 1) {
                           cb.setChecked(true);
-                          if(!modelItems[position].getName().equalsIgnoreCase(DataManager.getInstance().getUser().getLogin()))
+                          if(!modelItems.get(position).getName().equalsIgnoreCase(DataManager.getInstance().getUser().getLogin()))
                             cb.setEnabled(false);
                       }
                       else
@@ -81,54 +84,55 @@ public CustomAdapter(Context context, ModelAdapter[] resource) {
 
                 return convertView;
         }
-    //TODO to be removed if there is a bug !!!!1
-    @Override
-    public Filter getFilter() {
-        if (filter == null)
-            filter = new CustomFilter();
 
-        return filter;
-    }
-
-    private class CustomFilter extends Filter {
-
+        //TODO to be removed if there is a bug !!!!1
         @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results = new FilterResults();
-            // We implement here the filter logic
-            if (constraint == null || constraint.length() == 0) {
-                // No filter implemented we return all the list
-                results.values = originalItems;
-                results.count = originalItems.length;
-            } else {
-                // We perform filtering operation
-                List<ModelAdapter> modelList = new ArrayList<ModelAdapter>();
+        public Filter getFilter() {
+            if (filter == null)
+                filter = new CustomFilter();
 
-                for (ModelAdapter p : originalItems) {
-                    if (p.getName().toUpperCase().startsWith(constraint.toString().toUpperCase()))
-                        modelList.add(p);
+            return filter;
+        }
+
+        private class CustomFilter extends Filter {
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults results = new FilterResults();
+                // We implement here the filter logic
+                if (constraint == null || constraint.length() == 0) {
+                    // No filter implemented we return all the list
+                    results.values = originalItems;
+                    results.count = originalItems.size();
+                } else {
+                    // We perform filtering operation
+                    List<ModelAdapter> modelList = new ArrayList<ModelAdapter>();
+
+                    for (ModelAdapter p : originalItems) {
+                        if (p.getName().toUpperCase().startsWith(constraint.toString().toUpperCase()))
+                            modelList.add(p);
+                    }
+
+                    ModelAdapter [] new_adapt = new ModelAdapter[modelList.size()];
+                    for(int i=0;i<modelList.size();i++)
+                        new_adapt[i]= modelList.get(i);
+
+                    results.values = new_adapt;
+                    results.count = new_adapt.length;
+
                 }
+                return results;
+            }
 
-                ModelAdapter [] new_adapt = new ModelAdapter[modelList.size()];
-                for(int i=0;i<modelList.size();i++)
-                    new_adapt[i]= modelList.get(i);
+            @Override
+            protected void publishResults(CharSequence constraint,
+                                          FilterResults results) {
 
-                results.values = new_adapt;
-                results.count = new_adapt.length;
+                // Now we have to inform the adapter about the new list filtered
+
+                modelItems = (List<ModelAdapter>) results.values;
+                notifyDataSetChanged();
 
             }
-            return results;
         }
-
-        @Override
-        protected void publishResults(CharSequence constraint,
-                                      FilterResults results) {
-
-            // Now we have to inform the adapter about the new list filtered
-
-            modelItems = (ModelAdapter[]) results.values;
-            notifyDataSetChanged();
-
-        }
-    }
 }

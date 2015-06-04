@@ -219,14 +219,15 @@ public class EventsActivity extends ActionBarActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             //UPDATE VUE
-            events = DataManager.getInstance().getEvents();
+            /*events = DataManager.getInstance().getEvents();
             listAdapter.clear();
             listAdapter.addAll(events.values());
-            listAdapter.notifyDataSetChanged();
+            listAdapter.notifyDataSetChanged();*/
+            new Task().execute();
         }
     };
 
-    class Task extends AsyncTask<String, Integer, Boolean> {
+    private class Task extends AsyncTask<String, Integer, Boolean> {
         @Override
         protected void onPreExecute() {
             layout.setVisibility(View.VISIBLE);
@@ -249,6 +250,7 @@ public class EventsActivity extends ActionBarActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    listAdapter.clear();
                     listAdapter.addAll(events.values());
                 }
             });

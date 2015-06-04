@@ -30,7 +30,21 @@
         android:padding="10dp"
         android:text="Send Invitation"
         android:background="@drawable/button_default_bg"
-        android:layout_marginBottom="62dp"
+        android:layout_marginBottom="122dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
+
+    <Button
+        android:id="@+id/btnLeaveEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Leave the event"
+        android:background="@drawable/button_default_bg"
+        android:layout_marginBottom="42dp"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/textView"
         android:layout_alignStart="@+id/textView"
