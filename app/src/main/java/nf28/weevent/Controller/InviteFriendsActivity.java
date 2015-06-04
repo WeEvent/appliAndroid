@@ -159,7 +159,7 @@ public class InviteFriendsActivity extends ActionBarActivity {
         for (String contact : list_contact) {
             String mobilePhone = DataManager.getInstance().getUser(contact).getMobile();
             if (mobilePhone != null){
-                String sms = "Test";
+                String sms = DataManager.getInstance().getSelectedEvt().getNom()+" invite you to "+DataManager.getInstance().getSelectedEvt().getNom();
                 try {
                     SmsManager smsManager = SmsManager.getDefault();
                     smsManager.sendTextMessage(mobilePhone, null, sms, null, null);

@@ -463,6 +463,32 @@ public class DataManager extends Activity {
         return events;
     }
 
+    public Event getEvent(String idEvent) {
+        RestClient client = new RestClient(serverAddress + "events");
+        client.AddParam("id", idEvent);
+
+        try {
+            client.Execute(RequestMethod.GET);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        Event evt = null;
+        JSONObject json = null;
+        try{
+            json = new JSONObject(client.getResponse());
+            JSONArray array = json.getJSONArray("result");
+            evt = new Gson().fromJson(array.getJSONObject(0).toString(), Event.class);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+        return evt;
+    }
+
     public boolean removeContactFromEvent(String login) {
         RestClient client = new RestClient(serverAddress + "events");
         client.AddParam("id", event.getID());

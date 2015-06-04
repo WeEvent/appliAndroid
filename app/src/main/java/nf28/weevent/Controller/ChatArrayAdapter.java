@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,14 +68,16 @@ public class ChatArrayAdapter extends ArrayAdapter<Message>{
         if(isMessageFromCurrentUser)
         {
             newMessage.setText(message.getTextMsg());
+            newMessage.setTextColor(Color.WHITE);
         }
         else
         {
             newMessage.setText(message.getLogin()+":\n"+message.getTextMsg());
+            newMessage.setTextColor(Color.BLACK);
         }
 
 
-        newMessage.setBackgroundResource(!isMessageFromCurrentUser ? R.drawable.bubble_yellow : R.drawable.bubble_green);
+        newMessage.setBackgroundResource(!isMessageFromCurrentUser ? R.drawable.bubble_gray : R.drawable.bubble_green);
         wrapper.setGravity(!isMessageFromCurrentUser ? Gravity.LEFT : Gravity.RIGHT);
 
         return row;

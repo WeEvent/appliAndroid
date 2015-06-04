@@ -43,7 +43,8 @@ public class OverviewAdapter extends ArrayAdapter<ModelAdapter>{
         pos = position;  // update the position
 
 
-        if(modelItems[position] !=null && modelItems.length!=0) {
+        if(modelItems[position] !=null) {
+            int tab = ViewPagerAdapter.getSizeTab();
             int posit = position %10;
             cb.setText(modelItems[posit].getName());
             cb.setEnabled(false);

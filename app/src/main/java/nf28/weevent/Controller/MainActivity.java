@@ -29,6 +29,7 @@ import java.util.Map;
 
 import nf28.weevent.Model.User;
 import nf28.weevent.R;
+import nf28.weevent.Tools.DataManager;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -77,8 +78,8 @@ public class MainActivity extends ActionBarActivity {
 
     protected void addDrawerItems() {
 
-        String[] thumbnail = {String.valueOf(R.drawable.ic_event),String.valueOf(R.drawable.ic_friends) ,String.valueOf(R.drawable.ic_historical) ,String.valueOf(R.drawable.ic_profile) , String.valueOf(R.drawable.ic_settings), String.valueOf(R.drawable.ic_settings) };
-        String[] text = { "Events", "Friends", "Historical", "Profile", "Settings", "Logout" };
+        String[] thumbnail = {String.valueOf(R.drawable.ic_profile),"",String.valueOf(R.drawable.ic_event),String.valueOf(R.drawable.ic_friends) ,String.valueOf(R.drawable.ic_historical) , String.valueOf(R.drawable.ic_settings), String.valueOf(R.drawable.ic_logout) };
+        String[] text = {DataManager.getInstance().getUser().getLogin(),"","Events", "Friends", "Historical", "Settings", "Logout" };
 
         List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
         for (int i = 0; i < text.length; i++) {
@@ -89,32 +90,28 @@ public class MainActivity extends ActionBarActivity {
         }
         mDrawerList.setAdapter(new SimpleAdapter(this, data, R.layout.drawer_item, new String[] {"thumbnail","name"}, new int[] {R.id.imageView, R.id.titoloTv}));
 
-
-        //TODO:replace by R.string.item_home, R.string.item_events... but there is a cast problem
-        String[] osArray = { "Events", "Friends", "Historical", "Profile", "Settings" };
-        //mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
-        //mDrawerList.setAdapter(mAdapter);
-
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        startActivity(new Intent(MainActivity.this, EventsActivity.class));
-                        break;
-                    case 1:
-                        startActivity(new Intent(MainActivity.this,FriendsActivity.class));
-                        break;
-                    case 2:
-                        startActivity(new Intent(MainActivity.this,HistoricalActivity.class));
-                        break;
-                    case 3:
                         startActivity(new Intent(MainActivity.this,ProfileActivity.class));
                         break;
+                    case 1:
+                        break;
+                    case 2:
+                        startActivity(new Intent(MainActivity.this, EventsActivity.class));
+                        break;
+                    case 3:
+                        startActivity(new Intent(MainActivity.this,FriendsActivity.class));
+                        break;
                     case 4:
-                        startActivity(new Intent(MainActivity.this,SettingsActivity.class));
+                        startActivity(new Intent(MainActivity.this,HistoricalActivity.class));
                         break;
                     case 5:
+                        startActivity(new Intent(MainActivity.this,SettingsActivity.class));
+                        break;
+                    case 6:
                         SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.remove("loginRegister");
