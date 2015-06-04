@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
@@ -16,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,18 +44,31 @@ public class EventsActivity extends ActionBarActivity {
     // Search EditText
     EditText inputSearch;
 
+    LinearLayout layout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.events);
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        mainListView = (ListView) findViewById( R.id.ListView );
+        mainListView = (ListView) findViewById(R.id.ListView);
+        layout = (LinearLayout) findViewById(R.id.progressbar_view);
 
-        listAdapter = new ArrayAdapter(this, R.layout.simplerow);
+        listAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
         mainListView.setAdapter(listAdapter);
+        mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView parent, View view, int position, long id) {
+                // When clicked, show a toast with the TextView text
+                Toast.makeText(getApplicationContext(), ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+                loadEvent(listAdapter.getItem(position));
+
+            }
+        });
 
         Button btn_events = (Button) findViewById(R.id.btn_events_add);
         btn_events.setOnClickListener(new View.OnClickListener() {
@@ -110,16 +125,6 @@ public class EventsActivity extends ActionBarActivity {
             }
         });
 
-        mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView parent, View view, int position, long id) {
-                // When clicked, show a toast with the TextView text
-                Toast.makeText(getApplicationContext(), ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
-                loadEvent(listAdapter.getItem(position));
-
-            }
-        });
-
-
         inputSearch = (EditText) findViewById(R.id.inputSearch);
         inputSearch.addTextChangedListener(new TextWatcher() {
 
@@ -141,16 +146,20 @@ public class EventsActivity extends ActionBarActivity {
                 // TODO Auto-generated method stub
             }
         });
+
+        new Task().execute();
+
+
     }
 
-    @Override
+    /*@Override
     public void onResume(){
         super.onResume();
         events = DataManager.getInstance().getEvents();
         listAdapter.clear();
         listAdapter.addAll(events.values());
         listAdapter.notifyDataSetChanged();
-    }
+    }*/
 
     public void loadEvent(Event event){
         if(event != null){
@@ -198,5 +207,39 @@ public class EventsActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_activity, menu);
         return true;
+    }
+
+
+
+
+
+    class Task extends AsyncTask<String, Integer, Boolean> {
+        @Override
+        protected void onPreExecute() {
+            layout.setVisibility(View.VISIBLE);
+            mainListView.setVisibility(View.GONE);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            layout.setVisibility(View.GONE);
+            mainListView.setVisibility(View.VISIBLE);
+            listAdapter.notifyDataSetChanged();
+            super.onPostExecute(result);
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            events = DataManager.getInstance().getEvents();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    listAdapter.addAll(events.values());
+                }
+            });
+            return null;
+        }
     }
 }
