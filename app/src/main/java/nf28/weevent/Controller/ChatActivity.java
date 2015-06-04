@@ -121,6 +121,7 @@ public class ChatActivity extends ActionBarActivity {
                 // app icon in action bar clicked; go home
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(menuItem);
@@ -177,5 +178,13 @@ public class ChatActivity extends ActionBarActivity {
         // Unregister since the activity is about to be closed.
         unregisterReceiver(mMessageReceiver);
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, CategoriesActivity.class);
+        startActivity(intent);
+        finish();
+        //super.onBackPressed();
     }
 }

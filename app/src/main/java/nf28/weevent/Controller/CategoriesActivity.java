@@ -97,9 +97,6 @@ public class CategoriesActivity extends ActionBarActivity {
                 startActivity(chat);
                 return true;
             default:
-                /*Intent intent_ = new Intent(this, EventsActivity.class);
-                startActivity(intent_);
-                return true;*/
                 return super.onOptionsItemSelected(menuItem);
         }
 
