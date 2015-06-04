@@ -9,10 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 
-import java.util.HashMap;
 import java.util.Vector;
 
-import nf28.weevent.Model.Category;
 import nf28.weevent.Model.Event;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
@@ -27,6 +25,7 @@ public class CreateEventActivity extends ActionBarActivity {
     private CheckBox radio_date;
     private CheckBox radio_map;
     private CheckBox radio_transp;
+    private CheckBox radio_type;
     private CheckBox radio_overview;
 
     private Button btn_events_create;
@@ -42,10 +41,11 @@ public class CreateEventActivity extends ActionBarActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
        // radio_desc = (CheckBox) findViewById(R.id.select_desc);
-        radio_evt = (CheckBox) findViewById(R.id.select_evt);
+       // radio_evt = (CheckBox) findViewById(R.id.select_evt);
         radio_date = (CheckBox) findViewById(R.id.select_date);
         radio_map = (CheckBox) findViewById(R.id.select_map);
         radio_transp = (CheckBox) findViewById(R.id.select_transp);
+        radio_type = (CheckBox)findViewById(R.id.select_type);
         //radio_overview = (CheckBox) findViewById(R.id.select_resume);
 
 
@@ -73,9 +73,10 @@ public class CreateEventActivity extends ActionBarActivity {
 
         tabs.add(0);
         event.addCategory("Cat_0","Categ_0");
-        if(radio_evt.isChecked()) {
+
+        if(radio_type.isChecked()) {
             tabs.add(1);
-            event.addCategory("Cat_1","Categ_1");
+            event.addCategory("Cat_1", "Categ_1");
         }
         if(radio_date.isChecked()) {
             tabs.add(2);
@@ -90,10 +91,12 @@ public class CreateEventActivity extends ActionBarActivity {
             event.addCategory("Cat_4", "Categ_4");
         }
 
-
         tabs.add(5);
+        event.addCategory("Cat_5","Categ_5");
 
-        event.addCategory("Cat_5", "Categ_5");
+        tabs.add(6);
+
+        event.addCategory("Cat_6", "Categ_6");
         updateEventCategories(tabs);
         //init_categ_event(event);
 

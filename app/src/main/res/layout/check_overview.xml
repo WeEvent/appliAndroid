@@ -19,7 +19,7 @@
         android:id="@+id/new_overview"
         android:layout_width="217dp"
         android:layout_height="55dp"
-        android:button="@drawable/check_box_selector"
+        android:button="@drawable/check_overview_selector"
         android:text=""
         android:checked="false"
         android:layout_marginTop="25dp"

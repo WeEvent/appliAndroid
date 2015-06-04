@@ -28,7 +28,7 @@ import nf28.weevent.Tools.DataManager;
 /**
  * Created by KM on 13/05/15.
  */
-public class Place extends Fragment {
+public class EventType extends Fragment {
     private Button addPlace = null;
     private ListView mainListView = null;
     private ModelAdapter[] modelItems = new ModelAdapter[1];
@@ -41,26 +41,26 @@ public class Place extends Fragment {
     int pollIndex = 0; /// index used to fill the container for friends
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v =inflater.inflate(R.layout.place,container,false);
+        View v =inflater.inflate(R.layout.type,container,false);
         context = inflater.getContext();
-        mainListView = (ListView) v.findViewById( R.id.PlaceView );
+        mainListView = (ListView) v.findViewById( R.id.TypeView );
         //System.err.println( DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getName());
-        pollValues = DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getPollValues();
+        pollValues = DataManager.getInstance().getSelectedEvt().getCategory("Cat_1").getPollValues();
         modelItems = new ModelAdapter[pollValues.size()];
         for (PollValue p : pollValues) {
-            modelItems[pollIndex++] = new ModelAdapter(p.getValue(),(p.hasVoted(DataManager.getInstance().getUser().getLogin())?1:0),p.getVotersCount());
+            modelItems[pollIndex++] = new ModelAdapter(p.getValue(),(p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0);
         }
         //TODO a user can be inserted only once!!!!!!!
         adapter = new PlaceAdapter(context, modelItems);
         mainListView.setAdapter(adapter);
 
-        addPlace = (Button) v.findViewById(R.id.add_new_place);
+        addPlace = (Button) v.findViewById(R.id.add_new_type);
         addPlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LayoutInflater layoutInflater = LayoutInflater.from(context);
 
-                View promptView = layoutInflater.inflate(R.layout.dialog_place, null);
+                View promptView = layoutInflater.inflate(R.layout.dialog_eventtype, null);
 
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
@@ -75,19 +75,19 @@ public class Place extends Fragment {
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 // get user input and set it to result
-                                DataManager.getInstance().addLineToPoll("Cat_3",input.getText().toString());
-                                pollValues = DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getPollValues();
+                                DataManager.getInstance().addLineToPoll("Cat_1",input.getText().toString());
+                                pollValues = DataManager.getInstance().getSelectedEvt().getCategory("Cat_1").getPollValues();
                                 modelItems = new ModelAdapter[pollValues.size()];
                                 pollIndex = 0;
                                 for (PollValue p : pollValues) {
-                                    modelItems[pollIndex++] = new ModelAdapter(p.getValue(),(p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0);
+                                    modelItems[pollIndex++] = new ModelAdapter(p.getValue(),(p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0,p.getVotersCount());
                                 }
 
                                adapter = new PlaceAdapter(context, modelItems);
                                mainListView.setAdapter(adapter);
 
                                adapter.notifyDataSetChanged();
-                               Toast.makeText(context,"Place added", Toast.LENGTH_SHORT).show();
+                               Toast.makeText(context,"Type event added", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .setNegativeButton("Cancel",
@@ -108,7 +108,7 @@ public class Place extends Fragment {
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 // When clicked, show a toast with the TextView text
                 Toast.makeText(context, ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
-                DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getPollValue(((TextView) view).getText()
+                DataManager.getInstance().getSelectedEvt().getCategory("Cat_1").getPollValue(((TextView) view).getText()
                         .toString()).addVoter(DataManager.getInstance().getUser().getLogin());
 
             }
@@ -121,7 +121,7 @@ public class Place extends Fragment {
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
                 // When user changed the Text
                 //TODO filter not working properly
-                Place.this.adapter.getFilter().filter(cs);
+                EventType.this.adapter.getFilter().filter(cs);
             }
 
             @Override

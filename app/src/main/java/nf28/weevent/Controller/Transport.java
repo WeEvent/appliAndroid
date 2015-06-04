@@ -48,7 +48,7 @@ public class Transport extends Fragment {
         pollValues = DataManager.getInstance().getSelectedEvt().getCategory("Cat_4").getPollValues();
         modelItems = new ModelAdapter[pollValues.size()];
         for (PollValue p : pollValues) {
-            modelItems[pollIndex++] = new ModelAdapter(p.getValue(),(p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0);
+            modelItems[pollIndex++] = new ModelAdapter(p.getValue(),(p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0,p.getVotersCount());
         }
         //TODO a user can be inserted only once!!!!!!!
         adapter = new TransportAdapter(context, modelItems);

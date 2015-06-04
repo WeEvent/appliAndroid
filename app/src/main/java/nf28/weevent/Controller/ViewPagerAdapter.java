@@ -17,7 +17,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     int NumbOfTabs; // Store the number of tabs, this will also be passed when the ViewPagerAdapter is created
 
     static private Vector<Integer> tab_names = new Vector<Integer>();
-    private static CharSequence Tiles_all[]={"Description","Event","Date","Place","Transport","Overview"};
+    private static CharSequence Tiles_all[]={"Description","Type","Date","Place","Transport","Event","Overview"};
 
     // Build a Constructor and assign the passed Values to appropriate values in the class
     public ViewPagerAdapter(FragmentManager fm,CharSequence mTitles[], int mNumbOfTabsumb) {
@@ -31,6 +31,10 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public static void addTab(int id){
         System.err.println("-"+id);
         tab_names.add(id);
+    }
+
+    static public Vector<Integer> getTabs(){
+        return tab_names;
     }
 
     public static int getSizeTab(){
@@ -63,28 +67,32 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         {
             Description description = new Description();
             return description;
+        }else if(ViewPagerAdapter.getTabName(position) == 1 ){     // 1 Type
+            EventType type = new EventType();
+            return type;
         }
-        else  if(ViewPagerAdapter.getTabName(position) == 1)      // second tab corresponds to the second category and so on ...
-        {
-            EventActivity event = new EventActivity();
-            return event;
-        }else  if(ViewPagerAdapter.getTabName(position) == 2)      // 3 tab corresponds to Date
+        else  if(ViewPagerAdapter.getTabName(position) == 2)      // 2 tab corresponds to Date
         {
             Date date = new Date();
             return date;
-        } else  if(ViewPagerAdapter.getTabName(position) == 3)      // 4 tab corresponds to Place
+        } else  if(ViewPagerAdapter.getTabName(position) == 3)      // 3 tab corresponds to Place
         {
             Place place = new Place();
             return place;
-        } else if(ViewPagerAdapter.getTabName(position) == 4)      // 5 tab corresponds to Transport
+        } else if(ViewPagerAdapter.getTabName(position) == 4)      // 4 tab corresponds to Transport
         {
             Transport transport = new Transport();
             return transport;
-        }else if(ViewPagerAdapter.getTabName(position) == 5 )       //  6 overview
+        }else  if(ViewPagerAdapter.getTabName(position) == 5)      // second tab corresponds to the second category and so on ...
+        {
+            EventActivity event = new EventActivity();
+            return event;
+        }else if(ViewPagerAdapter.getTabName(position) == 6 )       //  6 overview
         {
             Overview overview = new Overview();
             return overview;
-        }else{
+        }
+        else{
             return null;
         }
     }

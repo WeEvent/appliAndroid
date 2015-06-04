@@ -241,6 +241,9 @@ public class SlidingTabLayout extends HorizontalScrollView {
                     img = getContext().getResources().getDrawable(R.drawable.ic_transp);
                     break;
                 case 5:
+                    img = getContext().getResources().getDrawable(R.drawable.ic_categories_img);
+                    break;
+                case 6:
                     img = getContext().getResources().getDrawable(R.drawable.ic_overview);
                     break;
                 default:

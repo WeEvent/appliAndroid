@@ -67,7 +67,7 @@ public TransportAdapter(Context context, ModelAdapter[] resource) {
                 }
             } );
                 if(position < modelItems.length) {
-                    cb.setText(modelItems[position].getName());
+                    cb.setText(modelItems[position].getVotes() + " - " +modelItems[position].getName());
                     if (modelItems[position].getValue() == 1)
                         cb.setChecked(true);
                     else

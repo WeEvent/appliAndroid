@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-import java.util.HashMap;
 import java.util.Vector;
 
 import nf28.weevent.Model.Category;
@@ -30,6 +29,7 @@ public class EventActivity extends Fragment {
     private CheckBox radio_date;
     private CheckBox radio_map;
     private CheckBox radio_transport;
+    private CheckBox radio_type;
     private CheckBox radio_overview;
     private Context context  = null;
     private Button btn_events_create;
@@ -43,6 +43,7 @@ public class EventActivity extends Fragment {
         radio_date = (CheckBox) v.findViewById(R.id.select_date);
         radio_map = (CheckBox) v.findViewById(R.id.select_map);
         radio_transport = (CheckBox) v.findViewById(R.id.select_transp);
+        radio_type = (CheckBox) v.findViewById(R.id.select_type);
         //radio_overview = (CheckBox) findViewById(R.id.select_resume);
 
         updateCategory();
@@ -68,6 +69,10 @@ public class EventActivity extends Fragment {
         if(event != null){
             for(Category cat : event.getCategoryList()) {
 
+                if (cat.getName().equalsIgnoreCase("Cat_1")) {
+                    radio_type.setEnabled(false);
+                    radio_type.setChecked(true);
+                }
                 if (cat.getName().equalsIgnoreCase("Cat_2")) {
                     radio_date.setEnabled(false);
                     radio_date.setChecked(true);
@@ -121,6 +126,7 @@ public class EventActivity extends Fragment {
 
 
         tabs.add(5);
+        tabs.add(6);
 
         DataManager.getInstance().setSelectedEvt(event);
         updateEventCategories(tabs);

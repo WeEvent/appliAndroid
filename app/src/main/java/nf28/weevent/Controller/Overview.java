@@ -25,7 +25,7 @@ import nf28.weevent.Tools.DataManager;
  */
 public class Overview extends Fragment {
     private ListView mainListView = null;
-    private ModelAdapter[] modelItems = new ModelAdapter[1];
+    private Vector<ModelAdapter> modelItems = new Vector<ModelAdapter>();
     private OverviewAdapter adapter = null;
     private Context context = null;
 
@@ -40,15 +40,14 @@ public class Overview extends Fragment {
         mainListView = (ListView) v.findViewById( R.id.overviewView );
         //System.err.println( DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getName());
         pollValues = DataManager.getInstance().getSelectedEvt().getPreferedPolls();
-        modelItems = new ModelAdapter[pollValues.size()];
-        int i=0;
+
         for (PollValue p : pollValues) {
             if(p!= null)
-                modelItems[pollIndex++] = new ModelAdapter(p.getValue(),10*i+((p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0));
-            i++;
+                modelItems.add( new ModelAdapter(p.getValue(),((p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0)));
         }
         //TODO a user can be inserted only once!!!!!!!
-        System.out.println("++ \n "+ pollValues+" \n++");
+        System.out.println("++ \n "+ pollValues.toString()+" \n++");
+
         adapter = new OverviewAdapter(context, modelItems);
 
         mainListView.setAdapter(adapter);

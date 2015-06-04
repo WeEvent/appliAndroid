@@ -166,7 +166,7 @@ public class Event {
         for(Category categorie : vect_categ){
             if(!categorie.getName().equalsIgnoreCase("Cat_0"))
                 if(!categorie.getName().equalsIgnoreCase("Cat_5"))
-                    if(!categorie.getName().equalsIgnoreCase("Cat_1")) {
+                    if(!categorie.getName().equalsIgnoreCase("Cat6")) {
                         PollValue poll = categorie.getPreferedPoll();
                             preferedPolls.add(poll);
                     }

@@ -7,11 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.Filter;
 import android.widget.ImageView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Vector;
 
 import nf28.weevent.R;
 
@@ -20,13 +18,13 @@ import nf28.weevent.R;
  */
 
 public class OverviewAdapter extends ArrayAdapter<ModelAdapter>{
-    ModelAdapter[] modelItems = null;
-    ModelAdapter[] originalItems = null;
-    CustomFilter filter = null;
+    Vector<ModelAdapter> modelItems = null;
+    Vector<ModelAdapter> originalItems = null;
+
     Context context;
     int pos = 0;
-    public OverviewAdapter(Context context, ModelAdapter[] resource) {
-        super(context, R.layout.check_friend,resource);
+    public OverviewAdapter(Context context, Vector<ModelAdapter> resource) {
+        super(context, R.layout.check_overview,resource);
         // TODO Auto-generated constructor stub
         this.context = context;
         this.modelItems = resource;
@@ -43,80 +41,33 @@ public class OverviewAdapter extends ArrayAdapter<ModelAdapter>{
         pos = position;  // update the position
 
 
-        if(modelItems[position] !=null) {
-            int tab = ViewPagerAdapter.getSizeTab();
-            int posit = position %10;
-            cb.setText(modelItems[posit].getName());
+        if(modelItems.elementAt(position) !=null) {
+            Vector<Integer> tabs = ViewPagerAdapter.getTabs();
+
+            cb.setText(modelItems.elementAt(position).getName());
             cb.setEnabled(false);
-            int idx = position /10;
-            switch(position) {
-                case 0:img.setImageResource(R.drawable.ic_time);
+            System.err.println(tabs);
+
+            switch(tabs.elementAt(position)) {
+                case 1:img.setImageResource(R.drawable.ic_time);
                     break;
-                case 1:img.setImageResource(R.drawable.ic_place);
+                case 2:img.setImageResource(R.drawable.ic_place);
                     break;
-                case 2:img.setImageResource(R.drawable.ic_transport);
+                case 3:img.setImageResource(R.drawable.ic_transport);
                     break;
                 default :
-                    img.setImageResource(R.drawable.ic_overview);
+                    img.setImageResource(R.drawable.ic_evt);
             }
-            if (modelItems[posit].getValue() == 1)
+            if (modelItems.elementAt(position).getValue() == 1)
                 cb.setChecked(true);
             else
                 cb.setChecked(false);
+        }else{
+            cb.setVisibility(View.GONE);
         }
 
-  //          cb.setVisibility(View.GONE);
         return convertView;
     }
 
-    //TODO to be removed if there is a bug !!!!1
-    @Override
-    public Filter getFilter() {
-        if (filter == null)
-            filter = new CustomFilter();
 
-        return filter;
-    }
-
-    private class CustomFilter extends Filter {
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results = new FilterResults();
-            // We implement here the filter logic
-            if (constraint == null || constraint.length() == 0) {
-                // No filter implemented we return all the list
-                results.values = originalItems;
-                results.count = originalItems.length;
-            } else {
-                // We perform filtering operation
-                List<ModelAdapter> modelList = new ArrayList<ModelAdapter>();
-
-                for (ModelAdapter p : originalItems) {
-                    if (p.getName().toUpperCase().startsWith(constraint.toString().toUpperCase()))
-                        modelList.add(p);
-                }
-
-                ModelAdapter[] new_adapt = new ModelAdapter[modelList.size()];
-                for (int i = 0; i < modelList.size(); i++)
-                    new_adapt[i] = modelList.get(i);
-
-                results.values = new_adapt;
-                results.count = new_adapt.length;
-
-            }
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint,
-                                      FilterResults results) {
-
-            // Now we have to inform the adapter about the new list filtered
-
-            modelItems = (ModelAdapter[]) results.values;
-            notifyDataSetChanged();
-
-        }
-    }
 }

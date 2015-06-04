@@ -20,13 +20,13 @@ import nf28.weevent.Tools.DataManager;
  * Created by KM on 23/05/15.
  */
 
-public class PlaceAdapter extends ArrayAdapter<ModelAdapter>{
+public class EventTypeAdapter extends ArrayAdapter<ModelAdapter>{
         ModelAdapter[] modelItems = null;
         ModelAdapter[] originalItems = null;
         CustomFilter filter = null;
         Context context;
         int pos = 0;
-public PlaceAdapter(Context context, ModelAdapter[] resource) {
+public EventTypeAdapter(Context context, ModelAdapter[] resource) {
         super(context, R.layout.check_friend,resource);
         // TODO Auto-generated constructor stub
         this.context = context;
@@ -53,10 +53,10 @@ public PlaceAdapter(Context context, ModelAdapter[] resource) {
                              m.setValue((arg1==true)?1:0);
                              if(m.getValue()==1) {
                                  // When clicked, show a toast with the TextView text
-                                 DataManager.getInstance().newVoteToPollValue("Cat_3",text
+                                 DataManager.getInstance().newVoteToPollValue("Cat_1",text
                                          ,DataManager.getInstance().getUser().getLogin());
                              }else{
-                                 DataManager.getInstance().removeVoteToPollValue("Cat_3",text
+                                 DataManager.getInstance().removeVoteToPollValue("Cat_1",text
                                          ,DataManager.getInstance().getUser().getLogin());
 
                              }
@@ -67,7 +67,6 @@ public PlaceAdapter(Context context, ModelAdapter[] resource) {
                 }
             } );
                 if(position < modelItems.length) {
-                    //cb.setText(modelItems[position].getVotes() + " - " +modelItems[position].getName());
                     cb.setText(modelItems[position].getName());
                     if (modelItems[position].getValue() == 1)
                         cb.setChecked(true);

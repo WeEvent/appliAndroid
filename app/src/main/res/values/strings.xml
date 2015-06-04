@@ -21,6 +21,7 @@
 
     <string name="search_events">Search events &#8230;</string>
     <string name="search_places">Search places &#8230;</string>
+    <string name="search_types">Search types &#8230;</string>
     <string name="search_dates">Search dates &#8230;</string>
     <string name="search_transport">Search transport</string>
 
@@ -61,6 +62,7 @@
     <string name="enter_group">Enter group name</string>
     <string name="event_name">Event name</string>
     <string name="place_name">Place name</string>
+    <string name="event_type">Event type</string>
     <string name="transport_name">Transport name</string>
     <string name="edit_description">New description</string>
 
