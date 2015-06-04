@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 
 import nf28.weevent.Controller.LoginActivity;
 import nf28.weevent.Controller.MainActivity;
+import nf28.weevent.Model.Event;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
 
@@ -97,11 +98,33 @@ public class GCMNotificationIntentService extends IntentService {
                 Pattern pattern = Pattern.compile("id=(.*)");
                 Matcher matcher = pattern.matcher(msg);
                 if (matcher.find()) {
+					String id = matcher.group(1);
                     SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString(matcher.group(1), "newMessage");
+                    editor.putString(id, "newMessage");
                     editor.commit();
                     sendMessage();
+
+					//Notif graphique d'un nouveau message
+					mNotificationManager = (NotificationManager) this
+							.getSystemService(Context.NOTIFICATION_SERVICE);
+
+					PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+							new Intent(this, LoginActivity.class), 0);
+
+					Event evt = DataManager.getInstance().getEvent(id);
+
+					NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
+							this).setSmallIcon(R.drawable.gcm_cloud)
+							.setContentTitle("WeEvent")
+							.setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
+							.setDefaults(Notification.DEFAULT_SOUND)
+							.setAutoCancel(true)
+							.setContentText("New message in \"" + evt.getNom() + "\"");
+
+					mBuilder.setContentIntent(contentIntent);
+					mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+					Log.d(TAG, "Notification ok");
                 }
             }
         }
