@@ -5,23 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +47,7 @@ public class ChatActivity extends ActionBarActivity {
         setTitle("Chat");
 
         //Receiver for local broadcast to update chat after notif
-        registerReceiver(mMessageReceiver, new IntentFilter("update"));
+        registerReceiver(mMessageReceiver, new IntentFilter("updateChat"));
 
         //Check if there is a new message
         SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);
@@ -151,8 +144,8 @@ public class ChatActivity extends ActionBarActivity {
             @Override
             protected void onPostExecute(String result) {
                 shareRegidTask = null;
-                Toast.makeText(getApplicationContext(), result,
-                        Toast.LENGTH_LONG).show();
+                /*Toast.makeText(getApplicationContext(), result,
+                        Toast.LENGTH_LONG).show();*/
             }
         };
         shareRegidTask.execute(null, null, null);

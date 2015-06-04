@@ -146,8 +146,8 @@ public class InviteFriendsActivity extends ActionBarActivity {
             @Override
             protected void onPostExecute(String result) {
                 shareRegidTask = null;
-                Toast.makeText(getApplicationContext(), result,
-                        Toast.LENGTH_LONG).show();
+                /*Toast.makeText(getApplicationContext(), result,
+                        Toast.LENGTH_LONG).show();*/
             }
 
         };
@@ -163,12 +163,12 @@ public class InviteFriendsActivity extends ActionBarActivity {
                 try {
                     SmsManager smsManager = SmsManager.getDefault();
                     smsManager.sendTextMessage(mobilePhone, null, sms, null, null);
-                    Toast.makeText(getApplicationContext(), "SMS Sent!",
-                            Toast.LENGTH_LONG).show();
+                    /*.makeText(getApplicationContext(), "SMS Sent!",
+                            Toast.LENGTH_LONG).show();*/
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(),
+                    /*Toast.makeText(getApplicationContext(),
                             "SMS faild, please try again later!",
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_LONG).show();*/
                     e.printStackTrace();
                 }
             }

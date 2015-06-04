@@ -92,6 +92,8 @@ public class GCMNotificationIntentService extends IntentService {
                 mBuilder.setContentIntent(contentIntent);
                 mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
                 Log.d(TAG, "Notification ok");
+
+				sendMessage("updateEvents");
             }
             else if (msg.contains("id=")) {
                 // enregistrement du nouveau etat chat
@@ -103,7 +105,7 @@ public class GCMNotificationIntentService extends IntentService {
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putString(id, "newMessage");
                     editor.commit();
-                    sendMessage();
+                    sendMessage("updateChat");
 
 					//Notif graphique d'un nouveau message
 					mNotificationManager = (NotificationManager) this
@@ -130,9 +132,9 @@ public class GCMNotificationIntentService extends IntentService {
         }
 	}
 
-    private void sendMessage()
+    private void sendMessage(String signalName)
     {
-        Intent intent = new Intent("update");
+        Intent intent = new Intent(signalName);
         //intent.putExtra("update",  "chat");
         sendBroadcast(intent);
     }

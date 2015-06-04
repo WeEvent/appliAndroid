@@ -406,9 +406,9 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
             regId = registerGCM();
             Log.d("RegisterActivity", "GCM RegId: " + regId);
         } else {
-            Toast.makeText(getApplicationContext(),
+            /*Toast.makeText(getApplicationContext(),
                     "Already Registered with GCM Server!",
-                    Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_LONG).show();*/
 
         }
     }
@@ -425,9 +425,9 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
                     "registerGCM - successfully registered with GCM server - regId: "
                             + regId);
         } else {
-            Toast.makeText(getApplicationContext(),
+            /*.makeText(getApplicationContext(),
                     "RegId already available. RegId: " + regId,
-                    Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_LONG).show();*/
             DataManager.getInstance().updateRegId(regId);
 
         }
@@ -490,9 +490,9 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
 
             @Override
             protected void onPostExecute(String msg) {
-                Toast.makeText(getApplicationContext(),
+                /*Toast.makeText(getApplicationContext(),
                         "Registered with GCM Server." + msg, Toast.LENGTH_LONG)
-                        .show();
+                        .show();*/
                 DataManager.getInstance().updateRegId(regId);
 
 

@@ -1,9 +1,11 @@
 package nf28.weevent.Controller;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -30,7 +32,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import nf28.weevent.Model.Chat;
 import nf28.weevent.Model.Event;
+import nf28.weevent.Model.Message;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
 
@@ -52,6 +56,8 @@ public class EventsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.events);
 
+        //Receiver for local broadcast to update chat after notif
+        registerReceiver(mMessageReceiver, new IntentFilter("updateEvents"));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -209,9 +215,16 @@ public class EventsActivity extends ActionBarActivity {
         return true;
     }
 
-
-
-
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //UPDATE VUE
+            events = DataManager.getInstance().getEvents();
+            listAdapter.clear();
+            listAdapter.addAll(events.values());
+            listAdapter.notifyDataSetChanged();
+        }
+    };
 
     class Task extends AsyncTask<String, Integer, Boolean> {
         @Override
