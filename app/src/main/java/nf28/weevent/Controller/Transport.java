@@ -80,7 +80,7 @@ public class Transport extends Fragment {
                                 modelItems = new ModelAdapter[pollValues.size()];
                                 pollIndex = 0;
                                 for (PollValue p : pollValues) {
-                                    modelItems[pollIndex++] = new ModelAdapter(p.getValue(),(p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0);
+                                    modelItems[pollIndex++] = new ModelAdapter(p.getValue(),(p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0,p.getVotersCount());
                                 }
 
                                 adapter = new TransportAdapter(context, modelItems);

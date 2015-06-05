@@ -55,7 +55,7 @@ public class InviteFriendsActivity extends ActionBarActivity {
         //int idx = 0; /// index used to fill the container for friends
         for (String s : friends) {
             if (!DataManager.getInstance().getSelectedEvt().getContactList().contains(s)){
-                modelItems.add(new ModelAdapter(s, 0));
+                modelItems.add(new ModelAdapter(s, 0,0));
             }
         }
 

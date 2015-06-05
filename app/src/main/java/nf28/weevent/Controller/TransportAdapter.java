@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Filter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public TransportAdapter(Context context, ModelAdapter[] resource) {
                 convertView = inflater.inflate(R.layout.check_transport, parent, false);
                 //TextView name = (TextView) convertView.findViewById(R.id.textView1);
                 CheckBox cb = (CheckBox) convertView.findViewById(R.id.new_transport);
+                TextView votes = (TextView) convertView.findViewById(R.id.vote_value_transport);
                 pos = position;  // update the position
                 cb.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
 
@@ -67,7 +69,8 @@ public TransportAdapter(Context context, ModelAdapter[] resource) {
                 }
             } );
                 if(position < modelItems.length) {
-                    cb.setText(modelItems[position].getVotes() + " - " +modelItems[position].getName());
+                    cb.setText(modelItems[position].getName());
+                    votes.setText(""+modelItems[position].getVotes());
                     if (modelItems[position].getValue() == 1)
                         cb.setChecked(true);
                     else
