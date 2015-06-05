@@ -90,7 +90,8 @@ public class Description extends Fragment {
         sendValid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), InviteFriendsActivity.class));
+                //startActivity(new Intent(getActivity(), InviteFriendsActivity.class));
+                startActivity(new Intent(getActivity(), SendInvitationActivity.class));
             }
         });
         participants.setOnClickListener(new View.OnClickListener() {

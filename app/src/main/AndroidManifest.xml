@@ -102,11 +102,6 @@
             android:label="New Contact">
         </activity>
         <activity
-            android:name=".Controller.InviteFriendsActivity"
-            android:screenOrientation="portrait"
-            android:label="Invite">
-        </activity>
-        <activity
             android:name=".Controller.ParticipantsActivity"
             android:screenOrientation="portrait"
             android:label="Participants">
@@ -135,6 +130,11 @@
             android:name=".Controller.DatePickerActivity"
             android:screenOrientation="portrait"
             android:label="Date picker">
+        </activity>
+        <activity
+            android:name=".Controller.SendInvitationActivity"
+            android:screenOrientation="portrait"
+            android:label="New Group">
         </activity>
 
         <receiver
