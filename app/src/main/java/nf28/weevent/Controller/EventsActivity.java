@@ -102,7 +102,7 @@ public class EventsActivity extends ActionBarActivity {
                                 if(DataManager.getInstance().getEvents().get(event.getID())==null) {
                                     init(event);
                                     startActivity(new Intent(EventsActivity.this, CreateEventActivity.class));
-                                    finish();
+                                    //no finish() because we want to recreate and reload all the events when the user cancel the creation
                                 }else{
                                     Toast.makeText(getApplicationContext(),	"Event exists!", Toast.LENGTH_SHORT).show();
                                 }
@@ -153,15 +153,6 @@ public class EventsActivity extends ActionBarActivity {
 
     }
 
-    /*@Override
-    public void onResume(){
-        super.onResume();
-        events = DataManager.getInstance().getEvents();
-        listAdapter.clear();
-        listAdapter.addAll(events.values());
-        listAdapter.notifyDataSetChanged();
-    }*/
-
     public void loadEvent(Event event){
         if(event != null){
             DataManager.getInstance().setSelectedEvt(event);
@@ -191,7 +182,6 @@ public class EventsActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
     {
-        onBackPressed();
         switch (menuItem.getItemId()) {
             case R.id.action_home:
                 // app icon in action bar clicked; go home
@@ -200,7 +190,8 @@ public class EventsActivity extends ActionBarActivity {
                 finish();
                 return true;
             default:
-                return super.onOptionsItemSelected(menuItem);
+                onBackPressed();
+                return true;
         }
     }
 
@@ -214,11 +205,6 @@ public class EventsActivity extends ActionBarActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            //UPDATE VUE
-            /*events = DataManager.getInstance().getEvents();
-            listAdapter.clear();
-            listAdapter.addAll(events.values());
-            listAdapter.notifyDataSetChanged();*/
             new Task().execute();
         }
     };

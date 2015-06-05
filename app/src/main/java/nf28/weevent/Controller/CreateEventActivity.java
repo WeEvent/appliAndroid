@@ -20,13 +20,10 @@ import nf28.weevent.Tools.DataManager;
  */
 public class CreateEventActivity extends ActionBarActivity {
     // All the radio buttons
-    private CheckBox radio_desc;
-    private CheckBox radio_evt;
     private CheckBox radio_date;
     private CheckBox radio_map;
     private CheckBox radio_transp;
     private CheckBox radio_type;
-    private CheckBox radio_overview;
 
     private Button btn_events_create;
     @Override
@@ -34,22 +31,17 @@ public class CreateEventActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_event);
 
-
         // Creating The Toolbar and setting it as the Toolbar for the activity
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-       // radio_desc = (CheckBox) findViewById(R.id.select_desc);
-       // radio_evt = (CheckBox) findViewById(R.id.select_evt);
         radio_date = (CheckBox) findViewById(R.id.select_date);
         radio_map = (CheckBox) findViewById(R.id.select_map);
         radio_transp = (CheckBox) findViewById(R.id.select_transp);
         radio_type = (CheckBox)findViewById(R.id.select_type);
-        //radio_overview = (CheckBox) findViewById(R.id.select_resume);
 
 
-        Button btn_events_create = (Button) findViewById(R.id.btn_events_create);
+        btn_events_create = (Button) findViewById(R.id.btn_events_create);
 
 
         btn_events_create.setOnClickListener(new View.OnClickListener() {
@@ -121,25 +113,18 @@ public class CreateEventActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        onBackPressed();
         switch (menuItem.getItemId()) {
             case R.id.action_home:
                 // app icon in action bar clicked; go home
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                finish();
                 return true;
             default:
+                onBackPressed();
                 return super.onOptionsItemSelected(menuItem);
         }
 
 
     }
-    /*
-    @Override
-    public void onBackPressed(){
-        Intent cate = new Intent(this, EventsActivity.class);
-        startActivity(cate);
-        finish();
-    }
-    */
 }
