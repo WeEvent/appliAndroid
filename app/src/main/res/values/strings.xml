@@ -20,6 +20,8 @@
     <string name="action_home">Home</string>
 
     <string name="search_events">Search events &#8230;</string>
+    <string name="search_invited">Search invitations &#8230;</string>
+    <string name="search_participants">Search participants &#8230;</string>
     <string name="search_places">Search places &#8230;</string>
     <string name="search_types">Search types &#8230;</string>
     <string name="search_dates">Search dates &#8230;</string>
@@ -30,6 +32,7 @@
     <string name="btn_friends_text">Friends</string>
     <string name="btn_friends_add">+</string>
     <string name="btn_events_add">+</string>
+    <string name="btn_events_create">Create</string>
     <string name="btn_place_add">+</string>
     <string name='btn_date_add'>+</string>
     <string name='btn_transport_add'>+</string>
