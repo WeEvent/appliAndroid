@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,8 @@ import nf28.weevent.Tools.DataManager;
  */
 public class Description extends Fragment {
     private Button sendValid = null;
+    private Button participants = null;
+    private Button leaveEvent = null;
     private TextView eventDesc = null;
     private Context context = null;
 
@@ -38,6 +41,8 @@ public class Description extends Fragment {
         View v =inflater.inflate(R.layout.description,container,false);
         // Assigning ViewPager View and setting the adapter
         sendValid = (Button)v.findViewById(R.id.btnSendInvitation);
+        participants = (Button)v.findViewById(R.id.btnParticipants);
+        leaveEvent = (Button)v.findViewById(R.id.btnLeaveEvent);
         context = inflater.getContext();
         // Assigning ViewPager View and setting the adapter
         eventDesc = (TextView)v.findViewById(R.id.eventDescription);
@@ -85,10 +90,52 @@ public class Description extends Fragment {
         sendValid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),InviteFriendsActivity.class));
+                startActivity(new Intent(getActivity(), InviteFriendsActivity.class));
+            }
+        });
+        participants.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ParticipantsActivity.class));
+            }
+        });
+        leaveEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(getActivity())
+                        .setMessage("Are you sure you want to leave this event ?")
+                        .setCancelable(false)
+                        .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                new Task().execute();
+                            }
+                        })
+                        .setPositiveButton("No", null)
+                        .show();
+
             }
         });
 
         return v;
+    }
+
+    private class Task extends AsyncTask<String, Integer, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            Boolean ret = DataManager.getInstance().removeContactFromEvent(DataManager.getInstance().getUser().getLogin());
+            if (ret){
+                sendMessage("updateEvents");
+                getActivity().finish();
+            }
+            return ret;
+        }
+    }
+
+    private void sendMessage(String signalName)
+    {
+        Intent intent = new Intent(signalName);
+        //intent.putExtra("update",  "chat");
+        getActivity().sendBroadcast(intent);
     }
 }

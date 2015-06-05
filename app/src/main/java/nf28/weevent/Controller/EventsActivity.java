@@ -1,9 +1,11 @@
 package nf28.weevent.Controller;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -22,12 +24,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 
 import nf28.weevent.Model.Event;
@@ -52,6 +50,8 @@ public class EventsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.events);
 
+        //Receiver for local broadcast to update chat after notif
+        registerReceiver(mMessageReceiver, new IntentFilter("updateEvents"));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -209,11 +209,19 @@ public class EventsActivity extends ActionBarActivity {
         return true;
     }
 
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //UPDATE VUE
+            /*events = DataManager.getInstance().getEvents();
+            listAdapter.clear();
+            listAdapter.addAll(events.values());
+            listAdapter.notifyDataSetChanged();*/
+            new Task().execute();
+        }
+    };
 
-
-
-
-    class Task extends AsyncTask<String, Integer, Boolean> {
+    private class Task extends AsyncTask<String, Integer, Boolean> {
         @Override
         protected void onPreExecute() {
             layout.setVisibility(View.VISIBLE);
@@ -236,6 +244,7 @@ public class EventsActivity extends ActionBarActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    listAdapter.clear();
                     listAdapter.addAll(events.values());
                 }
             });

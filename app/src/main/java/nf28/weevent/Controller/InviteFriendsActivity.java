@@ -28,7 +28,7 @@ import nf28.weevent.Tools.DataManager;
 public class InviteFriendsActivity extends ActionBarActivity {
 
     private ListView mainListView ;
-    private ModelAdapter[] modelItems;
+    private List<ModelAdapter> modelItems;
     private CustomAdapter adapter = null;
     private final Context context = this;
     // Search EditText
@@ -49,12 +49,14 @@ public class InviteFriendsActivity extends ActionBarActivity {
         mainListView = (ListView) findViewById( R.id.InviteView );
 
         Collection<String> friends = DataManager.getInstance().getUser().getContactList();
-        friends.add(DataManager.getInstance().getUser().getLogin());
-        modelItems = new ModelAdapter[friends.size()];
+        //friends.add(DataManager.getInstance().getUser().getLogin());
+        modelItems = new ArrayList<ModelAdapter>();
 
-        int idx = 0; /// index used to fill the container for friends
+        //int idx = 0; /// index used to fill the container for friends
         for (String s : friends) {
-            modelItems[idx++] = new ModelAdapter(s,(DataManager.getInstance().getSelectedEvt().getContactList().contains(s))?1:0);
+            if (!DataManager.getInstance().getSelectedEvt().getContactList().contains(s)){
+                modelItems.add(new ModelAdapter(s, 0));
+            }
         }
 
         adapter = new CustomAdapter(this, modelItems);
@@ -65,15 +67,14 @@ public class InviteFriendsActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 ArrayList<String> list_contact = new ArrayList<String>();
-               for(int i=0;i<modelItems.length;i++){
-                   System.err.println("------ |  "+modelItems[i].getValue()+" | --------");
-                   if(modelItems[i].getValue()==1){
-                       DataManager.getInstance().addContact(modelItems[i].getName());
-                       list_contact.add(modelItems[i].getName());
+                for(int i=0;i<modelItems.size();i++){
+                   System.err.println("------ |  "+modelItems.get(i).getValue()+" | --------");
+                   if(modelItems.get(i).getValue()==1){
+                       DataManager.getInstance().addContactToEvent(modelItems.get(i).getName());
+                       list_contact.add(modelItems.get(i).getName());
                    }
-               }
+                }
                 //TODO a friend can be inserted only once!!!!!!!
-                //DataManager.getInstance().addEvent(DataManager.getInstance().getSelectedEvt());
                 Toast.makeText(context, "Invitation Sent!", Toast.LENGTH_SHORT).show();
 
                 shareRegisterIdWithServer(list_contact);
@@ -146,8 +147,8 @@ public class InviteFriendsActivity extends ActionBarActivity {
             @Override
             protected void onPostExecute(String result) {
                 shareRegidTask = null;
-                Toast.makeText(getApplicationContext(), result,
-                        Toast.LENGTH_LONG).show();
+                /*Toast.makeText(getApplicationContext(), result,
+                        Toast.LENGTH_LONG).show();*/
             }
 
         };
@@ -159,16 +160,16 @@ public class InviteFriendsActivity extends ActionBarActivity {
         for (String contact : list_contact) {
             String mobilePhone = DataManager.getInstance().getUser(contact).getMobile();
             if (mobilePhone != null){
-                String sms = DataManager.getInstance().getSelectedEvt().getNom()+" invite you to "+DataManager.getInstance().getSelectedEvt().getNom();
+                String sms = DataManager.getInstance().getUser().getLogin() + " invite you to "+DataManager.getInstance().getSelectedEvt().getNom();
                 try {
                     SmsManager smsManager = SmsManager.getDefault();
                     smsManager.sendTextMessage(mobilePhone, null, sms, null, null);
-                    Toast.makeText(getApplicationContext(), "SMS Sent!",
-                            Toast.LENGTH_LONG).show();
+                    /*.makeText(getApplicationContext(), "SMS Sent!",
+                            Toast.LENGTH_LONG).show();*/
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(),
+                    /*Toast.makeText(getApplicationContext(),
                             "SMS faild, please try again later!",
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_LONG).show();*/
                     e.printStackTrace();
                 }
             }

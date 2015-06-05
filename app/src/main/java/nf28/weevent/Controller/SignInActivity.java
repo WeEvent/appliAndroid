@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -26,13 +25,10 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,8 +43,6 @@ import nf28.weevent.Controller.Gcm.ShareExternalServer;
 import nf28.weevent.Model.User;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
-
-import static android.app.PendingIntent.getActivity;
 
 /**
  * A login screen that offers login via email/password.
@@ -372,9 +366,9 @@ public class SignInActivity extends Activity implements LoaderCallbacks<Cursor> 
             regId = registerGCM();
             Log.d("RegisterActivity", "GCM RegId: " + regId);
         } else {
-            Toast.makeText(getApplicationContext(),
+            /*Toast.makeText(getApplicationContext(),
                     "Already Registered with GCM Server!",
-                    Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_LONG).show();*/
 
         }
     }
@@ -391,9 +385,9 @@ public class SignInActivity extends Activity implements LoaderCallbacks<Cursor> 
                     "registerGCM - successfully registered with GCM server - regId: "
                             + regId);
         } else {
-            Toast.makeText(getApplicationContext(),
+            /*Toast.makeText(getApplicationContext(),
                     "RegId already available. RegId: " + regId,
-                    Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_LONG).show();*/
             DataManager.getInstance().updateRegId(regId);
 
         }
@@ -456,9 +450,9 @@ public class SignInActivity extends Activity implements LoaderCallbacks<Cursor> 
 
             @Override
             protected void onPostExecute(String msg) {
-                Toast.makeText(getApplicationContext(),
+                /*Toast.makeText(getApplicationContext(),
                         "Registered with GCM Server." + msg, Toast.LENGTH_LONG)
-                        .show();
+                        .show();*/
                 DataManager.getInstance().updateRegId(regId);
 
 
