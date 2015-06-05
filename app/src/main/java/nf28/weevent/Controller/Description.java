@@ -25,6 +25,7 @@ import nf28.weevent.Tools.DataManager;
  */
 public class Description extends Fragment {
     private Button sendValid = null;
+    private Button participants = null;
     private Button leaveEvent = null;
     private TextView eventDesc = null;
     private Context context = null;
@@ -40,6 +41,7 @@ public class Description extends Fragment {
         View v =inflater.inflate(R.layout.description,container,false);
         // Assigning ViewPager View and setting the adapter
         sendValid = (Button)v.findViewById(R.id.btnSendInvitation);
+        participants = (Button)v.findViewById(R.id.btnParticipants);
         leaveEvent = (Button)v.findViewById(R.id.btnLeaveEvent);
         context = inflater.getContext();
         // Assigning ViewPager View and setting the adapter
@@ -89,6 +91,12 @@ public class Description extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), InviteFriendsActivity.class));
+            }
+        });
+        participants.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ParticipantsActivity.class));
             }
         });
         leaveEvent.setOnClickListener(new View.OnClickListener() {

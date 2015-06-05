@@ -24,17 +24,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 
-import nf28.weevent.Model.Chat;
 import nf28.weevent.Model.Event;
-import nf28.weevent.Model.Message;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
 

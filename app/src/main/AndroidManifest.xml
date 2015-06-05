@@ -107,6 +107,11 @@
             android:label="Invite">
         </activity>
         <activity
+            android:name=".Controller.ParticipantsActivity"
+            android:screenOrientation="portrait"
+            android:label="Participants">
+        </activity>
+        <activity
             android:name=".Controller.AddContactToGroupSelectGroupActivity"
             android:screenOrientation="portrait"
             android:label="New Contact">
