@@ -85,7 +85,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             return transport;
         }else  if(ViewPagerAdapter.getTabName(position) == 5)      // second tab corresponds to the second category and so on ...
         {
-            EventActivity event = new EventActivity();
+            EventFragment event = new EventFragment();
             return event;
         }else if(ViewPagerAdapter.getTabName(position) == 6 )       //  6 overview
         {

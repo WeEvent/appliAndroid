@@ -121,7 +121,7 @@ public class CreateEventActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        //onBackPressed();
+        onBackPressed();
         switch (menuItem.getItemId()) {
             case R.id.action_home:
                 // app icon in action bar clicked; go home
@@ -134,4 +134,12 @@ public class CreateEventActivity extends ActionBarActivity {
 
 
     }
+    /*
+    @Override
+    public void onBackPressed(){
+        Intent cate = new Intent(this, EventsActivity.class);
+        startActivity(cate);
+        finish();
+    }
+    */
 }
