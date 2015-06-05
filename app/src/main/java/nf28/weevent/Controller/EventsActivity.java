@@ -152,15 +152,6 @@ public class EventsActivity extends ActionBarActivity {
 
     }
 
-    /*@Override
-    public void onResume(){
-        super.onResume();
-        events = DataManager.getInstance().getEvents();
-        listAdapter.clear();
-        listAdapter.addAll(events.values());
-        listAdapter.notifyDataSetChanged();
-    }*/
-
     public void loadEvent(Event event){
         if(event != null){
             DataManager.getInstance().setSelectedEvt(event);
@@ -213,10 +204,6 @@ public class EventsActivity extends ActionBarActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             //UPDATE VUE
-            /*events = DataManager.getInstance().getEvents();
-            listAdapter.clear();
-            listAdapter.addAll(events.values());
-            listAdapter.notifyDataSetChanged();*/
             new Task().execute();
         }
     };
