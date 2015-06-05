@@ -92,8 +92,11 @@ public class CategoriesActivity extends ActionBarActivity {
                 // app icon in action bar clicked; go home
                 Intent chat = new Intent(this, ChatActivity.class);
                 startActivity(chat);
+                finish();
                 return true;
             default:
+                onBackPressed();
+                finish();
                 return super.onOptionsItemSelected(menuItem);
         }
 
@@ -107,12 +110,12 @@ public class CategoriesActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
         */
     }
-/*
-    @Override
+
+    /*@Override
     public void onBackPressed(){
-        Intent cate = new Intent(this, EventsActivity.class);
-        startActivity(cate);
+        Intent intent = new Intent(this, EventsActivity.class);
+        startActivity(intent);
         finish();
-    }
-    */
+    }*/
+
 }

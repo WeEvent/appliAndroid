@@ -158,7 +158,8 @@ public class EventsActivity extends ActionBarActivity {
             DataManager.getInstance().setSelectedEvt(event);
             init(event);
             startActivity(new Intent(EventsActivity.this, CategoriesActivity.class));
-            finish();
+            // evite au retour de l'event de recharger la liste si rien n'a changé
+            //finish();
         }else{
             Toast.makeText(getApplicationContext(),	"Event doesn't exist!", Toast.LENGTH_SHORT).show();
 
@@ -245,5 +246,12 @@ public class EventsActivity extends ActionBarActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onDestroy() {
+        // Unregister since the activity is about to be closed.
+        unregisterReceiver(mMessageReceiver);
+        super.onDestroy();
     }
 }
