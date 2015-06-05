@@ -1,7 +1,10 @@
 package nf28.weevent.Controller;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nf28.weevent.Controller.List.ActionSlideExpandableListView;
@@ -24,6 +28,7 @@ public class ContactsFragment extends Fragment {
 
     private ActionSlideExpandableListView list;
     private ArrayAdapter<String> adapter;
+    private Integer positionToDelete;
 
     @Override
     public ActionSlideExpandableListView onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,7 +43,7 @@ public class ContactsFragment extends Fragment {
         list.setItemActionListener(new ActionSlideExpandableListView.OnActionClickListener() {
 
             @Override
-            public void onClick(View listView, View clickedView, int position) {
+            public void onClick(View listView, View clickedView, final int position) {
 
                 if(clickedView.getId()==R.id.btn_add_contact_to_group) {
                     Intent intent = new Intent(getActivity(), AddContactToGroupSelectGroupActivity.class);
@@ -46,21 +51,14 @@ public class ContactsFragment extends Fragment {
                     startActivity(intent);
 
                 } else {
+                    positionToDelete = position;
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage("Are you sure you want to delete this contact ?")
+                            .setCancelable(false)
+                            .setNegativeButton("Yes", DeleteContactListener)
+                            .setPositiveButton("No", null)
+                            .show();
 
-                    String loginToRemove = list.getItemAtPosition(position).toString();
-                    list.collapse();
-                    DataManager.getInstance().removeContact(loginToRemove);
-                    for (Group group: DataManager.getInstance().getUser().getGroups().values()) {
-                        if(group.getContactsList().contains(loginToRemove)){
-                            DataManager.getInstance().removeGroupUser(group.getName(), loginToRemove);
-                        }
-                    }
-
-                    adapter.notifyDataSetChanged();
-
-                    CharSequence text = "Contact removed!";
-                    Toast toast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
-                    toast.show();
                 }
 
 
@@ -85,6 +83,26 @@ public class ContactsFragment extends Fragment {
                 values
         );
     }
+
+
+    DialogInterface.OnClickListener DeleteContactListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+
+            String loginToRemove = list.getItemAtPosition(positionToDelete).toString();
+            list.collapse();
+            DataManager.getInstance().removeContact(loginToRemove);
+            for (Group group: DataManager.getInstance().getUser().getGroups().values()) {
+                if(group.getContactsList().contains(loginToRemove)){
+                    DataManager.getInstance().removeGroupUser(group.getName(), loginToRemove);
+                }
+            }
+
+            adapter.notifyDataSetChanged();
+
+            positionToDelete = null;
+        }
+    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {

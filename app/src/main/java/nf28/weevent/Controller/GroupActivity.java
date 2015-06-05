@@ -1,8 +1,11 @@
 package nf28.weevent.Controller;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -47,7 +50,22 @@ public class GroupActivity extends ActionBarActivity{
         delete = (ImageButton) this.findViewById(R.id.btn_delete_group);
         add = (Button) this.findViewById(R.id.btn_add_contact_to_group);
 
-        delete.setOnClickListener(deleteGroupListener);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(GroupActivity.this)
+                        .setMessage("Are you sure you want to delete this group ?")
+                        .setCancelable(false)
+                        .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                new DeleteGroup().execute();
+                            }
+                        })
+                        .setPositiveButton("No", null)
+                        .show();
+
+            }
+        });
         add.setOnClickListener(addContactToGroupListener);
 
         delete.setOnTouchListener(onTouchListener);
@@ -79,16 +97,6 @@ public class GroupActivity extends ActionBarActivity{
             startActivity(intent);
         }};
 
-    Button.OnClickListener deleteGroupListener
-            = new Button.OnClickListener(){
-
-        @Override
-        public void onClick(View v) {
-
-            DataManager.getInstance().removeGroup(group);
-            onBackPressed();
-        }};
-
     Button.OnTouchListener onTouchListener
             = new View.OnTouchListener() {
 
@@ -108,6 +116,18 @@ public class GroupActivity extends ActionBarActivity{
             return false;
         }
     };
+
+    private class DeleteGroup extends AsyncTask<String, Integer, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            Boolean ret = DataManager.getInstance().removeGroup(group);
+            if (ret){
+                GroupActivity.this.finish();
+            }
+            return ret;
+        }
+    }
 
     @Override
     protected void onResume()
@@ -137,7 +157,4 @@ public class GroupActivity extends ActionBarActivity{
         getMenuInflater().inflate(R.menu.menu_activity, menu);
         return true;
     }
-
-
-
 }
