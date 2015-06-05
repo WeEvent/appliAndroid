@@ -98,9 +98,13 @@ public class EventActivity extends Fragment {
 
         tabs.add(0);
 
-        tabs.add(1);
-
-
+        if(radio_type.isChecked()) {
+            tabs.add(1);
+            if(radio_type.isEnabled()) {
+                event.addCategory("Cat_1", "Categ_1");
+                DataManager.getInstance().addCategory("Cat_1", new Category("Cat_1", "Categ_1"));
+            }
+        }
         if(radio_date.isChecked()) {
             tabs.add(2);
             if(radio_date.isEnabled()) {

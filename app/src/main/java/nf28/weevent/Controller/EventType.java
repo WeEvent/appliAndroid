@@ -32,7 +32,7 @@ public class EventType extends Fragment {
     private Button addPlace = null;
     private ListView mainListView = null;
     private ModelAdapter[] modelItems = new ModelAdapter[1];
-    private PlaceAdapter adapter = null;
+    private EventTypeAdapter adapter = null;
     private Context context = null;
 
     private Collection<PollValue> pollValues = null;
@@ -44,14 +44,14 @@ public class EventType extends Fragment {
         View v =inflater.inflate(R.layout.type,container,false);
         context = inflater.getContext();
         mainListView = (ListView) v.findViewById( R.id.TypeView );
-        //System.err.println( DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getName());
+
         pollValues = DataManager.getInstance().getSelectedEvt().getCategory("Cat_1").getPollValues();
         modelItems = new ModelAdapter[pollValues.size()];
         for (PollValue p : pollValues) {
             modelItems[pollIndex++] = new ModelAdapter(p.getValue(),(p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0);
         }
         //TODO a user can be inserted only once!!!!!!!
-        adapter = new PlaceAdapter(context, modelItems);
+        adapter = new EventTypeAdapter(context, modelItems);
         mainListView.setAdapter(adapter);
 
         addPlace = (Button) v.findViewById(R.id.add_new_type);
@@ -83,7 +83,7 @@ public class EventType extends Fragment {
                                     modelItems[pollIndex++] = new ModelAdapter(p.getValue(),(p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0,p.getVotersCount());
                                 }
 
-                               adapter = new PlaceAdapter(context, modelItems);
+                               adapter = new EventTypeAdapter(context, modelItems);
                                mainListView.setAdapter(adapter);
 
                                adapter.notifyDataSetChanged();
