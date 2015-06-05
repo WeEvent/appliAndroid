@@ -14,6 +14,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import nf28.weevent.Model.Group;
 import nf28.weevent.R;
@@ -24,13 +25,17 @@ import nf28.weevent.Tools.DataManager;
  */
 public class AddContactToGroupSelectGroupFragment extends Fragment{
 
+    ArrayAdapter<String> adapter;
+    ListView list;
+
     @Override
     public ListView onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
-        ListView list = (ListView)inflater.inflate(R.layout.groups, container, false);
+        list = (ListView)inflater.inflate(R.layout.groups, container, false);
 
-        list.setAdapter(buildData());
+        adapter = buildData();
+        list.setAdapter(adapter);
 
         AdapterView.OnItemClickListener l = new AdapterView.OnItemClickListener() {
             @Override
@@ -47,6 +52,16 @@ public class AddContactToGroupSelectGroupFragment extends Fragment{
                 CharSequence text = "Contact added to group!";
                 Toast toast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
                 toast.show();
+
+                if(IsListEmpty())
+                {
+                    activity.finish();
+                }
+                else
+                {
+                    adapter = buildData();
+                    list.setAdapter(adapter);
+                }
             }
         };
 
@@ -55,17 +70,41 @@ public class AddContactToGroupSelectGroupFragment extends Fragment{
         return list;
     }
 
-    public ListAdapter buildData() {
+    public ArrayAdapter<String> buildData() {
+
+        AddContactToGroupSelectGroupActivity activity = (AddContactToGroupSelectGroupActivity) getActivity();
+        String contactToAdd = activity.getContactToAdd();
 
         HashMap<String,Group> groups = DataManager.getInstance().getUser().getGroups();
         List<String> values = new ArrayList<String>();
 
         for (String key: groups.keySet()) {
-            values.add(key);
+            Group group = groups.get(key);
+            if(!group.getContactsList().contains(contactToAdd))
+            {
+                values.add(key);
+            }
         }
 
         return new ArrayAdapter<String>
                 (getActivity(), R.layout.simple_list_item, R.id.text, values);
 
+    }
+
+    private Boolean IsListEmpty(){
+        AddContactToGroupSelectGroupActivity activity = (AddContactToGroupSelectGroupActivity) getActivity();
+        String contactToAdd = activity.getContactToAdd();
+
+        HashMap<String,Group> groups = DataManager.getInstance().getUser().getGroups();
+
+        for (String key: groups.keySet()) {
+            Group group = groups.get(key);
+            if(!group.getContactsList().contains(contactToAdd))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

@@ -78,6 +78,8 @@ public class AddContactActivity extends ActionBarActivity {
                         imm.hideSoftInputFromWindow(login.getWindowToken(), 0);
 
                         text = "Contact added!";
+
+                        AddContactActivity.this.finish();
                     }
                     else{
                         text="You can't add your own login!";
