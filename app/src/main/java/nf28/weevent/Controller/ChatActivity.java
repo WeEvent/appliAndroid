@@ -108,7 +108,6 @@ public class ChatActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
     {
-        onBackPressed();
         switch (menuItem.getItemId()) {
             case R.id.action_home:
                 // app icon in action bar clicked; go home
@@ -178,6 +177,5 @@ public class ChatActivity extends ActionBarActivity {
         Intent intent = new Intent(this, CategoriesActivity.class);
         startActivity(intent);
         finish();
-        //super.onBackPressed();
     }
 }

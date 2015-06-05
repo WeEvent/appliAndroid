@@ -92,12 +92,14 @@ public class Description extends Fragment {
             public void onClick(View v) {
                 //startActivity(new Intent(getActivity(), InviteFriendsActivity.class));
                 startActivity(new Intent(getActivity(), SendInvitationActivity.class));
+                getActivity().finish();
             }
         });
         participants.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), ParticipantsActivity.class));
+                getActivity().finish();
             }
         });
         leaveEvent.setOnClickListener(new View.OnClickListener() {
