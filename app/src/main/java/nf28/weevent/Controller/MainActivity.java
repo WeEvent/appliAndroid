@@ -59,6 +59,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, EventsActivity.class));
+                finish();
             }
         });
 
@@ -66,6 +67,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, FriendsActivity.class));
+                finish();
             }
         });
     }
@@ -90,20 +92,25 @@ public class MainActivity extends ActionBarActivity {
                 switch (position) {
                     case 0:
                         startActivity(new Intent(MainActivity.this,ProfileActivity.class));
+                        finish();
                         break;
                     case 1:
                         break;
                     case 2:
                         startActivity(new Intent(MainActivity.this, EventsActivity.class));
+                        finish();
                         break;
                     case 3:
                         startActivity(new Intent(MainActivity.this,FriendsActivity.class));
+                        finish();
                         break;
                     case 4:
                         startActivity(new Intent(MainActivity.this,HistoricalActivity.class));
+                        finish();
                         break;
                     case 5:
                         startActivity(new Intent(MainActivity.this,SettingsActivity.class));
+                        finish();
                         break;
                     case 6:
                         SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);

@@ -471,6 +471,13 @@ public class SignInActivity extends Activity implements LoaderCallbacks<Cursor> 
         editor.commit();
     }
 
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(SignInActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }
 
 

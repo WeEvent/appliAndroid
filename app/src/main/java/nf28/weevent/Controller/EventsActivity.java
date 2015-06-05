@@ -102,6 +102,7 @@ public class EventsActivity extends ActionBarActivity {
                                 if(DataManager.getInstance().getEvents().get(event.getID())==null) {
                                     init(event);
                                     startActivity(new Intent(EventsActivity.this, CreateEventActivity.class));
+                                    finish();
                                 }else{
                                     Toast.makeText(getApplicationContext(),	"Event exists!", Toast.LENGTH_SHORT).show();
                                 }
@@ -166,6 +167,7 @@ public class EventsActivity extends ActionBarActivity {
             DataManager.getInstance().setSelectedEvt(event);
             init(event);
             startActivity(new Intent(EventsActivity.this, CategoriesActivity.class));
+            finish();
         }else{
             Toast.makeText(getApplicationContext(),	"Event doesn't exist!", Toast.LENGTH_SHORT).show();
 
@@ -250,5 +252,12 @@ public class EventsActivity extends ActionBarActivity {
             });
             return null;
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
