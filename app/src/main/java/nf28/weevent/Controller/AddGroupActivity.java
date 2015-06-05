@@ -59,6 +59,8 @@ public class AddGroupActivity extends ActionBarActivity {
                 imm.hideSoftInputFromWindow(groupName.getWindowToken(), 0);
 
                 text = "Group added!";
+
+                AddGroupActivity.this.finish();
             }
             else{
                 text = "Group already exists!";

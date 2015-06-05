@@ -11,6 +11,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nf28.weevent.R;
@@ -20,13 +21,17 @@ import nf28.weevent.Tools.DataManager;
  * Created by CD on 25/05/2015.
  */
 public class AddContactToGroupSelectContactFragment extends Fragment {
+    ArrayAdapter<String> adapter;
+    ListView list;
+
     @Override
     public ListView onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
-        ListView list = (ListView)inflater.inflate(R.layout.contacts_simple_list, container, false);
+        list = (ListView)inflater.inflate(R.layout.contacts_simple_list, container, false);
 
-        list.setAdapter(buildData());
+        adapter = buildData();
+        list.setAdapter(adapter);
 
         AdapterView.OnItemClickListener l = new AdapterView.OnItemClickListener() {
             @Override
@@ -43,6 +48,16 @@ public class AddContactToGroupSelectContactFragment extends Fragment {
                 CharSequence text = "Contact added to group!";
                 Toast toast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
                 toast.show();
+
+                if(IsListEmpty())
+                {
+                    activity.finish();
+                }
+                else
+                {
+                    adapter = buildData();
+                    list.setAdapter(adapter);
+                }
             }
         };
 
@@ -51,12 +66,39 @@ public class AddContactToGroupSelectContactFragment extends Fragment {
         return list;
     }
 
-    public ListAdapter buildData() {
+    public ArrayAdapter<String> buildData() {
+        AddContactToGroupSelectContactActivity activity = (AddContactToGroupSelectContactActivity) getActivity();
 
         List<String> contacts = DataManager.getInstance().getUser().getContactList();
+        List<String> contactsInGroup = DataManager.getInstance().getUser().getGroup(activity.getGroup()).getContactsList();
+
+        List<String> contactsToAdd = new ArrayList<String>();
+
+        for (String contact : contacts)
+        {
+            if (!contactsInGroup.contains(contact)){
+                contactsToAdd.add(contact);
+            }
+        }
 
         return new ArrayAdapter<String>
-                (getActivity(), R.layout.simple_list_item, R.id.text, contacts);
+                (getActivity(), R.layout.simple_list_item, R.id.text, contactsToAdd);
 
+    }
+
+    private Boolean IsListEmpty(){
+        AddContactToGroupSelectContactActivity activity = (AddContactToGroupSelectContactActivity) getActivity();
+
+        List<String> contacts = DataManager.getInstance().getUser().getContactList();
+        List<String> contactsInGroup = DataManager.getInstance().getUser().getGroup(activity.getGroup()).getContactsList();
+
+        for (String contact : contacts)
+        {
+            if (!contactsInGroup.contains(contact)){
+                return false;
+            }
+        }
+
+        return true;
     }
 }
