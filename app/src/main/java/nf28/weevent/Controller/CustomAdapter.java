@@ -24,6 +24,7 @@ public class CustomAdapter extends ArrayAdapter<ModelAdapter>{
 
         List<ModelAdapter> originalItems = null;
         List<ModelAdapter> modelItems = null;
+        //List<String> newParticipants;
         Context context;
         CustomFilter filter = null;
         int pos = 0;
@@ -34,7 +35,12 @@ public class CustomAdapter extends ArrayAdapter<ModelAdapter>{
                 this.context = context;
                 this.modelItems = resource;
                 this.originalItems = resource;
+                //newParticipants = new ArrayList<>();
         }
+
+    /*public List<String> getNewParticipants(){
+        return newParticipants;
+    }*/
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
@@ -58,11 +64,12 @@ public class CustomAdapter extends ArrayAdapter<ModelAdapter>{
                              if(arg1==true){
                                  m.setValue(1);
                                  System.out.println("Added contact");
-                                 DataManager.getInstance().addContactToEvent(arg0.getText().toString());
+                                 //newParticipants.add(arg0.getText().toString());
+                                 //DataManager.getInstance().addContactToEvent(arg0.getText().toString());
                              }else{
                                  m.setValue(0);
                                  System.out.println("Removed contact");
-                                 DataManager.getInstance().removeContactFromEvent(arg0.getText().toString());
+                                 //DataManager.getInstance().removeContactFromEvent(arg0.getText().toString());
                              }
 
                              break;
