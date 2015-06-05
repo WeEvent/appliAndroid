@@ -11,9 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.HashMap;
-
-import nf28.weevent.Model.Event;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
 
@@ -110,4 +107,12 @@ public class CategoriesActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
         */
     }
+/*
+    @Override
+    public void onBackPressed(){
+        Intent cate = new Intent(this, EventsActivity.class);
+        startActivity(cate);
+        finish();
+    }
+    */
 }

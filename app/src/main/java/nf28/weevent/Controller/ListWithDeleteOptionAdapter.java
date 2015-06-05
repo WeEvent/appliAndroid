@@ -1,6 +1,8 @@
 package nf28.weevent.Controller;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import nf28.weevent.Model.Group;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
 
@@ -22,6 +25,7 @@ public class ListWithDeleteOptionAdapter extends BaseAdapter implements ListAdap
     private String group;
     private ArrayList<String> list = new ArrayList<String>();
     private Context context;
+    private Integer positionToDelete;
 
     public ListWithDeleteOptionAdapter(ArrayList<String> list, Context context, String grp) {
         this.list = list;
@@ -57,14 +61,35 @@ public class ListWithDeleteOptionAdapter extends BaseAdapter implements ListAdap
 
         ImageButton deleteBtn = (ImageButton)view.findViewById(R.id.btn_delete_contact);
 
+        final View currentView = view;
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                DataManager.getInstance().removeGroupUser(group, list.get(position));
-                notifyDataSetChanged();
+                positionToDelete = position;
+                new AlertDialog.Builder(currentView.getContext())
+                        .setMessage("Are you sure you want to remove this contact from the group?")
+                        .setCancelable(false)
+                        .setNegativeButton("Yes", DeleteContactListener)
+                        .setPositiveButton("No", null)
+                        .show();
+
+
             }
         });
 
         return view;
     }
+
+    DialogInterface.OnClickListener DeleteContactListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+
+            DataManager.getInstance().removeGroupUser(group, list.get(positionToDelete));
+            notifyDataSetChanged();
+
+            positionToDelete = null;
+        }
+    };
+
+
 }

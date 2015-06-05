@@ -153,6 +153,7 @@ public class Date extends Fragment {
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                     mHour = hourOfDay;
                     mMinute = minute;
+                    Toast.makeText(context,mMinute+"-"+mHour, Toast.LENGTH_SHORT).show();
                 }
             };
 
@@ -172,7 +173,7 @@ public class Date extends Fragment {
         modelItems = new ModelAdapter[pollValues.size()];
         pollIndex = 0;
         for (PollValue p : pollValues) {
-            modelItems[pollIndex++] = new ModelAdapter(p.getValue(),(p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0);
+            modelItems[pollIndex++] = new ModelAdapter(p.getValue(),(p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0,p.getVotersCount());
         }
 
         adapter = new DateAdapter(context, modelItems);
@@ -182,6 +183,8 @@ public class Date extends Fragment {
         Toast.makeText(context,mDateDisplay, Toast.LENGTH_SHORT).show();
 
     }
+
+
 
     // the callback received when the user "sets" the date in the dialog
     private DatePickerDialog.OnDateSetListener mDateSetListener =

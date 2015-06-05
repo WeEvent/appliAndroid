@@ -22,7 +22,7 @@ import nf28.weevent.Tools.DataManager;
 /**
  * Created by KM on 18/05/15.
  */
-public class EventActivity extends Fragment {
+public class EventFragment extends Fragment {
     // All the radio buttons
     private CheckBox radio_desc;
     private CheckBox radio_evt;
@@ -54,9 +54,11 @@ public class EventActivity extends Fragment {
             @Override
             public void onClick(View v) {
                 init();
+
                 startActivity(new Intent(context,CategoriesActivity.class));
                // DataManager.getInstance().addEvent(DataManager.getInstance().getSelectedEvt());
                 Toast.makeText(context," Added new Category", Toast.LENGTH_SHORT).show();
+                getActivity().finish();
             }
         });
 
@@ -72,18 +74,22 @@ public class EventActivity extends Fragment {
                 if (cat.getName().equalsIgnoreCase("Cat_1")) {
                     radio_type.setEnabled(false);
                     radio_type.setChecked(true);
+                    radio_type.setVisibility(View.GONE);
                 }
                 if (cat.getName().equalsIgnoreCase("Cat_2")) {
                     radio_date.setEnabled(false);
                     radio_date.setChecked(true);
+                    radio_date.setVisibility(View.GONE);
                 }else
                 if (cat.getName().equalsIgnoreCase("Cat_3")) {
                     radio_map.setEnabled(false);
                     radio_map.setChecked(true);
+                    radio_map.setVisibility(View.GONE);
                 }else
                 if (cat.getName().equalsIgnoreCase("Cat_4")) {
                     radio_transport.setEnabled(false);
                     radio_transport.setChecked(true);
+                    radio_transport.setVisibility(View.GONE);
                 }
             }
         }else

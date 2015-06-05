@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Filter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public DateAdapter(Context context, ModelAdapter[] resource) {
                 // TODO Auto-generated method stub
                 LayoutInflater inflater = ((Activity)context).getLayoutInflater();
                 convertView = inflater.inflate(R.layout.check_date, parent, false);
-                //TextView name = (TextView) convertView.findViewById(R.id.textView1);
+                TextView votes = (TextView) convertView.findViewById(R.id.vote_value_date);
                 CheckBox cb = (CheckBox) convertView.findViewById(R.id.new_date);
                 pos = position;  // update the position
                 cb.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
@@ -70,7 +71,7 @@ public DateAdapter(Context context, ModelAdapter[] resource) {
                 }
             } );
                 if(position < modelItems.length) {
-                    //cb.setText(modelItems[position].getVotes() + " - " +modelItems[position].getName());
+                    votes.setText(""+modelItems[position].getVotes());
                     cb.setText(modelItems[position].getName());
                     if (modelItems[position].getValue() == 1)
                         cb.setChecked(true);

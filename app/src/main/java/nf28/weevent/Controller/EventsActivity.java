@@ -102,6 +102,7 @@ public class EventsActivity extends ActionBarActivity {
                                 if(DataManager.getInstance().getEvents().get(event.getID())==null) {
                                     init(event);
                                     startActivity(new Intent(EventsActivity.this, CreateEventActivity.class));
+                                    //no finish() because we want to recreate and reload all the events when the user cancel the creation
                                 }else{
                                     Toast.makeText(getApplicationContext(),	"Event exists!", Toast.LENGTH_SHORT).show();
                                 }
@@ -157,6 +158,7 @@ public class EventsActivity extends ActionBarActivity {
             DataManager.getInstance().setSelectedEvt(event);
             init(event);
             startActivity(new Intent(EventsActivity.this, CategoriesActivity.class));
+            finish();
         }else{
             Toast.makeText(getApplicationContext(),	"Event doesn't exist!", Toast.LENGTH_SHORT).show();
 
@@ -180,7 +182,6 @@ public class EventsActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
     {
-        onBackPressed();
         switch (menuItem.getItemId()) {
             case R.id.action_home:
                 // app icon in action bar clicked; go home
@@ -189,7 +190,8 @@ public class EventsActivity extends ActionBarActivity {
                 finish();
                 return true;
             default:
-                return super.onOptionsItemSelected(menuItem);
+                onBackPressed();
+                return true;
         }
     }
 
@@ -203,7 +205,6 @@ public class EventsActivity extends ActionBarActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            //UPDATE VUE
             new Task().execute();
         }
     };
@@ -237,5 +238,12 @@ public class EventsActivity extends ActionBarActivity {
             });
             return null;
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

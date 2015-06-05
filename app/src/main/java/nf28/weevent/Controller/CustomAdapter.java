@@ -81,8 +81,6 @@ public class CustomAdapter extends ArrayAdapter<ModelAdapter>{
                       cb.setText(modelItems.get(position).getName());
                       if (modelItems.get(position).getValue() == 1) {
                           cb.setChecked(true);
-                          if(!modelItems.get(position).getName().equalsIgnoreCase(DataManager.getInstance().getUser().getLogin()))
-                            cb.setEnabled(false);
                       }
                       else
                           cb.setChecked(false);

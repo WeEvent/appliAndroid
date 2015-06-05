@@ -142,7 +142,6 @@ public class FriendsActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
     {
-        onBackPressed();
         switch (menuItem.getItemId()) {
             case R.id.action_home:
                 // app icon in action bar clicked; go home
@@ -150,7 +149,8 @@ public class FriendsActivity extends ActionBarActivity {
                 startActivity(intent);
                 return true;
             default:
-                return super.onOptionsItemSelected(menuItem);
+                onBackPressed();
+                return true;
         }
     }
 

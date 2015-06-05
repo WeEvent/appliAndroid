@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tab_1">
+    tools:context=".tab_1"
+    android:background="@color/ColorBackground">
 
     <TextView
         android:layout_width="fill_parent"
@@ -20,8 +21,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="You Are In Category 1"
         android:id="@+id/eventDescription"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/event_description"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp" />
 
     <Button
         android:id="@+id/btnSendInvitation"
@@ -64,5 +66,6 @@
         android:layout_alignStart="@+id/textView"
         android:layout_alignRight="@+id/textView"
         android:layout_alignEnd="@+id/textView" />
+
 
 </RelativeLayout>

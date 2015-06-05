@@ -8,9 +8,6 @@ public class ModelAdapter{
     int value; /* 0 -&gt; checkbox disable, 1 -&gt; checkbox enable */
     int votes = 0;
 
-    ModelAdapter(String name, int value){
-        this(name,value,0);
-    }
     ModelAdapter(String name, int value,int votes){
         this.name = name;
         this.value = value;

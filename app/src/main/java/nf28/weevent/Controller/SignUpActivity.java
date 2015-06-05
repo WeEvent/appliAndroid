@@ -193,8 +193,6 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
                 user.setPassword(password);
                 user.setLogin(login);
             }
-            //user.addGroup("Favoris");
-
 
             if (!isNetworkAvailable()){
                 Toast.makeText(SignUpActivity.this, getString(R.string.error_no_connection), Toast.LENGTH_SHORT).show();
@@ -221,9 +219,6 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
-                //showProgress(true);
-                //mAuthTask = new UserLoginTask(email, password);
-                //mAuthTask.execute((Void) null);
             }
         }
     }
@@ -509,6 +504,13 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
         editor.putString(REG_ID, regId);
         editor.putInt(APP_VERSION, appVersion);
         editor.commit();
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }

@@ -43,7 +43,7 @@ public class Overview extends Fragment {
 
         for (PollValue p : pollValues) {
             if(p!= null)
-                modelItems.add( new ModelAdapter(p.getValue(),((p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0)));
+                modelItems.add( new ModelAdapter(p.getValue(),p.hasVoted(DataManager.getInstance().getUser().getLogin())?1:0,p.getVotersCount()));
         }
         //TODO a user can be inserted only once!!!!!!!
         System.out.println("++ \n "+ pollValues.toString()+" \n++");
