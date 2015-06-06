@@ -129,7 +129,7 @@ public class Description extends Fragment {
             Boolean ret = DataManager.getInstance().removeContactFromEvent(DataManager.getInstance().getUser().getLogin());
             if (ret){
                 sendMessage("updateEvents");
-                getActivity().finish();
+                getActivity().onBackPressed();
             }
             return ret;
         }

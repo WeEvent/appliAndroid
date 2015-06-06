@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import nf28.weevent.Controller.List.ActionSlideExpandableListView;
@@ -38,6 +39,12 @@ public class ContactsFragment extends Fragment {
                 .inflate(R.layout.contacts, container, false);
 
         adapter = buildData();
+        adapter.sort(new Comparator<String>() {
+            @Override
+            public int compare(String lhs, String rhs) {
+                return lhs.compareTo(rhs);   //or whatever your sorting algorithm
+            }
+        });
         list.setAdapter(adapter);
 
         list.setItemActionListener(new ActionSlideExpandableListView.OnActionClickListener() {
