@@ -101,11 +101,12 @@ public class GCMNotificationIntentService extends IntentService {
                 Matcher matcher = pattern.matcher(msg);
                 if (matcher.find()) {
 					String id = matcher.group(1);
+/*
                     SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putString(id, "newMessage");
                     editor.commit();
-                    sendMessage("updateChat");
+                    sendMessage("updateChat");*/
 
 					//Notif graphique d'un nouveau message
 					mNotificationManager = (NotificationManager) this
@@ -114,7 +115,7 @@ public class GCMNotificationIntentService extends IntentService {
 					PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
 							new Intent(this, LoginActivity.class), 0);
 
-					Event evt = DataManager.getInstance().getEvent(id);
+					//Event evt = DataManager.getInstance().getEvent(id);
 
 					NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 							this).setSmallIcon(R.drawable.gcm_cloud)
@@ -122,7 +123,7 @@ public class GCMNotificationIntentService extends IntentService {
 							.setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
 							.setDefaults(Notification.DEFAULT_SOUND)
 							.setAutoCancel(true)
-							.setContentText("New message in \"" + evt.getNom() + "\"");
+							.setContentText("New message in chat");// \"" + evt.getNom() + "\"");
 
 					mBuilder.setContentIntent(contentIntent);
 					mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
