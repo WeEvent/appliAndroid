@@ -1,97 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1"
-    android:background="@color/ColorBackground"
-    >
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:background="@color/ColorBackground"
+        >
 
-    <CheckBox
-        android:drawableRight="@drawable/ic_desc"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:text="Description"
-        android:button="@drawable/check_box_selector"
-        android:id="@+id/select_desc"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:clickable="true"
-        android:enabled="false" />
-    <CheckBox
-        android:drawableRight="@drawable/ic_evt"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:text="What"
-        android:button="@drawable/check_box_selector"
-        android:id="@+id/select_type"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:clickable="true"
-        android:enabled="true"/>
-    <CheckBox
-        android:drawableRight="@drawable/ic_date"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:text="When"
-        android:button="@drawable/check_box_selector"
-        android:id="@+id/select_date"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:clickable="true" />
-    <CheckBox
-        android:drawableRight="@drawable/ic_map"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:text="Where"
-        android:button="@drawable/check_box_selector"
-        android:id="@+id/select_map"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        />
+        <CheckBox
+            android:drawableRight="@drawable/ic_desc"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Description"
+            android:button="@drawable/check_box_selector"
+            android:id="@+id/select_desc"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:clickable="true"
+            android:enabled="false" />
+        <CheckBox
+            android:drawableRight="@drawable/ic_evt"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="What"
+            android:button="@drawable/check_box_selector"
+            android:id="@+id/select_type"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:clickable="true"
+            android:enabled="true"/>
+        <CheckBox
+            android:drawableRight="@drawable/ic_date"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="When"
+            android:button="@drawable/check_box_selector"
+            android:id="@+id/select_date"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:clickable="true" />
+        <CheckBox
+            android:drawableRight="@drawable/ic_map"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="Where"
+            android:button="@drawable/check_box_selector"
+            android:id="@+id/select_map"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            />
 
-    <CheckBox
-        android:drawableRight="@drawable/ic_transp"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:text="How"
-        android:button="@drawable/check_box_selector"
-        android:id="@+id/select_transp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        />
+        <CheckBox
+            android:drawableRight="@drawable/ic_transp"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="How"
+            android:button="@drawable/check_box_selector"
+            android:id="@+id/select_transp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            />
 
-    <CheckBox
-        android:drawableRight="@drawable/ic_poll"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:text="Overview"
-        android:button="@drawable/check_box_selector"
-        android:id="@+id/select_poll"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal"
-        android:enabled="false"
-        />
-
+        <CheckBox
+            android:drawableRight="@drawable/ic_poll"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Overview"
+            android:button="@drawable/check_box_selector"
+            android:id="@+id/select_poll"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:enabled="false"
+            />
+    </LinearLayout>
     <Button
-        android:background="@drawable/btn_round_corner"
-        android:layout_width="120dp"
-        android:layout_height="30dp"
+        android:background="#ff08ae9e"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
         android:id="@+id/btn_events_create"
         android:text="@string/btn_events_create"
+        android:textAllCaps="false"
         android:textColor="#ffffffff"
-        android:textSize="17dp"
+        android:textSize="20dp"
 
-        android:layout_alignRight="@+id/ListView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
 
-        android:layout_marginTop="10dp"
+
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
         android:layout_gravity="right"
         android:layout_weight="0.19" />
-
-
-</LinearLayout>
+</RelativeLayout>

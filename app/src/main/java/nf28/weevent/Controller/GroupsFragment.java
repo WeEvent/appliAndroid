@@ -12,6 +12,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import nf28.weevent.Tools.DataManager;
  * Created by CD on 13/05/2015.
  */
 public class GroupsFragment extends Fragment{
+    private ArrayAdapter<String> adapter;
 
     @Override
     public ListView onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,8 +32,14 @@ public class GroupsFragment extends Fragment{
 
         ListView list = (ListView)inflater.inflate(R.layout.groups, container, false);
 
-        list.setAdapter(buildData());
-
+        adapter = buildData();
+        adapter.sort(new Comparator<String>() {
+            @Override
+            public int compare(String lhs, String rhs) {
+                return lhs.toLowerCase().compareTo(rhs.toLowerCase());   //or whatever your sorting algorithm
+            }
+        });
+        list.setAdapter(adapter);
         AdapterView.OnItemClickListener l = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -47,7 +55,7 @@ public class GroupsFragment extends Fragment{
         return list;
     }
 
-    public ListAdapter buildData() {
+    public ArrayAdapter<String> buildData() {
 
         HashMap<String,Group> groups = DataManager.getInstance().getUser().getGroups();
         List<String> values = new ArrayList<String>();

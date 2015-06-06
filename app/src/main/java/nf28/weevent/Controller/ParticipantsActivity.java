@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.util.Comparator;
+
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
 
@@ -33,6 +35,12 @@ public class ParticipantsActivity extends ActionBarActivity {
         mainListView = (ListView) findViewById( R.id.ParticipantsView );
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataManager.getInstance().getSelectedEvt().getContactList());
+        adapter.sort(new Comparator<String>() {
+            @Override
+            public int compare(String lhs, String rhs) {
+                return lhs.toLowerCase().compareTo(rhs.toLowerCase());   //or whatever your sorting algorithm
+            }
+        });
         mainListView.setAdapter(adapter);
 
         inputSearch = (EditText) findViewById(R.id.inputSearch);
