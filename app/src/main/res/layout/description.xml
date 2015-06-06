@@ -4,26 +4,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".tab_1"
-    android:background="@color/ColorBackground">
+    >
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Description"
-        android:id="@+id/event_description"
+        android:id="@+id/event_name"
         android:background="#ff08ae9e"
         android:textColor="#FFFFFF"
         android:gravity="center" />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="You Are In Category 1"
         android:id="@+id/eventDescription"
         android:layout_below="@+id/event_description"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="130dp" />
+        android:layout_marginTop="130dp"
+        android:background="@color/ColorBackground"/>
+
+    <Button
+        android:id="@+id/btnCloseEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Close Event"
+        android:background="@drawable/button_default_bg"
+        android:layout_marginBottom="172dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
 
     <Button
         android:id="@+id/btnSendInvitation"
@@ -32,12 +48,10 @@
         android:padding="10dp"
         android:text="Send Invitation"
         android:background="@drawable/button_default_bg"
-        android:layout_marginBottom="122dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView"
-        android:layout_alignRight="@+id/textView"
-        android:layout_alignEnd="@+id/textView" />
+        android:layout_above="@+id/btnParticipants"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+         />
 
     <Button
         android:id="@+id/btnParticipants"

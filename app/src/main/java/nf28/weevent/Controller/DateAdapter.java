@@ -70,6 +70,7 @@ public DateAdapter(Context context, ModelAdapter[] resource) {
                      }
                 }
             } );
+                if(DataManager.getInstance().getSelectedEvt().getLock()) cb.setEnabled(false);
                 if(position < modelItems.length) {
                     votes.setText(""+modelItems[position].getVotes());
                     cb.setText(modelItems[position].getName());

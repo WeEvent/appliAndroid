@@ -55,9 +55,13 @@ public class Place extends Fragment {
         mainListView.setAdapter(adapter);
 
         addPlace = (Button) v.findViewById(R.id.add_new_place);
+
+        if(DataManager.getInstance().getSelectedEvt().getLock())addPlace.setVisibility(View.GONE);
+
         addPlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 LayoutInflater layoutInflater = LayoutInflater.from(context);
 
                 View promptView = layoutInflater.inflate(R.layout.dialog_place, null);

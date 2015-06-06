@@ -141,7 +141,7 @@ public class Date extends DialogFragment
     public void addListenerOnButton(View v) {
 
         addDate = (Button) v.findViewById(R.id.add_new_date);
-
+        if(DataManager.getInstance().getSelectedEvt().getLock())addDate.setVisibility(View.GONE);
         addDate.setOnClickListener(new View.OnClickListener() {
 
             @Override
