@@ -124,7 +124,10 @@ public class GroupActivity extends ActionBarActivity{
         protected Boolean doInBackground(String... params) {
             Boolean ret = DataManager.getInstance().removeGroup(group);
             if (ret){
-                GroupActivity.this.finish();
+                Intent intent = new Intent(GroupActivity.this, FriendsActivity.class);
+                intent.putExtra("view", "groups");
+                startActivity(intent);
+                finish();
             }
             return ret;
         }
