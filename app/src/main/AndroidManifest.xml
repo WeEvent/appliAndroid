@@ -136,6 +136,11 @@
             android:screenOrientation="portrait"
             android:label="New Group">
         </activity>
+        <activity
+            android:name=".Controller.MyAndroidDate"
+            android:screenOrientation="portrait"
+            android:label="New Group">
+        </activity>
 
         <receiver
             android:name=".Controller.Gcm.GcmBroadcastReceiver"
