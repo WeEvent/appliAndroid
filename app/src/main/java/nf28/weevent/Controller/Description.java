@@ -58,10 +58,12 @@ public class Description extends Fragment {
                 if(DataManager.getInstance().getSelectedEvt().getLock()) {
                     DataManager.getInstance().getSelectedEvt().setLock(false);
                     sendValid.setVisibility(View.VISIBLE);
+                    butClose.setText("CLOSE EVENT");
                 }
                 else{
                     DataManager.getInstance().getSelectedEvt().setLock(true);
                     sendValid.setVisibility(View.GONE);
+                    butClose.setText("OPEN EVENT");
                 }
             }
         });
