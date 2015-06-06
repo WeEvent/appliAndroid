@@ -80,7 +80,6 @@ public class CategoriesActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        onBackPressed();
         switch (menuItem.getItemId()) {
             case R.id.action_home:
                 // app icon in action bar clicked; go home
@@ -92,8 +91,10 @@ public class CategoriesActivity extends ActionBarActivity {
                 // app icon in action bar clicked; go home
                 Intent chat = new Intent(this, ChatActivity.class);
                 startActivity(chat);
+                finish();
                 return true;
             default:
+                onBackPressed();
                 return super.onOptionsItemSelected(menuItem);
         }
 
@@ -107,12 +108,12 @@ public class CategoriesActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
         */
     }
-/*
+
     @Override
     public void onBackPressed(){
-        Intent cate = new Intent(this, EventsActivity.class);
-        startActivity(cate);
+        Intent intent = new Intent(this, EventsActivity.class);
+        startActivity(intent);
         finish();
     }
-    */
+
 }

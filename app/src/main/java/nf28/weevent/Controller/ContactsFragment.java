@@ -49,6 +49,7 @@ public class ContactsFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), AddContactToGroupSelectGroupActivity.class);
                     intent.putExtra("contactToAdd", list.getItemAtPosition(position).toString());
                     startActivity(intent);
+                    getActivity().finish();
 
                 } else {
                     positionToDelete = position;
@@ -103,21 +104,6 @@ public class ContactsFragment extends Fragment {
             positionToDelete = null;
         }
     };
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-        getActivity().onBackPressed();
-        switch (menuItem.getItemId()) {
-            case R.id.action_home:
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(menuItem);
-        }
-    }
-
-
 }
 
 

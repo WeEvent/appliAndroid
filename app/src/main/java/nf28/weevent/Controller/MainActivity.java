@@ -36,7 +36,6 @@ public class MainActivity extends ActionBarActivity {
 
     protected ListView mDrawerList;
     protected DrawerLayout mDrawerLayout;
-    //protected ArrayAdapter<String> mAdapter;
     protected ActionBarDrawerToggle mDrawerToggle;
     protected String mActivityTitle;
 
@@ -188,8 +187,8 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        /*MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);*/
         // TODO : Configure the search info and add any event listeners
         //...
         return true;
@@ -214,10 +213,4 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    /*@Override
-    public void onBackPressed()
-    {
-        // desactivate the return button
-    }*/
 }

@@ -70,8 +70,8 @@
             android:textColor="#ffffffff"
             android:textSize="25dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/ListView"
-            android:layout_alignEnd="@+id/ListView"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="20dp" />
 
 

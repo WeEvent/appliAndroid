@@ -45,6 +45,13 @@ public class FriendsActivity extends ActionBarActivity {
         fragmentTransaction.commit();
         view = "all";
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            String v = extras.getString("view", null);
+            if (v != null)
+                view = v;
+        }
+
         all.setOnClickListener(changeListOnClickListener);
         groups.setOnClickListener(changeListOnClickListener);
         add.setOnClickListener(addListener);
@@ -89,8 +96,10 @@ public class FriendsActivity extends ActionBarActivity {
 
             if(view == "all"){
                 startActivity(new Intent(FriendsActivity.this, AddContactActivity.class));
+                finish();
             }else{
                 startActivity(new Intent(FriendsActivity.this, AddGroupActivity.class));
+                finish();
             }
         }};
 
@@ -142,15 +151,16 @@ public class FriendsActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
     {
-        onBackPressed();
         switch (menuItem.getItemId()) {
             case R.id.action_home:
                 // app icon in action bar clicked; go home
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                finish();
                 return true;
             default:
-                return super.onOptionsItemSelected(menuItem);
+                onBackPressed();
+                return true;
         }
     }
 
@@ -161,4 +171,10 @@ public class FriendsActivity extends ActionBarActivity {
         return true;
     }
 
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
