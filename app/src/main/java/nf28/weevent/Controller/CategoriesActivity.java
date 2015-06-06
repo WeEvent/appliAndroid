@@ -95,7 +95,6 @@ public class CategoriesActivity extends ActionBarActivity {
                 return true;
             default:
                 onBackPressed();
-                finish();
                 return super.onOptionsItemSelected(menuItem);
         }
 
@@ -110,11 +109,11 @@ public class CategoriesActivity extends ActionBarActivity {
         */
     }
 
-    /*@Override
+    @Override
     public void onBackPressed(){
         Intent intent = new Intent(this, EventsActivity.class);
         startActivity(intent);
         finish();
-    }*/
+    }
 
 }

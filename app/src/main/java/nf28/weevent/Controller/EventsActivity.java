@@ -158,8 +158,8 @@ public class EventsActivity extends ActionBarActivity {
             DataManager.getInstance().setSelectedEvt(event);
             init(event);
             startActivity(new Intent(EventsActivity.this, CategoriesActivity.class));
-            // evite au retour de l'event de recharger la liste si rien n'a changé
-            //finish();
+            // evite au retour de l'event de recharger la liste si rien n'a change => pas possible
+            finish();
         }else{
             Toast.makeText(getApplicationContext(),	"Event doesn't exist!", Toast.LENGTH_SHORT).show();
 

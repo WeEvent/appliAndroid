@@ -38,6 +38,7 @@ public class GroupsFragment extends Fragment{
                 Intent intent = new Intent(getActivity(), GroupActivity.class);
                 intent.putExtra("group", parent.getItemAtPosition(position).toString());
                 startActivity(intent);
+                getActivity().finish();
             }
         };
 

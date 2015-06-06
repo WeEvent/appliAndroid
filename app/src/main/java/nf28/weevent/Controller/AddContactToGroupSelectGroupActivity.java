@@ -44,14 +44,15 @@ public class AddContactToGroupSelectGroupActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
     {
-        onBackPressed();
         switch (menuItem.getItemId()) {
             case R.id.action_home:
                 // app icon in action bar clicked; go home
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                finish();
                 return true;
             default:
+                onBackPressed();
                 return super.onOptionsItemSelected(menuItem);
         }
     }
@@ -61,5 +62,12 @@ public class AddContactToGroupSelectGroupActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_activity, menu);
         return true;
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(this, FriendsActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

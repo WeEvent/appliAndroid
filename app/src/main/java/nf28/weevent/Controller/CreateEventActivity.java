@@ -64,7 +64,7 @@ public class CreateEventActivity extends ActionBarActivity {
         Event event = DataManager.getInstance().getSelectedEvt();
 
         tabs.add(0);
-        event.addCategory("Cat_0","Categ_0");
+        event.addCategory("Cat_0", "Categ_0");
 
         if(radio_type.isChecked()) {
             tabs.add(1);
@@ -124,7 +124,12 @@ public class CreateEventActivity extends ActionBarActivity {
                 onBackPressed();
                 return super.onOptionsItemSelected(menuItem);
         }
+    }
 
-
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(this, EventsActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

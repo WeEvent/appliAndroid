@@ -43,14 +43,15 @@ public class AddContactToGroupSelectContactActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
     {
-        onBackPressed();
         switch (menuItem.getItemId()) {
             case R.id.action_home:
                 // app icon in action bar clicked; go home
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                finish();
                 return true;
             default:
+                onBackPressed();
                 return super.onOptionsItemSelected(menuItem);
         }
     }
@@ -62,4 +63,10 @@ public class AddContactToGroupSelectContactActivity extends ActionBarActivity {
         return true;
     }
 
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(this, GroupActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

@@ -95,6 +95,7 @@ public class GroupActivity extends ActionBarActivity{
             Intent intent = new Intent(GroupActivity.this, AddContactToGroupSelectContactActivity.class);
             intent.putExtra("group", group);
             startActivity(intent);
+            finish();
         }};
 
     Button.OnTouchListener onTouchListener
@@ -145,8 +146,10 @@ public class GroupActivity extends ActionBarActivity{
                 // app icon in action bar clicked; go home
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                finish();
                 return true;
             default:
+                onBackPressed();
                 return super.onOptionsItemSelected(menuItem);
         }
     }
@@ -156,5 +159,13 @@ public class GroupActivity extends ActionBarActivity{
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_activity, menu);
         return true;
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(this, FriendsActivity.class);
+        intent.putExtra("view", "groups");
+        startActivity(intent);
+        finish();
     }
 }
