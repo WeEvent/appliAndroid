@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.util.Comparator;
+
 import nf28.weevent.R;
 
 /**
@@ -20,6 +22,12 @@ public class InviteContactsFragment extends Fragment {
         ListView list = (ListView)inflater.inflate(R.layout.simple_list, container, false);
 
         SendInvitationActivity activity = (SendInvitationActivity) getActivity();
+        activity.getContactsAdapter().sort(new Comparator<ModelAdapter>() {
+            @Override
+            public int compare(ModelAdapter lhs, ModelAdapter rhs) {
+                return lhs.getName().toLowerCase().compareTo(rhs.getName().toLowerCase());   //or whatever your sorting algorithm
+            }
+        });
         list.setAdapter(activity.getContactsAdapter());
 
         return list;

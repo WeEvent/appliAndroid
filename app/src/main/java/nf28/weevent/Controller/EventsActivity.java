@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -60,6 +61,7 @@ public class EventsActivity extends ActionBarActivity {
         layout = (LinearLayout) findViewById(R.id.progressbar_view);
 
         listAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
+
         mainListView.setAdapter(listAdapter);
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView parent, View view, int position, long id) {
@@ -223,6 +225,12 @@ public class EventsActivity extends ActionBarActivity {
         protected void onPostExecute(Boolean result) {
             layout.setVisibility(View.GONE);
             mainListView.setVisibility(View.VISIBLE);
+            listAdapter.sort(new Comparator<Event>() {
+                @Override
+                public int compare(Event lhs, Event rhs) {
+                    return (lhs.getNom().toLowerCase()).compareTo(rhs.getNom().toLowerCase());   //or whatever your sorting algorithm
+                }
+            });
             listAdapter.notifyDataSetChanged();
             super.onPostExecute(result);
         }

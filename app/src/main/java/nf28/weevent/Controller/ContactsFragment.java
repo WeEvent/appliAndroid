@@ -42,7 +42,7 @@ public class ContactsFragment extends Fragment {
         adapter.sort(new Comparator<String>() {
             @Override
             public int compare(String lhs, String rhs) {
-                return lhs.compareTo(rhs);   //or whatever your sorting algorithm
+                return lhs.toLowerCase().compareTo(rhs.toLowerCase());   //or whatever your sorting algorithm
             }
         });
         list.setAdapter(adapter);

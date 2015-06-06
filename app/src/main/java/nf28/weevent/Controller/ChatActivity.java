@@ -13,8 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnKeyListener;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +71,7 @@ public class ChatActivity extends ActionBarActivity {
 
         editText1 = (EditText) findViewById(R.id.editText1);
 
-        editText1.setOnKeyListener(new OnKeyListener() {
+        /*editText1.setOnKeyListener(new OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)
                         && !editText1.getText().toString().equals("")) {
@@ -89,6 +91,32 @@ public class ChatActivity extends ActionBarActivity {
                 }
                 return false;
             }
+        });*/
+
+        editText1.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    // your additional processing...
+                    if (editText1.getText().toString().equals(""))
+                        return false;
+
+                    Message newMessage = new Message(DataManager.getInstance().getUser().getLogin(),
+                            editText1.getText().toString());
+
+                    adapter.add(newMessage);
+                    DataManager.getInstance().addMessage(newMessage);
+
+                    editText1.setText("");
+
+                    //send notification
+                    shareChatMessagedWithServer();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
         });
 
         addItems();

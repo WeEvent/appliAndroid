@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.List;
@@ -33,6 +35,10 @@ public class AddContactActivity extends ActionBarActivity {
 
     List<String> logins;
 
+    LinearLayout progressbar;
+
+    private ArrayAdapter adapterLogins;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,17 +47,17 @@ public class AddContactActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        progressbar = (LinearLayout) findViewById(R.id.progressbar_view);
+
         login = (AutoCompleteTextView)findViewById(R.id.loginSearch);
 
         add = (Button)findViewById(R.id.btn_add_contact);
         add.setOnClickListener(addOnClickListener);
         add.setOnTouchListener(onTouchListener);
 
-        logins = DataManager.getInstance().getAllLogins();
 
-        ArrayAdapter adapterLogins = new ArrayAdapter(this, android.R.layout.simple_list_item_1, logins);
-        //login.setDropDownBackgroundDrawable(new ColorDrawable(gt ));
-        login.setAdapter(adapterLogins);
+        new Task().execute();
+
     }
 
     Button.OnClickListener addOnClickListener
@@ -146,5 +152,33 @@ public class AddContactActivity extends ActionBarActivity {
         Intent intent = new Intent(this, FriendsActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private class Task extends AsyncTask<String, Integer, Boolean> {
+        @Override
+        protected void onPreExecute() {
+            login.setVisibility(View.GONE);
+            add.setVisibility(View.GONE);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            progressbar.setVisibility(View.GONE);
+            login.setVisibility(View.VISIBLE);
+            add.setVisibility(View.VISIBLE);
+
+            adapterLogins = new ArrayAdapter(AddContactActivity.this, android.R.layout.simple_list_item_1, logins);
+            //login.setDropDownBackgroundDrawable(new ColorDrawable(gt ));
+            login.setAdapter(adapterLogins);
+
+            super.onPostExecute(result);
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            logins = DataManager.getInstance().getAllLogins();
+            return null;
+        }
     }
 }
