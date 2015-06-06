@@ -83,7 +83,8 @@ public class CreateEventActivity extends ActionBarActivity {
             event.addCategory("Cat_4", "Categ_4");
         }
 
-        tabs.add(5);
+        if(tabs.size()<5)
+            tabs.add(5);
         event.addCategory("Cat_5","Categ_5");
 
         tabs.add(6);

@@ -6,10 +6,9 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -24,6 +23,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
 
@@ -34,7 +34,8 @@ import nf28.weevent.Tools.DataManager;
 /**
  * Created by KM on 13/05/15.
  */
-public class Date extends Fragment {
+public class Date extends DialogFragment
+        implements DatePickerDialog.OnDateSetListener {
     private Button addDate = null;
     private ListView mainListView = null;
     private ModelAdapter[] modelItems = new ModelAdapter[1];
@@ -42,14 +43,21 @@ public class Date extends Fragment {
     private Context context = null;
 
 
-    private int mYear;
-    private int mMonth;
-    private int mDay;
+    private String tvDisplayDate;
+    private DatePicker dpResult;
 
+
+    private int year;
+    private int month;
+    private int day;
     private int mHour       = 0;
     private int mMinute     = 0;
 
-    static final int DATE_DIALOG_ID = 0;
+    private int id ;
+
+    static final int TIME_DIALOG_ID = 100;
+
+    static final int DATE_DIALOG_ID = 999;
 
     private Collection<PollValue> pollValues = null;
     // Search EditText
@@ -70,25 +78,6 @@ public class Date extends Fragment {
         adapter = new DateAdapter(context, modelItems);
         mainListView.setAdapter(adapter);
 
-        addDate = (Button) v.findViewById(R.id.add_new_date);
-        addDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Dialog d = new DatePickerDialog(context,
-                        mDateSetListener,
-                        mYear, mMonth, mDay);
-
-                ((DatePickerDialog)d).setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int buttonId) {
-                        showTime();
-                        System.out.println("\n\n\n\nUpdate launched\n\n\n");
-                    }
-                });
-
-                d.show();
-            }
-
-        });
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 // When clicked, show a toast with the TextView text
@@ -99,13 +88,8 @@ public class Date extends Fragment {
             }
         });
 
-        // get the current date
-        final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
-        mHour = c.get(Calendar.HOUR_OF_DAY);
-        mMinute = c.get(Calendar.MINUTE);
+        setCurrentDateOnView(v);
+        addListenerOnButton(v);
 
         inputSearch = (EditText) v.findViewById(R.id.inputSearch);
         inputSearch.addTextChangedListener(new TextWatcher() {
@@ -133,41 +117,110 @@ public class Date extends Fragment {
 
         return v;
     }
+    // display current date
+    public void setCurrentDateOnView(View v) {
 
+
+        final Calendar c = Calendar.getInstance();
+        year = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH);
+        day = c.get(Calendar.DAY_OF_MONTH);
+
+        // set current date into textview
+        tvDisplayDate = (new StringBuilder()
+                // Month is 0 based, just add 1
+                .append(month + 1).append("-").append(day).append("-")
+                .append(year).append(" ")).toString();
+
+        // set current date into datepicker
+
+
+    }
+
+
+    public void addListenerOnButton(View v) {
+
+        addDate = (Button) v.findViewById(R.id.add_new_date);
+
+        addDate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                //showDialog(TIME_DIALOG_ID);
+                id = DATE_DIALOG_ID;
+                Dialog date = onCreateDialog(null);
+
+                showTime();
+                date.show();
+            }
+
+        });
+
+    }
     private void showTime(){
         Dialog d = new TimePickerDialog(context,
                 mTimeSetListener, mHour, mMinute, false);
+        id = TIME_DIALOG_ID;
 
-        ((TimePickerDialog)d).setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int buttonId) {
-
-                updateDisplay();
-                System.out.println("\n\n\n\nUpdate launched\n\n\n");
-            }
-        });
         d.show();
+
     }
-    // the callback received when the user "sets" the time in the dialog
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+// Use the current date as the default date in the picker
+        switch (id) {
+            case DATE_DIALOG_ID:
+                // set date picker as current date
+                return new DatePickerDialog(context, datePickerListener,
+                        year, month,day);
+            case TIME_DIALOG_ID:
+                return new TimePickerDialog(context,
+                        mTimeSetListener, mHour, mMinute, false);
+        }
+        return null;
+    }
+
     private TimePickerDialog.OnTimeSetListener mTimeSetListener =
             new TimePickerDialog.OnTimeSetListener() {
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                     mHour = hourOfDay;
                     mMinute = minute;
-                    Toast.makeText(context,mMinute+"-"+mHour, Toast.LENGTH_SHORT).show();
+                    tvDisplayDate +=(new StringBuilder().append(" : ").append(mHour)
+                            .append("--").append(mMinute)
+                            .append(" ")).toString();
+                    updateDisplay();
                 }
+
             };
 
-    private static String pad(int c) {
-        if (c >= 10)
-            return String.valueOf(c);
-        else
-            return "0" + String.valueOf(c);
-    }
-    // updates the date we display in the TextView
+    private DatePickerDialog.OnDateSetListener datePickerListener
+            = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+            year = selectedYear;
+            month = selectedMonth;
+            day = selectedDay;
+
+            // set selected date into textview
+            tvDisplayDate = (new StringBuilder().append(month + 1)
+                    .append("-").append(day).append("-").append(year)
+                    .append(" ")).toString();
+
+            // set selected date into datepicker also
+            //dpResult.init(year, month, day, null);
+
+        }
+
+    };
+
     private void updateDisplay() {
-        new TimePickerDialog(context,
-                mTimeSetListener, mHour, mMinute, false);
-        String mDateDisplay = ""+(mMonth + 1)+"-"+mDay+"-"+mYear+"       "+mHour+" : "+(mMinute);
+
+        String mDateDisplay = ""+(month + 1)+"-"+day+"-"+year+"       "+mHour+" : "+(mMinute);
         DataManager.getInstance().addLineToPoll("Cat_2",mDateDisplay);
         pollValues = DataManager.getInstance().getSelectedEvt().getCategory("Cat_2").getPollValues();
         modelItems = new ModelAdapter[pollValues.size()];
@@ -180,21 +233,18 @@ public class Date extends Fragment {
         mainListView.setAdapter(adapter);
 
         adapter.notifyDataSetChanged();
-        Toast.makeText(context,mDateDisplay, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,tvDisplayDate, Toast.LENGTH_SHORT).show();
 
     }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+        Calendar c = Calendar.getInstance();
+        c.set(year, month, day);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = sdf.format(c.getTime());
+    }
 
 
-    // the callback received when the user "sets" the date in the dialog
-    private DatePickerDialog.OnDateSetListener mDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-                public void onDateSet(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                    mYear = year;
-                    mMonth = monthOfYear;
-                    mDay = dayOfMonth;
-
-                }
-            };
 }

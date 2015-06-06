@@ -79,7 +79,7 @@ public class AddContactActivity extends ActionBarActivity {
 
                         text = "Contact added!";
 
-                        AddContactActivity.this.finish();
+                        onBackPressed();
                     }
                     else{
                         text="You can't add your own login!";
