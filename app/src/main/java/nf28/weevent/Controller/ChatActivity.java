@@ -116,6 +116,7 @@ public class ChatActivity extends ActionBarActivity {
                 finish();
                 return true;
             default:
+                onBackPressed();
                 return super.onOptionsItemSelected(menuItem);
         }
     }
