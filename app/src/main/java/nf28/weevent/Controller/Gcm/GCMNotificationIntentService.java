@@ -57,10 +57,10 @@ public class GCMNotificationIntentService extends IntentService {
 				for (int i = 0; i < 3; i++) {
 					Log.i(TAG,
 							"Working... ");
-					try {
+					/*try {
 						Thread.sleep(5000);
 					} catch (InterruptedException e) {
-					}
+					}*/
 				}
 				Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
 
