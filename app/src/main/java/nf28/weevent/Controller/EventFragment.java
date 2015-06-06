@@ -40,16 +40,21 @@ public class EventFragment extends Fragment {
 
 
         // radio_desc = (CheckBox) findViewById(R.id.select_desc);
+
         radio_date = (CheckBox) v.findViewById(R.id.select_date);
+        if(DataManager.getInstance().getSelectedEvt().getLock()) radio_date.setEnabled(false);
         radio_map = (CheckBox) v.findViewById(R.id.select_map);
+        if(DataManager.getInstance().getSelectedEvt().getLock()) radio_map.setEnabled(false);
         radio_transport = (CheckBox) v.findViewById(R.id.select_transp);
+        if(DataManager.getInstance().getSelectedEvt().getLock()) radio_transport.setEnabled(false);
         radio_type = (CheckBox) v.findViewById(R.id.select_type);
+        if(DataManager.getInstance().getSelectedEvt().getLock()) radio_type.setEnabled(false);
         //radio_overview = (CheckBox) findViewById(R.id.select_resume);
 
         updateCategory();
         Button btn_events_create = (Button) v.findViewById(R.id.btn_events_update);
 
-
+        if(DataManager.getInstance().getSelectedEvt().getLock()) btn_events_create.setVisibility(View.GONE);
         btn_events_create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +140,7 @@ public class EventFragment extends Fragment {
         }
 
 
-        if(event.getCategoryList().size()<5)
+        if(event.getCategoryList().size()<7)
             tabs.add(5);
 
         tabs.add(6);

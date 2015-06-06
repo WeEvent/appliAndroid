@@ -68,6 +68,7 @@ public TransportAdapter(Context context, ModelAdapter[] resource) {
                      }
                 }
             } );
+                if(DataManager.getInstance().getSelectedEvt().getLock()) cb.setEnabled(false);
                 if(position < modelItems.length) {
                     cb.setText(modelItems[position].getName());
                     votes.setText(""+modelItems[position].getVotes());

@@ -13,6 +13,8 @@ public class Event {
     private String id                               = null;
     private String nom                              = null;
     private String desc                             = null;
+    private String createur                         = " ";
+    private boolean locked                          = false;
 
     private List<String> listContacts               = null;
     private Chat chat                               = null;
@@ -25,6 +27,12 @@ public class Event {
         listContacts                    = new ArrayList<>();
         mapCategories                   = new HashMap<String, Category>();
     }
+
+    public Event(String createur,String id, String nom, String desc){
+        this(id,nom,desc);
+        this.createur = createur;
+    }
+
     public Event(String id, String nom, String desc){
         this();
         this.setID(id);
@@ -35,6 +43,17 @@ public class Event {
         this.setID(Double.toString(rand));
     }
 
+    public void setLock(boolean lock){
+        this.locked = lock;
+    }
+
+    public boolean getLock(){
+        return locked;
+    }
+
+    public String getCreateur(){
+        return createur;
+    }
 
     public Event(String nom, String desc){
         this();

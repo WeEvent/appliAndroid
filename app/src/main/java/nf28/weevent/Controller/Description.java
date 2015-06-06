@@ -27,7 +27,9 @@ public class Description extends Fragment {
     private Button sendValid = null;
     private Button participants = null;
     private Button leaveEvent = null;
+    private Button butClose= null;
     private TextView eventDesc = null;
+    private TextView eventName = null;
     private Context context = null;
 
     ///
@@ -46,8 +48,31 @@ public class Description extends Fragment {
         context = inflater.getContext();
         // Assigning ViewPager View and setting the adapter
         eventDesc = (TextView)v.findViewById(R.id.eventDescription);
+        eventName = (TextView)v.findViewById(R.id.event_name);
 
-        eventDesc.setText(DataManager.getInstance().getSelectedEvt().getDesc());
+        butClose = (Button) v.findViewById(R.id.btnCloseEvent);
+
+        butClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(DataManager.getInstance().getSelectedEvt().getLock()) {
+                    DataManager.getInstance().getSelectedEvt().setLock(false);
+                    sendValid.setVisibility(View.VISIBLE);
+                }
+                else{
+                    DataManager.getInstance().getSelectedEvt().setLock(true);
+                    sendValid.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        if(DataManager.getInstance().getSelectedEvt().getCreateur().equalsIgnoreCase(DataManager.getInstance().getUser().getLogin()))
+            butClose.setVisibility(View.VISIBLE);
+        else
+            butClose.setVisibility(View.GONE);
+
+        eventName.setText(DataManager.getInstance().getSelectedEvt().getNom());
+        eventDesc.setText("Desc : "+DataManager.getInstance().getSelectedEvt().getDesc());
 
         eventDesc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +112,7 @@ public class Description extends Fragment {
 
             }
         });
+        if(DataManager.getInstance().getSelectedEvt().getLock())sendValid.setVisibility(View.GONE);
         sendValid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

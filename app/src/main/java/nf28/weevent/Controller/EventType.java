@@ -29,7 +29,7 @@ import nf28.weevent.Tools.DataManager;
  * Created by KM on 13/05/15.
  */
 public class EventType extends Fragment {
-    private Button addPlace = null;
+    private Button addType = null;
     private ListView mainListView = null;
     private ModelAdapter[] modelItems = new ModelAdapter[1];
     private EventTypeAdapter adapter = null;
@@ -54,8 +54,9 @@ public class EventType extends Fragment {
         adapter = new EventTypeAdapter(context, modelItems);
         mainListView.setAdapter(adapter);
 
-        addPlace = (Button) v.findViewById(R.id.add_new_type);
-        addPlace.setOnClickListener(new View.OnClickListener() {
+        addType = (Button) v.findViewById(R.id.add_new_type);
+        if(DataManager.getInstance().getSelectedEvt().getLock())addType.setVisibility(View.GONE);
+        addType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LayoutInflater layoutInflater = LayoutInflater.from(context);

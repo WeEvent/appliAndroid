@@ -95,7 +95,7 @@ public class EventsActivity extends ActionBarActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 // get user input and set it to result
 
-                                Event event = new Event("10",input.getText().toString(),input.getText().toString()+" description");
+                                Event event = new Event(DataManager.getInstance().getUser().getLogin(),"10",input.getText().toString(),input.getText().toString()+" description");
                                 event.addContact(DataManager.getInstance().getUser().getLogin());
 
                                 DataManager.getInstance().setSelectedEvt(event);

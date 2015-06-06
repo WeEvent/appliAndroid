@@ -55,6 +55,7 @@ public class Transport extends Fragment {
         mainListView.setAdapter(adapter);
 
         addTransport = (Button) v.findViewById(R.id.add_new_transport);
+        if(DataManager.getInstance().getSelectedEvt().getLock())addTransport.setVisibility(View.GONE);
         addTransport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
