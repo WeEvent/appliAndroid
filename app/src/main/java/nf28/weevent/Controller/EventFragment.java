@@ -75,7 +75,7 @@ public class EventFragment extends Fragment {
                     radio_type.setEnabled(false);
                     radio_type.setChecked(true);
                     radio_type.setVisibility(View.GONE);
-                }
+                }else
                 if (cat.getName().equalsIgnoreCase("Cat_2")) {
                     radio_date.setEnabled(false);
                     radio_date.setChecked(true);
@@ -135,7 +135,9 @@ public class EventFragment extends Fragment {
         }
 
 
-        tabs.add(5);
+        if(event.getCategoryList().size()<5)
+            tabs.add(5);
+
         tabs.add(6);
 
         DataManager.getInstance().setSelectedEvt(event);

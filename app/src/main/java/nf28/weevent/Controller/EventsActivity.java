@@ -177,7 +177,8 @@ public class EventsActivity extends ActionBarActivity {
         }
         Collections.sort(order_tabs);
         for(int i : order_tabs)
-            ViewPagerAdapter.addTab(i);
+            if(order_tabs.size()!=7 || i!=order_tabs.elementAt(5))
+                ViewPagerAdapter.addTab(i);
     }
 
     @Override
