@@ -1,8 +1,10 @@
 package nf28.weevent.Controller;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -11,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import nf28.weevent.Model.Chat;
+import nf28.weevent.Model.Message;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
 
@@ -25,6 +29,7 @@ public class CategoriesActivity extends ActionBarActivity {
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
+    MenuItem chatIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +37,11 @@ public class CategoriesActivity extends ActionBarActivity {
         setContentView(R.layout.categories);
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        //Receiver for local broadcast to update chat after notif
+        registerReceiver(mMessageReceiver, new IntentFilter("updateChat"));
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(),ViewPagerAdapter.getTiles(),ViewPagerAdapter.getSizeTab());
@@ -66,6 +72,8 @@ public class CategoriesActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_categories, menu);
+
+        chatIcon = menu.findItem(R.id.action_chat);
 
         SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);
         String chatRegister = sharedPref.getString(DataManager.getInstance().getSelectedEvt().getID(), null);
@@ -107,6 +115,21 @@ public class CategoriesActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
         */
+    }
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //UPDATE VUE
+            chatIcon.setIcon(R.drawable.ic_chat_newmessage);
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        // Unregister since the activity is about to be closed.
+        unregisterReceiver(mMessageReceiver);
+        super.onDestroy();
     }
 
     @Override

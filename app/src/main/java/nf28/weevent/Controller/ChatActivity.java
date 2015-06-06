@@ -186,7 +186,8 @@ public class ChatActivity extends ActionBarActivity {
             //ex : int note = intent.getIntExtra("evaluation", 0);
 
             //UPDATE VUE
-            Chat chat = DataManager.getInstance().getChat();
+            //Chat chat = DataManager.getInstance().getChat(DataManager.getInstance().getSelectedEvt().getID());
+            Chat chat = DataManager.getInstance().getSelectedEvt().getChat();
             adapter.clear();
             for (Message m : chat.getMessages())
                 adapter.add(m);

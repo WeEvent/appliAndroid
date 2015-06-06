@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 
 import nf28.weevent.Controller.LoginActivity;
 import nf28.weevent.Controller.MainActivity;
+import nf28.weevent.Model.Chat;
 import nf28.weevent.Model.Event;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
@@ -101,11 +102,15 @@ public class GCMNotificationIntentService extends IntentService {
                 Matcher matcher = pattern.matcher(msg);
                 if (matcher.find()) {
 					String id = matcher.group(1);
-                    SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);
+					Chat chat = DataManager.getInstance().getChat(id);
+					if (DataManager.getInstance().getSelectedEvt().getID().equals(id)){
+						DataManager.getInstance().getSelectedEvt().setChat(chat);
+						sendMessage("updateChat");
+					}
+					SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString(id, "newMessage");
+					editor.putString(id, "newMessage");
                     editor.commit();
-                    sendMessage("updateChat");
 
 					//Notif graphique d'un nouveau message
 					mNotificationManager = (NotificationManager) this

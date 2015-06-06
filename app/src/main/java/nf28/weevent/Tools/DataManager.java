@@ -793,9 +793,9 @@ public class DataManager extends Activity {
         return true;
     }
 
-    public Chat getChat() {
+    public Chat getChat(String idEvent) {
         RestClient client = new RestClient(serverAddress + "events");
-        client.AddParam("id", event.getID());
+        client.AddParam("id", idEvent);
         client.AddParam("field", "chat");
         Chat chat = null;
 
