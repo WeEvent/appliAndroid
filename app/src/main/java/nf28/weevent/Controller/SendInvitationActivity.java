@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -34,6 +36,9 @@ public class SendInvitationActivity extends ActionBarActivity{
     Button sendInvitation;
     String view;
 
+    LinearLayout layout;
+    LinearLayout friend_list;
+
     List<ModelAdapter> contactsToInvite;
     List<ModelAdapter> groupsToInvite;
 
@@ -52,16 +57,23 @@ public class SendInvitationActivity extends ActionBarActivity{
     ShareExternalServer appUtil;
     AsyncTask<Void, Void, String> shareRegidTask;
 
+    private ArrayList<String> list_contact = new ArrayList<String>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.send_invitation);
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
         contactsAdapter = buildContacts();
         groupsAdapter = buildGroups();
+
+
+        friend_list = (LinearLayout) findViewById(R.id.guests_list);
+        layout = (LinearLayout) findViewById(R.id.progressbar_view);
 
         all = (Button)findViewById(R.id.btn_guests_all);
         groups = (Button)findViewById(R.id.btn_guests_groups);
@@ -90,12 +102,11 @@ public class SendInvitationActivity extends ActionBarActivity{
 
         @Override
         public void onClick(View v) {
-            ArrayList<String> list_contact = new ArrayList<String>();
 
             for (int i = 0; i < contactsToInvite.size(); i++) {
                 System.err.println("------ |  " + contactsToInvite.get(i).getValue() + " | --------");
                 if (contactsToInvite.get(i).getValue() == 1) {
-                    DataManager.getInstance().addContactToEvent(contactsToInvite.get(i).getName());
+                    //DataManager.getInstance().addContactToEvent(contactsToInvite.get(i).getName());
                     list_contact.add(contactsToInvite.get(i).getName());
                 }
             }
@@ -110,22 +121,19 @@ public class SendInvitationActivity extends ActionBarActivity{
                     for (String c : contactsInGroup){
                         if(!list_contact.contains(c))
                         {
-                            DataManager.getInstance().addContactToEvent(c);
+                            //DataManager.getInstance().addContactToEvent(c);
                             list_contact.add(c);
                         }
                     }
                 }
             }
 
+            new Task().execute();
+
             // add contacts included in groups
 
             //TODO a friend can be inserted only once!!!!!!!
-            Toast.makeText(SendInvitationActivity.this, "Invitation Sent!", Toast.LENGTH_SHORT).show();
 
-            shareRegisterIdWithServer(list_contact);
-            sendSMS(list_contact);
-
-            onBackPressed();
         }
     };
 
@@ -283,5 +291,33 @@ public class SendInvitationActivity extends ActionBarActivity{
         Intent intent = new Intent(this, CategoriesActivity.class);
         startActivity(intent);
         finish();
+    }
+
+
+    private class Task extends AsyncTask<String, Integer, Boolean> {
+        @Override
+        protected void onPreExecute() {
+            layout.setVisibility(View.VISIBLE);
+            friend_list.setVisibility(View.GONE);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            Toast.makeText(SendInvitationActivity.this, "Invitation Sent!", Toast.LENGTH_SHORT).show();
+            shareRegisterIdWithServer(list_contact);
+            sendSMS(list_contact);
+            onBackPressed();
+
+            super.onPostExecute(result);
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            for (String c : list_contact){
+                DataManager.getInstance().addContactToEvent(c);
+            }
+            return null;
+        }
     }
 }
