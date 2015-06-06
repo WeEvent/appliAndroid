@@ -5,9 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import nf28.weevent.Model.User;
 import nf28.weevent.R;
@@ -17,10 +21,53 @@ public class LoginActivity extends Activity implements OnClickListener {
 
     Button btnSignIn;
     Button btnSignUp;
+
+    private float xCurrentPos, yCurrentPos;
+    private ImageView logoFocus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+        logoFocus = (ImageView) findViewById(R.id.logo_weeevent);
+        xCurrentPos = logoFocus.getLeft();
+        yCurrentPos = logoFocus.getTop();
+
+        final Animation anim= new TranslateAnimation(xCurrentPos, xCurrentPos, yCurrentPos, yCurrentPos+500);
+        anim.setDuration(2000);
+        anim.setFillAfter(true);
+        anim.setFillEnabled(true);
+        anim.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation arg0) {}
+
+            @Override
+            public void onAnimationRepeat(Animation arg0) {}
+
+            @Override
+            public void onAnimationEnd(Animation arg0) {
+                xCurrentPos -= 150;
+            }
+        });
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                logoFocus.startAnimation(anim);
+                Handler handler2 = new Handler();
+                handler2.postDelayed(new Runnable() {
+                    public void run() {
+                        findViewById(R.id.linearLayout).setVisibility(View.VISIBLE);
+                    }
+                }, 2000);
+            }
+        }, 1000);
+
+
+
 
         btnSignIn = (Button) findViewById(R.id.btnSingIn);
         btnSignUp = (Button) findViewById(R.id.btnSignUp);
@@ -54,4 +101,6 @@ public class LoginActivity extends Activity implements OnClickListener {
         startActivity(i);
         finish();
     }
+
+
 }
