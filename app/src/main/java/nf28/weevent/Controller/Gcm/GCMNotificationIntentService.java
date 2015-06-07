@@ -133,7 +133,7 @@ public class GCMNotificationIntentService extends IntentService {
 							.setContentText("New message in "+"\""+name+"\"");
 
 					mBuilder.setContentIntent(contentIntent);
-					mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+					mNotificationManager.notify(NOTIFICATION_ID + 1, mBuilder.build());
 					Log.d(TAG, "Notification ok");
                 }
             }
