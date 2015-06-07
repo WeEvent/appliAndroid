@@ -105,7 +105,7 @@ public class GCMNotificationIntentService extends IntentService {
                     String name = matcher.group(1);
                     String id = matcher.group(2);
 
-					if (DataManager.getInstance().getSelectedEvt().getID().equals(id)){
+					if (DataManager.getInstance().getSelectedEvt()!=null && DataManager.getInstance().getSelectedEvt().getID().equals(id)){
 						Chat chat = DataManager.getInstance().getChat(id);
 						DataManager.getInstance().getSelectedEvt().setChat(chat);
 						sendMessage("updateChat");
@@ -128,9 +128,8 @@ public class GCMNotificationIntentService extends IntentService {
 					NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 							this).setSmallIcon(R.drawable.gcm_cloud)
 							.setContentTitle("WeEvent")
-							.setStyle(new NotificationCompat.BigTextStyle().bigText(""))
 							.setDefaults(Notification.DEFAULT_SOUND)
-							.setAutoCancel(true)
+                            .setAutoCancel(true)
 							.setContentText("New message in "+"\""+name+"\"");
 
 					mBuilder.setContentIntent(contentIntent);
