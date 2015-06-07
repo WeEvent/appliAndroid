@@ -98,10 +98,13 @@ public class GCMNotificationIntentService extends IntentService {
             }
             else if (msg.contains("id=")) {
                 // enregistrement du nouveau etat chat
-                Pattern pattern = Pattern.compile("id=(.*)");
+                Pattern pattern = Pattern.compile("name=(.*)id=(.*)");
                 Matcher matcher = pattern.matcher(msg);
+
                 if (matcher.find()) {
-					String id = matcher.group(1);
+                    String name = matcher.group(1);
+                    String id = matcher.group(2);
+
 					if (DataManager.getInstance().getSelectedEvt().getID().equals(id)){
 						Chat chat = DataManager.getInstance().getChat(id);
 						DataManager.getInstance().getSelectedEvt().setChat(chat);
@@ -112,7 +115,6 @@ public class GCMNotificationIntentService extends IntentService {
                     SharedPreferences.Editor editor = sharedPref.edit();
 					editor.putString(id, "newMessage");
                     editor.commit();
-
 
 					//Notif graphique d'un nouveau message
 					mNotificationManager = (NotificationManager) this
@@ -126,10 +128,10 @@ public class GCMNotificationIntentService extends IntentService {
 					NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 							this).setSmallIcon(R.drawable.gcm_cloud)
 							.setContentTitle("WeEvent")
-							.setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
+							.setStyle(new NotificationCompat.BigTextStyle().bigText(""))
 							.setDefaults(Notification.DEFAULT_SOUND)
 							.setAutoCancel(true)
-							.setContentText("New message in chat");// \"" + evt.getNom() + "\"");
+							.setContentText("New message in "+"\""+name+"\"");
 
 					mBuilder.setContentIntent(contentIntent);
 					mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());

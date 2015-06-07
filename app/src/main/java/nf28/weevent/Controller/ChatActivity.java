@@ -165,7 +165,7 @@ public class ChatActivity extends ActionBarActivity {
                 ArrayList<String> list_contact = (ArrayList<String>) DataManager.getInstance().getSelectedEvt().getContactList();
                 User connectedUser = DataManager.getInstance().getUser();
                 list_contact.remove(connectedUser.getLogin());
-                String result = appUtil.SendNotificationForChat(list_contact,DataManager.getInstance().getSelectedEvt().getID(), connectedUser.getLogin());
+                String result = appUtil.SendNotificationForChat(list_contact,DataManager.getInstance().getSelectedEvt().getID(), connectedUser.getLogin(),DataManager.getInstance().getSelectedEvt().getNom());
                 return result;
             }
 
