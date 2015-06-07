@@ -184,14 +184,10 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
             User user = new User();
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
+            user.setPassword(password);
+            user.setLogin(login);
             if (!TextUtils.isEmpty(phone)){
-                user.setPassword(password);
-                user.setLogin(login);
                 user.setMobile(phone);
-            }
-            else {
-                user.setPassword(password);
-                user.setLogin(login);
             }
 
             if (!isNetworkAvailable()){
@@ -206,6 +202,11 @@ public class SignUpActivity extends Activity implements LoaderCallbacks<Cursor> 
             User u = DataManager.getInstance().setUser(login); // sets the user in manager
             if (u != null){
 
+                // enregistrement automatique de la personne connectee
+                SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("loginRegister", DataManager.getInstance().getUser().getLogin());
+                editor.commit();
 
                 //----------------GCM --------------
                 //Creation of a register_id

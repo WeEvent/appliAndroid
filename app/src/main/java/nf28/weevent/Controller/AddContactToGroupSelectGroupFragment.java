@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -35,6 +36,12 @@ public class AddContactToGroupSelectGroupFragment extends Fragment{
         list = (ListView)inflater.inflate(R.layout.groups, container, false);
 
         adapter = buildData();
+        adapter.sort(new Comparator<String>() {
+            @Override
+            public int compare(String lhs, String rhs) {
+                return lhs.toLowerCase().compareTo(rhs.toLowerCase());   //or whatever your sorting algorithm
+            }
+        });
         list.setAdapter(adapter);
 
         AdapterView.OnItemClickListener l = new AdapterView.OnItemClickListener() {
