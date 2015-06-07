@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -41,6 +42,7 @@ public class Date extends DialogFragment
     private ModelAdapter[] modelItems = new ModelAdapter[1];
     private DateAdapter adapter = null;
     private Context context = null;
+    private ImageView img_empty = null;
 
 
     private String tvDisplayDate;
@@ -76,6 +78,15 @@ public class Date extends DialogFragment
         }
         //TODO a user can be inserted only once!!!!!!!
         adapter = new DateAdapter(context, modelItems);
+
+        img_empty = (ImageView) v.findViewById(R.id.empty_view);
+        if(pollValues.size()==0) {
+            img_empty.setVisibility(View.VISIBLE);
+            img_empty.setImageResource(R.drawable.ic_alert);
+        }else{
+            img_empty.setVisibility(View.INVISIBLE);
+        }
+
         mainListView.setAdapter(adapter);
 
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -93,8 +104,8 @@ public class Date extends DialogFragment
 
         inputSearch = (EditText) v.findViewById(R.id.inputSearch);
         if(DataManager.getInstance().getSelectedEvt().getCategory("Cat_2").getPoll().getPollCount()==0){
-            inputSearch.setText("When empty");
-            inputSearch.setEnabled(false);
+            // inputSearch.setText("Where empty");
+            inputSearch.setVisibility(View.INVISIBLE);
         }
         inputSearch.addTextChangedListener(new TextWatcher() {
 
@@ -157,8 +168,9 @@ public class Date extends DialogFragment
 
                 showTime();
                 date.show();
-                inputSearch.setEnabled(true);
+                inputSearch.setVisibility(View.VISIBLE);
                 inputSearch.setText("");
+                img_empty.setVisibility(View.INVISIBLE);
             }
 
         });

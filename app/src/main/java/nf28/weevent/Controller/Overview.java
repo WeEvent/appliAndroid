@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ public class Overview extends Fragment {
     private Vector<ModelAdapter> modelItems = new Vector<ModelAdapter>();
     private OverviewAdapter adapter = null;
     private Context context = null;
+    private ImageView img_empty = null;
 
     private Vector<PollValue> pollValues = null;
     // Search EditText
@@ -47,6 +49,14 @@ public class Overview extends Fragment {
         }
         //TODO a user can be inserted only once!!!!!!!
         System.out.println("++ \n "+ pollValues.toString()+" \n++");
+
+        img_empty = (ImageView) v.findViewById(R.id.empty_view);
+        if(modelItems.size()==0) {
+            img_empty.setVisibility(View.VISIBLE);
+            img_empty.setImageResource(R.drawable.ic_alert);
+        }else{
+            img_empty.setVisibility(View.INVISIBLE);
+        }
 
         adapter = new OverviewAdapter(context, modelItems);
 

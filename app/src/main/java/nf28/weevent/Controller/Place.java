@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ public class Place extends Fragment {
     private ModelAdapter[] modelItems = new ModelAdapter[1];
     private PlaceAdapter adapter = null;
     private Context context = null;
+    private ImageView img_empty = null;
 
     private Collection<PollValue> pollValues = null;
     // Search EditText
@@ -53,6 +55,14 @@ public class Place extends Fragment {
         //TODO a user can be inserted only once!!!!!!!
         adapter = new PlaceAdapter(context, modelItems);
         mainListView.setAdapter(adapter);
+
+        img_empty = (ImageView) v.findViewById(R.id.empty_view);
+        if(pollValues.size()==0) {
+            img_empty.setVisibility(View.VISIBLE);
+            img_empty.setImageResource(R.drawable.ic_alert);
+        }else{
+            img_empty.setVisibility(View.INVISIBLE);
+        }
 
         addPlace = (Button) v.findViewById(R.id.add_new_place);
 
@@ -105,8 +115,9 @@ public class Place extends Fragment {
                 AlertDialog alertD = alertDialogBuilder.create();
 
                 alertD.show();
-                inputSearch.setEnabled(true);
+                inputSearch.setVisibility(View.VISIBLE);
                 inputSearch.setText("");
+                img_empty.setVisibility(View.INVISIBLE);
             }
 
         });
@@ -122,8 +133,8 @@ public class Place extends Fragment {
 
         inputSearch = (EditText) v.findViewById(R.id.inputSearch);
         if(DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getPoll().getPollCount()==0){
-            inputSearch.setText("Where empty");
-            inputSearch.setEnabled(false);
+           // inputSearch.setText("Where empty");
+            inputSearch.setVisibility(View.INVISIBLE);
         }
         inputSearch.addTextChangedListener(new TextWatcher() {
 

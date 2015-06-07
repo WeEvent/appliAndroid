@@ -1,6 +1,6 @@
 
 <!-- The first child in the layout is for the main Activity UI-->
-<LinearLayout
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -15,19 +15,13 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/inputSearch"
         android:nestedScrollingEnabled="true"
-        android:layout_above="@+id/add_new_overview" />
+         />
 
-    <Button
-        android:background="@drawable/btn_round_corner"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:id="@+id/add_new_overview"
-        android:text="@string/btn_place_add"
-        android:textColor="#ffffffff"
-        android:textSize="25dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="20dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/empty_view"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
-</LinearLayout>
+</RelativeLayout>
