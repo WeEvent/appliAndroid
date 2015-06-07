@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -73,17 +74,18 @@ public class GroupActivity extends ActionBarActivity{
 
         contactsList = (ListView)this.findViewById(R.id.contactsWithTrashList);
 
-        contactsList.setAdapter(buildData(group));
+        ListWithDeleteOptionAdapter adapter = buildData(group);
+        contactsList.setAdapter(adapter);
     }
 
-    public ListAdapter buildData(String groupName) {
+    public ListWithDeleteOptionAdapter buildData(String groupName) {
 
         HashMap<String,Group> groups = DataManager.getInstance().getUser().getGroups();
         Group group = groups.get(groupName);
 
-        List<String> values = group.getContactsList();
+        ArrayList<String> values = group.getContactsList();
 
-        return new ListWithDeleteOptionAdapter((ArrayList)values, GroupActivity.this, groupName);
+        return new ListWithDeleteOptionAdapter(values, GroupActivity.this, groupName);
     }
 
     Button.OnClickListener addContactToGroupListener
@@ -143,7 +145,6 @@ public class GroupActivity extends ActionBarActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
     {
-        onBackPressed();
         switch (menuItem.getItemId()) {
             case R.id.action_home:
                 // app icon in action bar clicked; go home

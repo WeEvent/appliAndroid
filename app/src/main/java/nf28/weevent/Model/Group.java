@@ -9,7 +9,7 @@ import java.util.List;
 public class Group {
 
     private String name;
-    private List<String> contactsList;
+    private ArrayList<String> contactsList;
 
     /// Constructor ///
     public Group(String n){
@@ -26,7 +26,7 @@ public class Group {
         name = n;
     }
 
-    public List<String> getContactsList(){
+    public ArrayList<String> getContactsList(){
         return contactsList;
     }
 
