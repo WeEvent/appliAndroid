@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 
 import nf28.weevent.Controller.LoginActivity;
 import nf28.weevent.Controller.MainActivity;
+import nf28.weevent.Model.Chat;
 import nf28.weevent.Model.Event;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
@@ -57,10 +58,10 @@ public class GCMNotificationIntentService extends IntentService {
 				for (int i = 0; i < 3; i++) {
 					Log.i(TAG,
 							"Working... ");
-					try {
+					/*try {
 						Thread.sleep(5000);
 					} catch (InterruptedException e) {
-					}
+					}*/
 				}
 				Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
 
@@ -97,15 +98,23 @@ public class GCMNotificationIntentService extends IntentService {
             }
             else if (msg.contains("id=")) {
                 // enregistrement du nouveau etat chat
-                Pattern pattern = Pattern.compile("id=(.*)");
+                Pattern pattern = Pattern.compile("name=(.*)id=(.*)");
                 Matcher matcher = pattern.matcher(msg);
+
                 if (matcher.find()) {
-					String id = matcher.group(1);
+                    String name = matcher.group(1);
+                    String id = matcher.group(2);
+
+					if (DataManager.getInstance().getSelectedEvt()!=null && DataManager.getInstance().getSelectedEvt().getID().equals(id)){
+						Chat chat = DataManager.getInstance().getChat(id);
+						DataManager.getInstance().getSelectedEvt().setChat(chat);
+						sendMessage("updateChat");
+					}
+
                     SharedPreferences sharedPref = getSharedPreferences("global", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString(id, "newMessage");
+					editor.putString(id, "newMessage");
                     editor.commit();
-                    sendMessage("updateChat");
 
 					//Notif graphique d'un nouveau message
 					mNotificationManager = (NotificationManager) this
@@ -114,15 +123,14 @@ public class GCMNotificationIntentService extends IntentService {
 					PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
 							new Intent(this, LoginActivity.class), 0);
 
-					Event evt = DataManager.getInstance().getEvent(id);
+					//Event evt = DataManager.getInstance().getEvent(id);
 
 					NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 							this).setSmallIcon(R.drawable.gcm_cloud)
 							.setContentTitle("WeEvent")
-							.setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
 							.setDefaults(Notification.DEFAULT_SOUND)
-							.setAutoCancel(true)
-							.setContentText("New message in \"" + evt.getNom() + "\"");
+                            .setAutoCancel(true)
+							.setContentText("New message in "+"\""+name+"\"");
 
 					mBuilder.setContentIntent(contentIntent);
 					mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());

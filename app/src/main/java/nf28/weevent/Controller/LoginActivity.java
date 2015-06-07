@@ -35,8 +35,8 @@ public class LoginActivity extends Activity implements OnClickListener {
         xCurrentPos = logoFocus.getLeft();
         yCurrentPos = logoFocus.getTop();
 
-        final Animation anim= new TranslateAnimation(xCurrentPos, xCurrentPos, yCurrentPos, yCurrentPos+500);
-        anim.setDuration(2000);
+        final Animation anim= new TranslateAnimation(xCurrentPos, xCurrentPos, yCurrentPos, yCurrentPos+450);
+        anim.setDuration(1000);
         anim.setFillAfter(true);
         anim.setFillEnabled(true);
         anim.setAnimationListener(new Animation.AnimationListener() {
@@ -62,7 +62,7 @@ public class LoginActivity extends Activity implements OnClickListener {
                     public void run() {
                         findViewById(R.id.linearLayout).setVisibility(View.VISIBLE);
                     }
-                }, 2000);
+                }, 1000);
             }
         }, 1000);
 

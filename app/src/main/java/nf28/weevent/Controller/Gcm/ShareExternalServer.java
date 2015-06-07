@@ -86,7 +86,7 @@ public class ShareExternalServer {
 		return result;
 	}
 
-    public String SendNotificationForChat(final ArrayList<String> list_contact, String event_id, String event_creator) {
+    public String SendNotificationForChat(final ArrayList<String> list_contact, String event_id, String event_creator, String event_name) {
 
         String result = "";
         Map<String, String> paramsMap = new HashMap<String, String>();
@@ -98,6 +98,7 @@ public class ShareExternalServer {
         }
         paramsMap.put("event_creator",event_creator);
         paramsMap.put("event_id",event_id);
+        paramsMap.put("event_name",event_name);
         paramsMap.put("chatStatus","newMessage");
 
 

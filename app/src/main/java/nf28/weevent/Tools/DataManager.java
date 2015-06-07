@@ -575,6 +575,34 @@ public class DataManager extends Activity {
         return true;
     }
 
+    public boolean setClosed() {
+        RestClient client = new RestClient(serverAddress + "events");
+        client.AddParam("id", event.getID());
+        JSONObject action = new JSONObject();
+        try {
+            JSONObject hashMap = new JSONObject();
+            hashMap.put("locked", true);
+            action.put("$set", hashMap);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        client.setObject(action.toString());
+
+        try {
+            client.Execute(RequestMethod.PUT);
+            if (client.getResponseCode() != 200)
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        event.setLock(true);
+        return true;
+    }
+
     public boolean addLineToPoll(String nameCategory, String valueLine) {
         //bug sur le hashMap vide dans MongoDB, il le considere comme un array, d'où les 2 cas
         if (event.getCategory(nameCategory).getPoll().getPollValues().size() == 0)
@@ -793,9 +821,9 @@ public class DataManager extends Activity {
         return true;
     }
 
-    public Chat getChat() {
+    public Chat getChat(String idEvent) {
         RestClient client = new RestClient(serverAddress + "events");
-        client.AddParam("id", event.getID());
+        client.AddParam("id", idEvent);
         client.AddParam("field", "chat");
         Chat chat = null;
 
