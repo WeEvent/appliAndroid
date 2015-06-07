@@ -95,7 +95,7 @@
 
 
         <Button
-            android:background="#ff08ae9e"
+            android:background="@drawable/button_select"
             android:layout_width="70dp"
             android:layout_height="40dp"
             android:id="@+id/btn_send_invitation"

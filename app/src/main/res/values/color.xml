@@ -4,5 +4,7 @@
     <color name="ColorPrimaryDark">#c31c13</color>
     <color name="tabsScrollColor">#8a140e</color>
     <color name="ColorBackground">#ffffff</color>
+    <color name="TextViewBackground">#2a08ae9e</color>
+    <color name="SelectedButton">#f11faeef</color>
 
 </resources>

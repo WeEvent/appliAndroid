@@ -22,10 +22,10 @@
     <string name="search_events">Search events &#8230;</string>
     <string name="search_invited">Search invitations &#8230;</string>
     <string name="search_participants">Search participants &#8230;</string>
-    <string name="search_places">Search places &#8230;</string>
-    <string name="search_types">Search types &#8230;</string>
-    <string name="search_dates">Search dates &#8230;</string>
-    <string name="search_transport">Search transport</string>
+    <string name="search_places">Search where &#8230;</string>
+    <string name="search_types">Search what &#8230;</string>
+    <string name="search_dates">Search when &#8230;</string>
+    <string name="search_transport">Search how</string>
 
     <string name="description">Never miss an event again !</string>
     <string name="btn_events_text">Events</string>

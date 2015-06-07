@@ -105,6 +105,8 @@ public class Place extends Fragment {
                 AlertDialog alertD = alertDialogBuilder.create();
 
                 alertD.show();
+                inputSearch.setEnabled(true);
+                inputSearch.setText("");
             }
 
         });
@@ -119,6 +121,10 @@ public class Place extends Fragment {
         });
 
         inputSearch = (EditText) v.findViewById(R.id.inputSearch);
+        if(DataManager.getInstance().getSelectedEvt().getCategory("Cat_3").getPoll().getPollCount()==0){
+            inputSearch.setText("Where empty");
+            inputSearch.setEnabled(false);
+        }
         inputSearch.addTextChangedListener(new TextWatcher() {
 
             @Override

@@ -40,6 +40,9 @@ public class Poll {
     public PollValue getPollValue(String v) {
         return values.get(v);
     }
+    public int getPollCount() {
+        return values.size();
+    }
 
     public PollValue getPreferedPoll(){
         PollValue _poll = null;

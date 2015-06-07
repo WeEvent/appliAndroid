@@ -92,6 +92,10 @@ public class Date extends DialogFragment
         addListenerOnButton(v);
 
         inputSearch = (EditText) v.findViewById(R.id.inputSearch);
+        if(DataManager.getInstance().getSelectedEvt().getCategory("Cat_2").getPoll().getPollCount()==0){
+            inputSearch.setText("When empty");
+            inputSearch.setEnabled(false);
+        }
         inputSearch.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -153,6 +157,8 @@ public class Date extends DialogFragment
 
                 showTime();
                 date.show();
+                inputSearch.setEnabled(true);
+                inputSearch.setText("");
             }
 
         });

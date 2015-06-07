@@ -28,7 +28,7 @@
         android:layout_above="@+id/add_new_place" />
 
     <Button
-        android:background="@drawable/btn_round_corner"
+        android:background="@drawable/button_select"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/add_new_place"
