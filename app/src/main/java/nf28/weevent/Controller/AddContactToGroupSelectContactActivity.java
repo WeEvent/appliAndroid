@@ -66,6 +66,7 @@ public class AddContactToGroupSelectContactActivity extends ActionBarActivity {
     @Override
     public void onBackPressed(){
         Intent intent = new Intent(this, GroupActivity.class);
+        intent.putExtra("group", group);
         startActivity(intent);
         finish();
     }
