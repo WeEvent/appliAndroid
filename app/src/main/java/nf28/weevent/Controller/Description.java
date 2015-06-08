@@ -51,31 +51,36 @@ public class Description extends Fragment {
         eventName = (TextView)v.findViewById(R.id.event_name);
 
         butClose = (Button) v.findViewById(R.id.btnCloseEvent);
-
-        butClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(DataManager.getInstance().getSelectedEvt().getLock()) {
-                    DataManager.getInstance().getSelectedEvt().setLock(false);
-                    sendValid.setVisibility(View.VISIBLE);
-                    butClose.setText("CLOSE EVENT");
-                }
-                else{
-                    DataManager.getInstance().getSelectedEvt().setLock(true);
-                    sendValid.setVisibility(View.GONE);
-                    butClose.setText("OPEN EVENT");
-                }
-            }
-        });
-
         if(DataManager.getInstance().getSelectedEvt().getCreateur().equalsIgnoreCase(DataManager.getInstance().getUser().getLogin()))
             butClose.setVisibility(View.VISIBLE);
         else
             butClose.setVisibility(View.GONE);
+        if(DataManager.getInstance().getSelectedEvt().getLock()) butClose.setVisibility(View.GONE);
+        butClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(getActivity())
+                        .setMessage("Are you sure you want to close this event ?")
+                        .setCancelable(false)
+                        .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                if(!DataManager.getInstance().getSelectedEvt().getLock()) {
+                                    DataManager.getInstance().setClosed(true);
+                                    eventDesc.setEnabled(false);
+                                    sendValid.setVisibility(View.GONE);
+                                    butClose.setVisibility(View.GONE);
+                                }
+                            }
+                        })
+                        .setPositiveButton("No", null)
+                        .show();
+
+            }
+        });
 
         eventName.setText(DataManager.getInstance().getSelectedEvt().getNom());
         eventDesc.setText("Desc : "+DataManager.getInstance().getSelectedEvt().getDesc());
-
+        if(DataManager.getInstance().getSelectedEvt().getLock()) eventDesc.setEnabled(false);
         eventDesc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

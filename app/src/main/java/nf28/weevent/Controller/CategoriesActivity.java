@@ -13,8 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import nf28.weevent.Model.Chat;
-import nf28.weevent.Model.Message;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
 
@@ -66,6 +64,7 @@ public class CategoriesActivity extends ActionBarActivity {
 
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
+
     }
 
     @Override

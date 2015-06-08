@@ -23,6 +23,9 @@ public class Category {
         return name;
     }
 
+    public int getTabIdx(){
+        return Integer.parseInt(getName().substring(4));
+    }
     public void setName(String n){
         name = n;
     }

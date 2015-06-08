@@ -575,13 +575,13 @@ public class DataManager extends Activity {
         return true;
     }
 
-    public boolean setClosed() {
+    public boolean setClosed(boolean close) {
         RestClient client = new RestClient(serverAddress + "events");
         client.AddParam("id", event.getID());
         JSONObject action = new JSONObject();
         try {
             JSONObject hashMap = new JSONObject();
-            hashMap.put("locked", true);
+            hashMap.put("locked", close);
             action.put("$set", hashMap);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -599,7 +599,7 @@ public class DataManager extends Activity {
             return false;
         }
 
-        event.setLock(true);
+        event.setLock(close);
         return true;
     }
 

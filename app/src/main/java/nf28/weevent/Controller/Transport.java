@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,7 +34,7 @@ public class Transport extends Fragment {
     private ModelAdapter[] modelItems = new ModelAdapter[1];
     private TransportAdapter adapter = null;
     private Context context = null;
-    private ImageView img_empty = null;
+    private TextView img_empty = null;
 
     private Collection<PollValue> pollValues = null;
     // Search EditText
@@ -56,10 +55,9 @@ public class Transport extends Fragment {
         adapter = new TransportAdapter(context, modelItems);
         mainListView.setAdapter(adapter);
 
-        img_empty = (ImageView) v.findViewById(R.id.empty_view);
+        img_empty = (TextView) v.findViewById(R.id.empty_view);
         if(pollValues.size()==0) {
             img_empty.setVisibility(View.VISIBLE);
-            img_empty.setImageResource(R.drawable.ic_alert);
         }else{
             img_empty.setVisibility(View.INVISIBLE);
         }

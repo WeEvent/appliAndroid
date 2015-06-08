@@ -18,7 +18,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -42,7 +41,7 @@ public class Date extends DialogFragment
     private ModelAdapter[] modelItems = new ModelAdapter[1];
     private DateAdapter adapter = null;
     private Context context = null;
-    private ImageView img_empty = null;
+    private TextView img_empty = null;
 
 
     private String tvDisplayDate;
@@ -74,15 +73,14 @@ public class Date extends DialogFragment
         pollValues = DataManager.getInstance().getSelectedEvt().getCategory("Cat_2").getPollValues();
         modelItems = new ModelAdapter[pollValues.size()];
         for (PollValue p : pollValues) {
-            modelItems[pollIndex++] = new ModelAdapter(p.getValue(),(p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0,p.getVotersCount());
+            modelItems[pollIndex++] = new ModelAdapter(p.getValue(),(p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0,p.getVotersCount(),2);
         }
         //TODO a user can be inserted only once!!!!!!!
         adapter = new DateAdapter(context, modelItems);
 
-        img_empty = (ImageView) v.findViewById(R.id.empty_view);
+        img_empty = (TextView) v.findViewById(R.id.empty_view);
         if(pollValues.size()==0) {
             img_empty.setVisibility(View.VISIBLE);
-            img_empty.setImageResource(R.drawable.ic_alert);
         }else{
             img_empty.setVisibility(View.INVISIBLE);
         }
@@ -244,7 +242,7 @@ public class Date extends DialogFragment
         modelItems = new ModelAdapter[pollValues.size()];
         pollIndex = 0;
         for (PollValue p : pollValues) {
-            modelItems[pollIndex++] = new ModelAdapter(p.getValue(),(p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0,p.getVotersCount());
+            modelItems[pollIndex++] = new ModelAdapter(p.getValue(),(p.hasVoted(DataManager.getInstance().getUser().getLogin()))?1:0,p.getVotersCount(),2);
         }
 
         adapter = new DateAdapter(context, modelItems);

@@ -165,8 +165,8 @@ public class Event {
         chat.addMessage(msg);
     }*/
 
-    public Vector<PollValue> getPreferedPolls(){
-        Vector <PollValue> preferedPolls = new Vector<PollValue>();
+    public HashMap <Integer,PollValue> getPreferedPolls(){
+        HashMap <Integer,PollValue> preferedPolls = new HashMap<Integer,PollValue>();
         Collection<Category> values = mapCategories.values();
         Vector<Category> vect_categ = new Vector<Category>();
 
@@ -185,9 +185,9 @@ public class Event {
         for(Category categorie : vect_categ){
             if(!categorie.getName().equalsIgnoreCase("Cat_0"))
                 if(!categorie.getName().equalsIgnoreCase("Cat_5"))
-                    if(!categorie.getName().equalsIgnoreCase("Cat6")) {
+                    if(!categorie.getName().equalsIgnoreCase("Cat_6")) {
                         PollValue poll = categorie.getPreferedPoll();
-                            preferedPolls.add(poll);
+                            preferedPolls.put(Integer.parseInt(categorie.getName().substring(4)),poll);
                     }
         }
         return preferedPolls;

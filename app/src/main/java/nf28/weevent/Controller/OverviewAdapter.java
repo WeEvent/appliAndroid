@@ -48,12 +48,12 @@ public class OverviewAdapter extends ArrayAdapter<ModelAdapter>{
             cb.setEnabled(false);
             System.err.println(tabs);
 
-            switch(tabs.elementAt(position)) {
-                case 0:img.setImageResource(R.drawable.ic_time);
+            switch(modelItems.elementAt(position).getTab()) {
+                case 2:img.setImageResource(R.drawable.ic_time);
                     break;
-                case 1:img.setImageResource(R.drawable.ic_place);
+                case 3:img.setImageResource(R.drawable.ic_place);
                     break;
-                case 2:img.setImageResource(R.drawable.ic_transport);
+                case 4:img.setImageResource(R.drawable.ic_transport);
                     break;
                 default :
                     img.setImageResource(R.drawable.ic_evt);

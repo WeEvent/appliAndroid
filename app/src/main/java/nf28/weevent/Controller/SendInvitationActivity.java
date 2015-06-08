@@ -15,7 +15,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -63,7 +62,7 @@ public class SendInvitationActivity extends ActionBarActivity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.send_invitation);
-
+        setTitle("Invitation");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -197,7 +196,7 @@ public class SendInvitationActivity extends ActionBarActivity{
         //int idx = 0; /// index used to fill the container for friends
         for (String s : friends) {
             if (!DataManager.getInstance().getSelectedEvt().getContactList().contains(s)){
-                contactsToInvite.add(new ModelAdapter(s, 0,0));
+                contactsToInvite.add(new ModelAdapter(s, 0,0,0));
             }
         }
 
@@ -215,7 +214,7 @@ public class SendInvitationActivity extends ActionBarActivity{
         }
 
         for (String s : values) {
-            groupsToInvite.add(new ModelAdapter(s, 0,0));
+            groupsToInvite.add(new ModelAdapter(s, 0,0,0));
         }
 
         return new CustomAdapter(SendInvitationActivity.this, groupsToInvite);
