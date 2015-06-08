@@ -137,6 +137,26 @@ public class GCMNotificationIntentService extends IntentService {
 					Log.d(TAG, "Notification ok");
                 }
             }
+            else if (msg.contains("now closed")){
+                Log.d(TAG, "Preparing to send notification...: " + msg);
+                mNotificationManager = (NotificationManager) this
+                        .getSystemService(Context.NOTIFICATION_SERVICE);
+
+                PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                        new Intent(this, LoginActivity.class), 0);
+
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
+                        this).setSmallIcon(R.drawable.gcm_cloud)
+                        .setContentTitle("WeEvent")
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
+                        .setDefaults(Notification.DEFAULT_SOUND)
+                        .setAutoCancel(true)
+                        .setContentText(msg);
+
+                mBuilder.setContentIntent(contentIntent);
+                mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+                Log.d(TAG, "Notification ok");
+            }
         }
 	}
 
