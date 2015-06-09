@@ -25,7 +25,7 @@ import nf28.weevent.Model.User;
  * Created by clement on 10/05/2015.
  */
 public class DataManager extends Activity {
-    private static DataManager ourInstance = new DataManager();
+    private static DataManager ourInstance = null;
     private User user = null;
     private HashMap<String,Event> events = null;
     private Event event = null;
@@ -33,6 +33,8 @@ public class DataManager extends Activity {
     private String serverAddress;
 
     public static DataManager getInstance() {
+        if (ourInstance == null)
+            ourInstance = new DataManager();
         return ourInstance;
     }
 
@@ -84,7 +86,9 @@ public class DataManager extends Activity {
     }
 
     public User setUser(String login) {
-        //if (user == null)
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         RestClient client = new RestClient(serverAddress + "users");
         client.AddParam("login", login);
 

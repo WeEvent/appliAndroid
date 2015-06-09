@@ -17,6 +17,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
+import nf28.weevent.Controller.Gcm.ShareExternalServer;
+import nf28.weevent.Model.User;
 import nf28.weevent.R;
 import nf28.weevent.Tools.DataManager;
 
@@ -38,6 +42,11 @@ public class Description extends Fragment {
     private CheckBox radio_date;
     private CheckBox radio_map;
     private CheckBox radio_transp;
+
+    //gcm
+    ShareExternalServer appUtil;
+    AsyncTask<Void, Void, String> shareRegidTask;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.description,container,false);
@@ -175,5 +184,28 @@ public class Description extends Fragment {
         Intent intent = new Intent(signalName);
         //intent.putExtra("update",  "chat");
         getActivity().sendBroadcast(intent);
+    }
+
+    public void shareClosedEventMessagedWithServer(){
+
+        appUtil = new ShareExternalServer();
+        shareRegidTask = new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                ArrayList<String> list_contact = (ArrayList<String>) DataManager.getInstance().getSelectedEvt().getContactList();
+                User connectedUser = DataManager.getInstance().getUser();
+                list_contact.remove(connectedUser.getLogin());
+                String result = appUtil.SendNotificationForClosedEvent(list_contact,DataManager.getInstance().getSelectedEvt().getID(),DataManager.getInstance().getSelectedEvt().getNom());
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                shareRegidTask = null;
+                /*Toast.makeText(getApplicationContext(), result,
+                        Toast.LENGTH_LONG).show();*/
+            }
+        };
+        shareRegidTask.execute(null, null, null);
     }
 }
