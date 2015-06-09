@@ -27,6 +27,7 @@ public class PlaceAdapter extends ArrayAdapter<ModelAdapter>{
         CustomFilter filter = null;
         Context context;
         int pos = 0;
+        TextView votes = null;
 public PlaceAdapter(Context context, ModelAdapter[] resource) {
         super(context, R.layout.check_friend,resource);
         // TODO Auto-generated constructor stub
@@ -41,7 +42,7 @@ public PlaceAdapter(Context context, ModelAdapter[] resource) {
                 convertView = inflater.inflate(R.layout.check_place, parent, false);
                 //TextView name = (TextView) convertView.findViewById(R.id.textView1);
                 CheckBox cb = (CheckBox) convertView.findViewById(R.id.new_place);
-                TextView votes = (TextView) convertView.findViewById(R.id.vote_value_place);
+                votes = (TextView) convertView.findViewById(R.id.vote_value_place);
                 pos = position;  // update the position
                 cb.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
 
@@ -57,9 +58,11 @@ public PlaceAdapter(Context context, ModelAdapter[] resource) {
                                  // When clicked, show a toast with the TextView text
                                  DataManager.getInstance().newVoteToPollValue("Cat_3",text
                                          ,DataManager.getInstance().getUser().getLogin());
+                          //       votes.setText(""+(Integer.parseInt(votes.getText().toString())+1));
                              }else{
                                  DataManager.getInstance().removeVoteToPollValue("Cat_3",text
                                          ,DataManager.getInstance().getUser().getLogin());
+                           //      votes.setText(""+(Integer.parseInt(votes.getText().toString())-1));
 
                              }
 

@@ -69,6 +69,8 @@ public class Description extends Fragment {
                                     eventDesc.setEnabled(false);
                                     sendValid.setVisibility(View.GONE);
                                     butClose.setVisibility(View.GONE);
+                                    startActivity(new Intent(context,CategoriesActivity.class));
+                                    getActivity().finish();
                                 }
                             }
                         })

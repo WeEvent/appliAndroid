@@ -26,6 +26,7 @@ public class TransportAdapter extends ArrayAdapter<ModelAdapter>{
         ModelAdapter[] originalItems = null;
         CustomFilter filter = null;
         Context context;
+        TextView votes = null;
         int pos = 0;
 public TransportAdapter(Context context, ModelAdapter[] resource) {
         super(context, R.layout.check_friend,resource);
@@ -33,6 +34,7 @@ public TransportAdapter(Context context, ModelAdapter[] resource) {
         this.context = context;
         this.modelItems = resource;
         this.originalItems = resource;
+
         }
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
@@ -41,7 +43,7 @@ public TransportAdapter(Context context, ModelAdapter[] resource) {
                 convertView = inflater.inflate(R.layout.check_transport, parent, false);
                 //TextView name = (TextView) convertView.findViewById(R.id.textView1);
                 CheckBox cb = (CheckBox) convertView.findViewById(R.id.new_transport);
-                TextView votes = (TextView) convertView.findViewById(R.id.vote_value_transport);
+                votes = (TextView) convertView.findViewById(R.id.vote_value_transport);
                 pos = position;  // update the position
                 cb.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
 
@@ -57,9 +59,11 @@ public TransportAdapter(Context context, ModelAdapter[] resource) {
                                  // When clicked, show a toast with the TextView text
                                  DataManager.getInstance().newVoteToPollValue("Cat_4",text
                                          ,DataManager.getInstance().getUser().getLogin());
+                                // votes.setText(""+(Integer.parseInt(votes.getText().toString())+1));
                              }else{
                                  DataManager.getInstance().removeVoteToPollValue("Cat_4",text
                                          ,DataManager.getInstance().getUser().getLogin());
+                               //  votes.setText(""+(Integer.parseInt(votes.getText().toString())-1));
 
                              }
 

@@ -27,6 +27,7 @@ public class EventTypeAdapter extends ArrayAdapter<ModelAdapter>{
         CustomFilter filter = null;
         Context context;
         int pos = 0;
+        TextView votes = null;
 public EventTypeAdapter(Context context, ModelAdapter[] resource) {
         super(context, R.layout.check_friend,resource);
         // TODO Auto-generated constructor stub
@@ -41,7 +42,7 @@ public EventTypeAdapter(Context context, ModelAdapter[] resource) {
                 convertView = inflater.inflate(R.layout.check_type, parent, false);
 
                 CheckBox cb = (CheckBox) convertView.findViewById(R.id.new_type);
-                TextView votes = (TextView) convertView.findViewById(R.id.vote_value_type);
+                votes = (TextView) convertView.findViewById(R.id.vote_value_type);
                 pos = position;  // update the position
                 cb.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
 
@@ -57,10 +58,11 @@ public EventTypeAdapter(Context context, ModelAdapter[] resource) {
                                  // When clicked, show a toast with the TextView text
                                  DataManager.getInstance().newVoteToPollValue("Cat_1",text
                                          ,DataManager.getInstance().getUser().getLogin());
+                              //   votes.setText(""+(Integer.parseInt(votes.getText().toString())+1));
                              }else{
                                  DataManager.getInstance().removeVoteToPollValue("Cat_1",text
                                          ,DataManager.getInstance().getUser().getLogin());
-
+                              //   votes.setText(""+(Integer.parseInt(votes.getText().toString())-1));
                              }
 
                              break;

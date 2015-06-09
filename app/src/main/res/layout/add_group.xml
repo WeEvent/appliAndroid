@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:text="Add"
         android:id="@+id/btn_add_group"
-        android:background="@drawable/button_select"
+        android:background="@drawable/button_select_rect"
         android:textColor="#FFFFFF"
         android:layout_marginTop="30dp"
         android:layout_gravity="center_horizontal"/>

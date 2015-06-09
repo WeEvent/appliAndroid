@@ -37,58 +37,71 @@
         android:id="@+id/btnCloseEvent"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-
-
-        android:background="@drawable/button_select"
-        android:drawableTop="@drawable/ic_lock"
+        android:text="Lock Event"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_select_rect"
+        android:drawableLeft="@drawable/ic_lock"
         android:layout_marginBottom="190dp"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/textView"
         android:layout_alignStart="@+id/textView"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:gravity="left" />
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingLeft="120dp"
+        android:paddingRight="90dp" />
 
     <Button
         android:id="@+id/btnSendInvitation"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:drawableTop="@drawable/ic_send"
+        android:textColor="#FFFFFF"
+        android:drawableLeft="@drawable/ic_send"
         android:text="Send Invitation"
-        android:background="@drawable/button_select"
+        android:background="@drawable/button_select_rect"
         android:layout_above="@+id/btnParticipants"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginBottom="10dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingLeft="120dp"
+        android:paddingRight="90dp" />
 
     <Button
         android:id="@+id/btnParticipants"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:drawableTop="@drawable/ic_group"
+        android:textColor="#FFFFFF"
+        android:drawableLeft="@drawable/ic_group"
         android:text="Participants"
-        android:background="@drawable/button_select"
+        android:background="@drawable/button_select_rect"
         android:layout_marginBottom="70dp"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/textView"
         android:layout_alignStart="@+id/textView"
         android:layout_alignRight="@+id/textView"
-        android:layout_alignEnd="@+id/textView" />
+        android:layout_alignEnd="@+id/textView"
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingLeft="120dp"
+        android:paddingRight="90dp" />
 
     <Button
         android:id="@+id/btnLeaveEvent"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:drawableTop="@drawable/ic_exit"
-        android:text="Leave the event"
+        android:drawableLeft="@drawable/ic_exit"
+        android:text="Leave event"
         android:layout_marginBottom="10dp"
+        android:textColor="#FFFFFF"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/textView"
         android:layout_alignStart="@+id/textView"
         android:layout_alignRight="@+id/textView"
         android:layout_alignEnd="@+id/textView"
-        android:background="@drawable/button_select"
-        android:gravity="left" />
+        android:background="@drawable/button_select_rect"
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingLeft="120dp"
+        android:paddingRight="90dp" />
 
 
 </RelativeLayout>

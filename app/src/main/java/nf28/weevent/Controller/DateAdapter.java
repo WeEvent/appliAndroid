@@ -27,6 +27,7 @@ public class DateAdapter extends ArrayAdapter<ModelAdapter>{
         CustomFilter filter = null;
         Context context;
         int pos = 0;
+        TextView votes = null;
 public DateAdapter(Context context, ModelAdapter[] resource) {
         super(context, R.layout.check_date,resource);
         // TODO Auto-generated constructor stub
@@ -39,7 +40,7 @@ public DateAdapter(Context context, ModelAdapter[] resource) {
                 // TODO Auto-generated method stub
                 LayoutInflater inflater = ((Activity)context).getLayoutInflater();
                 convertView = inflater.inflate(R.layout.check_date, parent, false);
-                TextView votes = (TextView) convertView.findViewById(R.id.vote_value_date);
+                votes = (TextView) convertView.findViewById(R.id.vote_value_date);
                 CheckBox cb = (CheckBox) convertView.findViewById(R.id.new_date);
                 pos = position;  // update the position
                 cb.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
@@ -57,11 +58,14 @@ public DateAdapter(Context context, ModelAdapter[] resource) {
                                  System.out.println("Added date");
                                  DataManager.getInstance().newVoteToPollValue("Cat_2",text
                                          ,DataManager.getInstance().getUser().getLogin());
+                             //    votes.setText(""+(Integer.parseInt(votes.getText().toString())+1));
+
                              }else{
                                  m.setValue(0);
                                  System.out.println("Removed date");
                                  DataManager.getInstance().removeVoteToPollValue("Cat_2",text
                                          ,DataManager.getInstance().getUser().getLogin());
+                             //    votes.setText(""+(Integer.parseInt(votes.getText().toString())-1));
                              }
 
 
