@@ -105,14 +105,14 @@ public class Description extends Fragment {
                 alertDialogBuilder.setView(promptView);
 
                 final EditText input = (EditText) promptView.findViewById(R.id.userInput);
-
+                input.setText(DataManager.getInstance().getSelectedEvt().getDesc());
                 // setup a dialog window
                 alertDialogBuilder
                         .setCancelable(false)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 // get user input and set it to result
-                                eventDesc.setText(input.getText().toString());
+                                eventDesc.setText("Desc : "+input.getText().toString());
                                 DataManager.getInstance().setDescEvent(input.getText().toString());
                             }
                         })
