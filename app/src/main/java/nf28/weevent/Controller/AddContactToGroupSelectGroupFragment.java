@@ -62,7 +62,7 @@ public class AddContactToGroupSelectGroupFragment extends Fragment{
 
                 if(IsListEmpty())
                 {
-                    activity.finish();
+                    activity.onBackPressed();
                 }
                 else
                 {
