@@ -17,7 +17,10 @@
         android:background="@drawable/linearlayout_bg"
         android:padding="10dp"
         android:id="@+id/linearLayout"
-        android:visibility="gone">
+        android:visibility="visible"
+        android:layout_below="@+id/logo_we"
+   >
+
 
         <Button
             android:id="@+id/btnSignUp"
@@ -40,21 +43,21 @@
             />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="WeEvent"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:textColor="#ffffff"
-        android:textSize="70dp" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="450dp"
+        android:background="@drawable/logo_weevent"
+        android:layout_height="180dp"
+        android:id="@+id/logo_we"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/logo_weeevent" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:id="@+id/logo_weeevent"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/logo"
