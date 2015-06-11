@@ -102,25 +102,26 @@ public class SendInvitationActivity extends ActionBarActivity{
         @Override
         public void onClick(View v) {
 
+            List<String> eventContacts = DataManager.getInstance().getSelectedEvt().getContactList();
+
             for (int i = 0; i < contactsToInvite.size(); i++) {
-                System.err.println("------ |  " + contactsToInvite.get(i).getValue() + " | --------");
+                //System.err.println("------ |  " + contactsToInvite.get(i).getValue() + " | --------");
                 if (contactsToInvite.get(i).getValue() == 1) {
-                    //DataManager.getInstance().addContactToEvent(contactsToInvite.get(i).getName());
                     list_contact.add(contactsToInvite.get(i).getName());
                 }
             }
 
             for (int i = 0; i < groupsToInvite.size(); i++) {
-                System.err.println("------ |  " + groupsToInvite.get(i).getValue() + " | --------");
+                //System.err.println("------ |  " + groupsToInvite.get(i).getValue() + " | --------");
                 if (groupsToInvite.get(i).getValue() == 1) {
                     List<String> contactsInGroup = DataManager.getInstance()
                             .getUser()
                             .getGroup(groupsToInvite.get(i).getName())
                             .getContactsList();
                     for (String c : contactsInGroup){
-                        if(!list_contact.contains(c))
+                        if(!list_contact.contains(c) &&
+                                !eventContacts.contains(c)) // On enleve les personnes deja invitees qui sont dans ce groupe
                         {
-                            //DataManager.getInstance().addContactToEvent(c);
                             list_contact.add(c);
                         }
                     }
@@ -239,7 +240,6 @@ public class SendInvitationActivity extends ActionBarActivity{
 
         };
         shareRegidTask.execute(null, null, null);
-        finish();
     }
 
     public void sendSMS(List<String> list_contact){
