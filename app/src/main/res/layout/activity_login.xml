@@ -46,20 +46,20 @@
 
 
     <ImageView
-        android:layout_width="450dp"
+        android:layout_width="230dp"
         android:background="@drawable/logo_weevent"
-        android:layout_height="180dp"
+        android:layout_height="150dp"
         android:id="@+id/logo_we"
-        android:layout_gravity="center_horizontal"
-        android:layout_above="@+id/logo_weeevent"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp" />
 
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/logo_weeevent"
-        android:layout_gravity="center_horizontal"
         android:background="@drawable/logo"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
